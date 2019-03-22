@@ -1,0 +1,7 @@
+---
+
+- name: Install common packages
+  yum:
+    name:
+      - jq
+      - git-{{git_version}}
