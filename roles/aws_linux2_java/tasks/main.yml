@@ -1,0 +1,6 @@
+---
+
+- name: Install Java SDK
+  yum:
+    name:
+      - java-{{java_version}}-openjdk-devel

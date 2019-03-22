@@ -1,7 +1,13 @@
 ---
 
-- name: Install common packages
+- name: Install common util packages
   yum:
     name:
       - jq
       - git-{{git_version}}
+
+- name: Install AWS support packages
+  yum:
+    name:
+      - amazon-ssm-agent
+      - amazon-efs-utils
