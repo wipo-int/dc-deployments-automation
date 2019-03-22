@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - aws_linux2_base
+    - aws_linux2_java
