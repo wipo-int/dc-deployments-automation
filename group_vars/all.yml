@@ -1,3 +1,4 @@
 ---
+java_version: "1.8.0"
 postgres_version: "9.6"
 git_version: "2.14.4"

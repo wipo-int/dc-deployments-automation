@@ -6,6 +6,6 @@
     product_user: jira
 
   roles:
-    - aws_linux2_base
-    - aws_linux2_java
+    - aws_linux2_common
+    - aws_linux2_product_common
     - product_base
