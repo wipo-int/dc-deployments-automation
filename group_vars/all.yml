@@ -2,3 +2,9 @@
 java_version: "1.8.0"
 postgres_version: "9.6"
 git_version: "2.14.4"
+atl_shared_mountpoint: "/media/atl"
+
+#  The following are imports from the environment. These are generally
+#  set in /etc/atl by the CloudFormation template and sourced before
+#  Ansible is run.
+atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"

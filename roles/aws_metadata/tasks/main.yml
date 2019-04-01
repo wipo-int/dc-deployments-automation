@@ -1,0 +1,8 @@
+---
+
+# This role is primarily intended to be depended on via `meta` by
+# roles that need runtime information available.
+
+- name: Fetch local EC2 metadata
+  ec2_metadata_facts:
+

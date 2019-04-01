@@ -9,3 +9,4 @@
     - aws_linux2_common
     - aws_linux2_product_common
     - product_base
+    - aws_efs_config

@@ -13,4 +13,3 @@ source $ENV_FILE
 set +a
 
 ansible-playbook -v -i $INV $PLAYBOOK
-
