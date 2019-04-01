@@ -1,13 +1,18 @@
 ---
 
-- name: Install common util packages
-  yum:
-    name:
-      - jq
-      - git-{{git_version}}
 
 - name: Install AWS support packages
   yum:
     name:
       - amazon-ssm-agent
       - amazon-efs-utils
+
+- name: Install common util packages
+  yum:
+    name:
+      - jq
+      - git-{{git_version}}
+
+- name: Install Postgresql
+  # Amazon Linux 2 supplies extra packages via a special command.
+  command: amazon-linux-extras install -y "postgresql{{ postgres_version }}"
