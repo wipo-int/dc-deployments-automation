@@ -1,0 +1,6 @@
+---
+
+- name: Create product user
+  user:
+    name: "{{ product_user }}"
+    comment: "Product runtime user"

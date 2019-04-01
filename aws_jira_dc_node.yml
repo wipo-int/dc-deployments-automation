@@ -1,6 +1,11 @@
 ---
 - hosts: all
   become: true
+
+  vars:
+    product_user: jira
+
   roles:
     - aws_linux2_base
     - aws_linux2_java
+    - product_base
