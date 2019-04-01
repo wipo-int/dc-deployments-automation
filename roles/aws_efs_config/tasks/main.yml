@@ -1,10 +1,6 @@
 ---
 
 - name: Enable mountpoint in fstab
-  # lineinfile:
-  #   path: "/etc/fstab"
-  #   line: "{{ efs_target }}:/ /media/atl nfs4 rw,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0"
-  # notify: mount_all
   mount:
     path: "{{ atl_shared_mountpoint }}"
     src: "{{ efs_target }}:/"

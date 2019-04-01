@@ -8,6 +8,6 @@
 - name: Create mountpoint
   file:
     state: directory
-    path: "{{ atl_shared_mount }}"
+    path: "{{ atl_shared_mountpoint }}"
     owner: "{{ product_user }}"
     mode: 0755
