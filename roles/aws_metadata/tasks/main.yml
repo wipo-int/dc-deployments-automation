@@ -5,4 +5,3 @@
 
 - name: Fetch local EC2 metadata
   ec2_metadata_facts:
-
