@@ -4,10 +4,3 @@
   user:
     name: "{{ product_user }}"
     comment: "Product runtime user"
-
-- name: Create mountpoint
-  file:
-    state: directory
-    path: "{{ atl_shared_mountpoint }}"
-    owner: "{{ product_user }}"
-    mode: 0755
