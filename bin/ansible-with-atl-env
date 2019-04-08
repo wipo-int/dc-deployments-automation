@@ -5,11 +5,12 @@ set -e
 # Optionally take an environment file on the command-line for testing.
 INV=${1:?"Inventory file must be specified"}
 PLAYBOOK=${2:?"Playbook must be specified"}
-ENV_FILE=${3:-"/etc/atl"}
+LOG_FILE=${3:-"/dev/null"}
+ENV_FILE=${4:-"/etc/atl"}
 
 # Set the environment with default exports
 set -a
 source $ENV_FILE
 set +a
 
-ansible-playbook -v -i $INV $PLAYBOOK
+ansible-playbook -v -i $INV $PLAYBOOK | tee --append $LOG_FILE
