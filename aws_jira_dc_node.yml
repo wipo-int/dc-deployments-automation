@@ -3,7 +3,8 @@
   become: true
 
   vars:
-    product_user: jira
+    atl_product: jira
+    atl_product_user: jira
 
   roles:
     - aws_linux2_common
