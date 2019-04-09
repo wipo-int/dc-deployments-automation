@@ -1,0 +1,12 @@
+---
+
+# Note: Try and limit these to packages that are distro-specific, and
+# place commonly-named ones below.
+- name: Install distro-specific prerequisites
+  include: "{{ ansible_os_family|lower }}.yml"
+
+- name: Install common support packags
+  package:
+    name:
+      - jq
+      - curl

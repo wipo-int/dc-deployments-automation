@@ -1,0 +1,6 @@
+---
+
+- name: Install Redhat family support packages
+  yum:
+    name:
+      - shadow-utils
