@@ -7,5 +7,5 @@
     atl_product_installation_dir: "/opt/atlassian/jira"
     atl_installer_temp: "/opt/atlassian/tmp"
   roles:
-    - role: product_base
+    - role: product_common
     - role: jira_config

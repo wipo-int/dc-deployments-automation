@@ -7,4 +7,4 @@
     atl_installer_temp: "/opt/atlassian/temp"
   roles:
     - role: linux_common
-    - role: product_base
+    - role: product_common

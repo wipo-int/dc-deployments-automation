@@ -9,6 +9,5 @@
   roles:
     - linux_common
     - aws_common
-    - aws_linux2_product_common
-    - product_base
+    - product_common
     - aws_efs_config
