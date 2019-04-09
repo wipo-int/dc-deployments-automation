@@ -13,4 +13,4 @@
     owner: "{{ atl_product_user }}"
   with_items:
     - "{{ atl_product_home }}"
-    - "{{ atl_temp_dir }}"
+    - "{{ atl_installer_temp }}"
