@@ -1,5 +1,8 @@
 ---
 
+- name: Perform distro-specific tasks
+  include: "{{ ansible_distribution|lower }}.yml"
+
 - name: Create product user
   user:
     name: "{{ atl_product_user }}"

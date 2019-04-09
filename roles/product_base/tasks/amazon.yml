@@ -1,0 +1,8 @@
+---
+
+- name: Install Java and other base packages on Amazon Linux
+  yum:
+    name:
+      - java-{{ java_version }}-openjdk-devel
+      - git-{{ git_version }}
+      - postgresql

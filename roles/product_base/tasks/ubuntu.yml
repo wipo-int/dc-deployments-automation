@@ -1,0 +1,8 @@
+---
+
+- name: Install Java and other base packages on Ubuntu
+  package:
+    name:
+      - openjdk-{{ java_major_version }}-jdk-headless
+      - postgresql-client
+      - git

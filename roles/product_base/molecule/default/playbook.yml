@@ -6,4 +6,5 @@
     atl_product_home: "/opt/atlassian/product"
     atl_installer_temp: "/opt/atlassian/temp"
   roles:
+    - role: linux_common
     - role: product_base
