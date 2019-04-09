@@ -23,7 +23,7 @@ def test_dirs_created(host, target):
     assert d.user == 'testuser'
 
 
-@pytest.mark.parametrize('target', [
+@pytest.mark.parametrize('exe', [
     '/usr/bin/git',
     '/usr/bin/psql',
     '/usr/bin/javac'
