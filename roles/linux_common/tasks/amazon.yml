@@ -1,6 +1,6 @@
 ---
 
-- name: Install Redhat family support packages
+- name: Install Amazon-Linux-specific support packages
   yum:
     name:
       - shadow-utils
