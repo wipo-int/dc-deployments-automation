@@ -7,7 +7,8 @@
     atl_product_user: jira
 
   roles:
-    - aws_linux2_common
+    - linux_common
+    - aws_common
     - aws_linux2_product_common
     - product_base
     - aws_efs_config

@@ -1,0 +1,4 @@
+---
+
+- name: Install distro-specific prerequisites
+  include: "{{ ansible_distribution|lower }}.yml"
