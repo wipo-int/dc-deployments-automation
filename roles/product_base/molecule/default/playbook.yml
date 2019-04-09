@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    atl_product_user: "testuser"
+    atl_product_home: "/opt/atlassian/product"
+    atl_temp_dir: "/opt/atlassian/temp"
+  roles:
+    - role: product_base
