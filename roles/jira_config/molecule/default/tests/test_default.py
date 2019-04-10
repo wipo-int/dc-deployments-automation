@@ -10,6 +10,7 @@ def test_varfile(host):
     f = host.file('/opt/atlassian/tmp/jira.varfile')
     assert f.exists
     assert f.is_file
+    assert f.user == 'jira'
     assert f.contains("app.jiraHome=/var/atlassian/application-data/jira")
     assert f.contains("existingInstallationDir=/opt/atlassian/jira")
     assert f.contains("sys.installationDir=/opt/atlassian/jira")
