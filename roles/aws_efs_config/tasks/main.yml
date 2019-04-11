@@ -4,7 +4,7 @@
   file:
     state: directory
     path: "{{ atl_shared_mountpoint }}"
-    owner: "{{ product_user }}"
+    owner: "{{ atl_product_user }}"
     mode: 0755
 
 - name: Enable mountpoint in fstab
