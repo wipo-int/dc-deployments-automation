@@ -10,9 +10,10 @@ postgres_version: "9.6"
 git_version: "2.14.4"
 atl_shared_mountpoint: "/media/atl"
 
-# FIXME: Some of these could be overridden from the environment.
+# FIXME: Some of these should be overridden from the environment?
 atl_home_base: "/var/atlassian/application-data"
-atl_product_home: "{{ atl_home_base }}/{{ atl_product }}"
+atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
+atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/shared"
 
 atl_product_installation_base: "/opt/atlassian"
 atl_product_installation_dir: "{{ atl_product_installation_base }}/{{ atl_product }}"
@@ -22,4 +23,3 @@ atl_installer_temp: "{{ atl_product_installation_base }}/tmp"
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
-

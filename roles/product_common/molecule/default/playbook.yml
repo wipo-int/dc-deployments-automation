@@ -5,6 +5,7 @@
     atl_product_user: "testuser"
     atl_product_home: "/opt/atlassian/product"
     atl_installer_temp: "/opt/atlassian/temp"
+    atl_product_home_shared: "/media/atl/jira/shared"
   roles:
     - role: linux_common
     - role: product_common

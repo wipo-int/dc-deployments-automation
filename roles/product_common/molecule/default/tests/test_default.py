@@ -14,7 +14,8 @@ def test_user_created(host):
 
 @pytest.mark.parametrize('target', [
     '/opt/atlassian/product',
-    '/opt/atlassian/temp'
+    '/opt/atlassian/temp',
+    '/media/atl/jira/shared'
 ])
 def test_dirs_created(host, target):
     d = host.file(target)

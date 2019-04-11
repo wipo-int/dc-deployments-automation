@@ -3,8 +3,9 @@
   become: true
 
   vars:
-    atl_product: jira
-    atl_product_user: jira
+    atl_product_family: "jira"
+    atl_product_edition: "jira-software"
+    atl_product_user: "jira"
 
   roles:
     - linux_common
