@@ -6,8 +6,3 @@
       - ec2-utils
       - amazon-ssm-agent
       - amazon-efs-utils
-
-- name: Fetch local EC2 metadata
-  ec2_metadata_facts:
-  # Guard is mostly for testing
-  when: ansible_system_vendor == "Amazon EC2"

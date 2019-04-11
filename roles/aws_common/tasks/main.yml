@@ -2,3 +2,8 @@
 
 - name: Install distro-specific prerequisites
   include: "{{ ansible_distribution|lower }}.yml"
+
+- name: Fetch local EC2 metadata
+  ec2_metadata_facts:
+  # Guard is mostly for testing
+  when: ansible_system_vendor == "Amazon EC2"
