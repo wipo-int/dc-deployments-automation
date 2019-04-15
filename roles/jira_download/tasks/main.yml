@@ -1,9 +1,20 @@
 ---
 
-- name: Fetch the latest version if necessary
+- name: Fetch and cache latest version when no override
   get_url:
     url: "{{ atl_product_latest_version_url }}"
     dest: "{{ atl_product_version_cache }}"
     force: false
   when: atl_product_version is undefined or atl_product_version == "latest"
 
+- name: Write override cached version when specified
+  template:
+    src: version.j2
+    dest: "{{ atl_product_version_cache }}"
+    force: false
+  when: atl_product_version is defined and atl_product_version != "latest"
+
+- name: Use version for product version
+  slurp:
+    src: "{{ atl_product_version_cache }}"
+  register: atl_product_version
