@@ -6,5 +6,6 @@
     atl_product_edition: "jira-software"
     atl_product_user: "jira"
   roles:
+    - role: linux_common
     - role: product_common
     - role: jira_download
