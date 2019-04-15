@@ -16,7 +16,7 @@ atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
 atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/shared"
 
 atl_product_installation_base: "/opt/atlassian"
-atl_product_installation_dir: "{{ atl_product_installation_base }}/{{ atl_product }}"
+atl_product_installation_dir: "{{ atl_product_installation_base }}/{{ atl_product_edition }}"
 atl_installer_temp: "{{ atl_product_installation_base }}/tmp"
 
 #  The following are imports from the environment. These are generally
