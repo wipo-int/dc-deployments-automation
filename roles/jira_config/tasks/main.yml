@@ -1,7 +1,0 @@
----
-
-- name: Create installer seed varfile
-  template:
-    src: jira.varfile.j2
-    dest: "{{ atl_installer_temp }}/jira.varfile"
-    owner: "{{ atl_product_user }}"
