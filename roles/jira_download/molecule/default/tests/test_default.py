@@ -25,7 +25,7 @@ def test_latest_is_downloaded(host):
     upstream_fd = urllib.request.urlopen("https://s3.amazonaws.com/atlassian-software/releases/jira-software/latest")
     upstream = upstream_fd.read().decode("UTF-8").strip()
 
-    installer = host.file('/media/atl/jira/shared/jira-software.'+upstream+'.bin')
+    installer = host.file('/opt/atlassian/tmp/jira-software.'+upstream+'.bin')
     assert installer.exists
     assert installer.user == 'root'
     assert installer.mode == 0o0755

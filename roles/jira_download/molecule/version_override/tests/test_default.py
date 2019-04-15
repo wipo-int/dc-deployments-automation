@@ -18,3 +18,8 @@ def test_version_is_latest(host):
 
     assert verfile.content.decode("UTF-8").strip() == "7.13.2"
 
+def test_latest_is_downloaded(host):
+    installer = host.file('/opt/atlassian/tmp/jira-software.7.13.2.bin')
+    assert installer.exists
+    assert installer.user == 'root'
+    assert installer.mode == 0o0755
