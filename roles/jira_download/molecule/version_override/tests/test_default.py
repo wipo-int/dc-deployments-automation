@@ -22,4 +22,10 @@ def test_latest_is_downloaded(host):
     installer = host.file('/opt/atlassian/tmp/jira-software.7.13.2.tar.gz')
     assert installer.exists
     assert installer.user == 'root'
+
+def test_latest_is_unpacked(host):
+    installer = host.file('/opt/atlassian/jira-software/atlassian-jira-software-7.13.2-standalone')
+    assert installer.exists
+    assert installer.is_directory
+    assert installer.user == 'jira'
     assert installer.mode == 0o0755

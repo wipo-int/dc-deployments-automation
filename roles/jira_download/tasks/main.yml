@@ -17,7 +17,7 @@
 - name: Use version for product version
   command: "cat {{ atl_product_version_cache }}"
   register: atl_product_version_file
-  changed_when: False
+  changed_when: false
 
 # Note: We don't cache this in the shared drive to the complexity
 # around download race-conditions if multiple nodes are starting at
@@ -27,5 +27,14 @@
   get_url:
     url: "{{ atl_product_download_url }}"
     dest: "{{ atl_product_download }}"
-    mode: 0755
+    mode: 0644
     force: false
+
+- name: Unpack the product packages
+  unarchive:
+    remote_src: true
+    src: "{{ atl_product_download }}"
+    dest: "{{ atl_product_installation_dir }}"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0755
