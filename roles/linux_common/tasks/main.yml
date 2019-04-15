@@ -9,4 +9,6 @@
   package:
     name:
       - jq
+      - tar
       - curl
+      - fontconfig
