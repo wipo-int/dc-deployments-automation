@@ -15,6 +15,12 @@
   when: atl_product_version is defined and atl_product_version != "latest"
 
 - name: Use version for product version
-  slurp:
-    src: "{{ atl_product_version_cache }}"
-  register: atl_product_version
+  command: "cat {{ atl_product_version_cache }}"
+  register: atl_product_version_file
+
+- name: Fetch product installer
+  get_url:
+    url: "{{ atl_product_download_url }}"
+    dest: "{{ atl_product_download_cache }}"
+    mode: 0755
+    force: false
