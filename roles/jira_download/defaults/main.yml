@@ -1,0 +1,5 @@
+---
+
+atl_release_base_url: "https://s3.amazonaws.com/atlassian-software/releases"
+atl_product_latest_version_url: "{{ atl_release_base_url }}/{{ atl_product_edition }}/latest"
+atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"

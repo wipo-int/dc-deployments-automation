@@ -1,0 +1,9 @@
+---
+
+- name: Fetch the latest version if necessary
+  get_url:
+    url: "{{ atl_product_latest_version_url }}"
+    dest: "{{ atl_product_version_cache }}"
+    force: false
+  when: atl_product_version is undefined or atl_product_version == "latest"
+
