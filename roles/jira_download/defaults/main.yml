@@ -1,11 +1,10 @@
 ---
 
-atl_release_base_url: "https://s3.amazonaws.com/atlassian-software/releases"
-atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_edition }}"
-
-atl_product_latest_version_url: "{{ atl_product_base_url }}/latest"
+atl_product_latest_version_url: "https://s3.amazonaws.com/atlassian-software/releases/{{ atl_product_edition }}/latest"
 atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
 
+atl_release_base_url: "https://product-downloads.atlassian.com/software"
+atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downloads"
 atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_product_edition }}-{{ atl_product_version_file.stdout }}-x64.bin"
 atl_product_download_filename: "{{ atl_product_edition }}.{{ atl_product_version_file.stdout }}.bin"
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
