@@ -12,6 +12,8 @@ platforms:
     image: ubuntu:bionic
 provisioner:
   name: ansible
+  options:
+    skip-tags: runtime_pkg
   lint:
     name: ansible-lint
   inventory:

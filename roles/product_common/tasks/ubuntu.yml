@@ -6,3 +6,5 @@
       - openjdk-{{ java_major_version }}-jdk-headless
       - postgresql-client
       - git
+  tags:
+    - runtime_pkg
