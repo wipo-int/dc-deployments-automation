@@ -12,3 +12,5 @@
     - aws_common
     - product_common
     - aws_efs_config
+    - jira_download
+    - jira_config
