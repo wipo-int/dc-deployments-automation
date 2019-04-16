@@ -1,0 +1,7 @@
+---
+
+- name: Create dbconfig.xml
+  template:
+    src: dbconfig.xml.j2
+    dest: "{{ atl_product_home }}/dbconfig.xml"
+    owner: "{{ atl_product_user }}"

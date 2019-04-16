@@ -25,3 +25,16 @@ atl_installer_temp: "{{ atl_installation_base }}/tmp"
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
+
+atl_jdbc_url: "{{ lookup('env', 'ATL_JDBC_URL') }}"
+atl_jdbc_user: "{{ lookup('env', 'ATL_JDBC_USER') }}"
+atl_jdbc_password: "{{ lookup('env', 'ATL_JDBC_PASSWORD') }}"
+
+atl_jdbc_driver: "{{ lookup('env', 'ATL_JDBC_DRIVER') or 'org.postgresql.Driver' }}"
+atl_db_poolminsize: "{{ lookup('env', 'ATL_DB_POOLMINSIZE') or '20' }}"
+atl_db_poolmaxsize: "{{ lookup('env', 'ATL_DB_POOLMAXSIZE') or '100' }}"
+atl_db_minidle: "{{ lookup('env', 'ATL_DB_MINIDLE') or '10' }}"
+atl_db_maxidle: "{{ lookup('env', 'ATL_DB_MAXIDLE') or '20' }}"
+
+atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP) }}"
+atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS) }}"
