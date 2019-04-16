@@ -18,4 +18,4 @@
     - "{{ atl_product_home }}"
     - "{{ atl_installer_temp }}"
     - "{{ atl_product_home_shared }}"
-    - "{{ atl_product_installation_dir }}"
+    - "{{ atl_product_installation_base }}"

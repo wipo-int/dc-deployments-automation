@@ -7,11 +7,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_version_downloaded(host):
-    verfile = host.file('/media/atl/jira/shared/jira-software.version')
-    assert verfile.exists
-
-
 def test_version_file_is_latest(host):
     verfile = host.file('/media/atl/jira/shared/jira-software.version')
     assert verfile.exists
@@ -28,4 +23,3 @@ def test_latest_is_downloaded(host):
     installer = host.file('/opt/atlassian/tmp/jira-software.'+upstream+'.tar.gz')
     assert installer.exists
     assert installer.user == 'root'
-    assert installer.mode == 0o0755

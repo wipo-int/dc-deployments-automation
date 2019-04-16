@@ -15,9 +15,11 @@ atl_home_base: "/var/atlassian/application-data"
 atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
 atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/shared"
 
-atl_product_installation_base: "/opt/atlassian"
-atl_product_installation_dir: "{{ atl_product_installation_base }}/{{ atl_product_edition }}"
-atl_installer_temp: "{{ atl_product_installation_base }}/tmp"
+atl_installation_base: "/opt/atlassian"
+atl_product_installation_base: "{{ atl_installation_base }}/{{ atl_product_edition }}"
+atl_product_installation_target: "{{ atl_installation_base }}/{{ atl_product_edition }}/current"
+atl_installer_temp: "{{ atl_installation_base }}/tmp"
+
 
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
