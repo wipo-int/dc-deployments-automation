@@ -47,3 +47,12 @@ atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc
 
 atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP) or '2048m' }}"
 atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS) or '' }}"
+atl_catalina_opts_extra: >-
+  -XX:+UseG1GC
+  -XX:+PrintAdaptiveSizePolicy
+  -XX:+PrintGCDetails
+  -XX:NumberOfGCLogFiles=10
+  -XX:GCLogFileSize=5m
+  -XX:+UseGCLogFileRotation
+  -XX:+PrintTenuringDistribution
+  -Dfile.encoding=UTF-8
