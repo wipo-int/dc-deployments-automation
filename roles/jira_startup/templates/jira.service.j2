@@ -8,7 +8,7 @@ Group={{ atl_product_user }}
 
 # NOTE: Additional environment vars are set in {{ atl_product_installation_target }}/bin/setenv.sh
 Environment=JIRA_HOME="{{ atl_product_home }}"
-Environment=CATALINA_OPTS="{{ atl_catalina_opts }} {{ atl_catalina_opts }}"
+Environment=CATALINA_OPTS="{{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"
 
 ExecStart={{ atl_product_installation_target }}/bin/start-jira.sh -fg
 
