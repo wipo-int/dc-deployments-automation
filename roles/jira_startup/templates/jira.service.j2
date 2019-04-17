@@ -11,6 +11,7 @@ Environment="JIRA_HOME={{ atl_product_home }}"
 Environment="CATALINA_OPTS={{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"
 
 ExecStart={{ atl_product_installation_target }}/bin/start-jira.sh -fg
+Restart=on-failure
 
 [Install]
 WantedBy=multi-target.target
