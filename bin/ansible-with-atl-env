@@ -13,4 +13,9 @@ set -a
 source $ENV_FILE
 set +a
 
+# Use Ansible from virtualenv if provided
+if [[ -f .venv/bin/ansible ]]; then
+    source .venv/bin/activate
+fi
+
 ansible-playbook -v -i $INV $PLAYBOOK | tee --append $LOG_FILE
