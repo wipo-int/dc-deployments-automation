@@ -37,7 +37,7 @@ atl_db_maxidle: "{{ lookup('env', 'ATL_DB_MAXIDLE') or '20' }}"
 atl_db_driver: "{{ lookup('env', 'ATL_DB_DRIVER') or 'org.postgresql.Driver' }}"
 
 atl_jdbc_db_name: "{{ lookup('env', 'ATL_DB_NAME') }}"
-atl_jdbc_url: "{{ jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}"
+atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}"
 atl_jdbc_user: "{{ lookup('env', 'ATL_JDBC_USER') }}"
 atl_jdbc_password: "{{ lookup('env', 'ATL_JDBC_PASSWORD') }}"
 atl_jdbc_encoding: "{{ lookup('env', 'ATL_JDBC_ENCODING') or 'UTF-8' }}"
