@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+set -e
+
+# The Amazon Linux 2 Ansible package is 2.4, which has issue
+# interacting with RDS, so use the PIP version.
+
+virtualenv --system-site-packages .venv
+source .venv/bin/activate
+pip install ansible==2.7.10
