@@ -12,3 +12,4 @@
       - tar
       - curl
       - fontconfig
+      - python-psycopg2
