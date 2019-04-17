@@ -5,3 +5,14 @@
     src: dbconfig.xml.j2
     dest: "{{ atl_product_home }}/dbconfig.xml"
     owner: "{{ atl_product_user }}"
+
+- name: Override JVM memory settings.
+  # Ugly but necessary as the product installs this file so we need to make the change here.
+  lineinfile:
+    path: "{{ atl_product_installation_target }}/bin/setenv.sh"
+    backrefs: true
+    regexp: "^{{ item }}="
+    line: "{{ item }}=\"{{ atl_jvm_heap }}\""
+  with_items:
+    - 'JVM_MINIMUM_MEMORY'
+    - 'JVM_MAXIMUM_MEMORY'
