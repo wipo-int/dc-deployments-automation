@@ -9,7 +9,16 @@
     name: "{{ atl_jdbc_user }}"
     password: "{{ atl_jdbc_password }}"
     expires: 'infinity'
-  tags: db_interaction
+
+- name: Update root privs for new user
+  postgresql_privs:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
+    database: postgres
+    roles: "{{ atl_db_root_user }}"
+    objs: "{{ atl_jdbc_user }}"
+    type: group
 
 - name: Create application database
   postgresql_db:
@@ -23,4 +32,3 @@
     lc_collate: "{{ atl_jdbc_collation }}"
     lc_ctype: "{{ atl_jdbc_ctype }}"
     template: "{{ atl_jdbc_template }}"
-  tags: db_interaction
