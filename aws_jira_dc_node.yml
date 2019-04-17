@@ -10,8 +10,8 @@
   roles:
     - linux_common
     - aws_common
-    - product_common
     - aws_efs_config
+    - product_common
     - database_config
     - jira_download
     - jira_config
