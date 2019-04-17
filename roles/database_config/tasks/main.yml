@@ -17,7 +17,7 @@
     login_user: "{{ atl_db_root_user }}"
     login_password: "{{ atl_db_root_password }}"
     port: "{{ atl_db_port }}"
-    name: "{{ atl_jdbc_name }}"
+    name: "{{ atl_jdbc_db_name }}"
     owner: "{{ atl_jdbc_user }}"
     encoding: "{{ atl_jdbc_encoding }}"
     lc_collate: "{{ atl_jdbc_collation }}"
