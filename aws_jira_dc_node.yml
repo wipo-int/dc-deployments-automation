@@ -15,3 +15,5 @@
     - database_config
     - jira_download
     - jira_config
+    - jira_startup
+

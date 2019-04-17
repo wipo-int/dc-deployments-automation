@@ -1,0 +1,12 @@
+[Unit]
+Description=Atlassian Jira
+After=network-online.target
+
+[Service]
+User={{ atl_product_user }}
+Group={{ atl_product_user }}
+
+ExecStart={{ atl_product_installation_target }}/bin/start-jira.sh -fg
+
+[Install]
+WantedBy=multi-target.target
