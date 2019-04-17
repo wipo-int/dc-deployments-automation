@@ -1,7 +1,7 @@
 ---
 
 - name: Install distro-specific prerequisites
-  include: "{{ ansible_distribution|lower }}.yml"
+  include_tasks: "{{ ansible_distribution|lower }}.yml"
 
 - name: Fetch local EC2 metadata
   ec2_metadata_facts:
