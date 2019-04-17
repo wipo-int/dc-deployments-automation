@@ -4,7 +4,7 @@
   postgresql_user:
     login_host: "{{ atl_db_host }}"
     login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
     port: "{{ atl_db_port }}"
     name: "{{ atl_jdbc_user }}"
     password: "{{ atl_jdbc_password }}"
@@ -15,7 +15,7 @@
   postgresql_db:
     login_host: "{{ atl_db_host }}"
     login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
     port: "{{ atl_db_port }}"
     name: "{{ atl_jdbc_name }}"
     owner: "{{ atl_jdbc_user }}"
