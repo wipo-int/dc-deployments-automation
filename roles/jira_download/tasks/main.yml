@@ -41,6 +41,7 @@
     remote_src: true
     src: "{{ atl_product_download }}"
     dest: "{{ atl_product_installation_base }}/{{ atl_product_version_file.stdout }}"
+    creates: "{{ atl_product_installation_base }}/{{ atl_product_version_file.stdout }}"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0755
