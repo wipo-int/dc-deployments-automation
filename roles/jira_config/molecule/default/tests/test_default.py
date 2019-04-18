@@ -19,3 +19,9 @@ def test_setenv_file(host):
     assert f.exists
     assert f.contains('JVM_MINIMUM_MEMORY="PLACEHOLDER"')
     assert f.contains('JVM_MAXIMUM_MEMORY="PLACEHOLDER"')
+
+def test_cluster_file(host):
+    f = host.file('/var/atlassian/application-data/jira/cluster.properties')
+    assert f.exists
+    assert f.contains('jira.node.id = FAKEID')
+    assert f.contains('jira.shared.home = /media/atl/jira/shared')

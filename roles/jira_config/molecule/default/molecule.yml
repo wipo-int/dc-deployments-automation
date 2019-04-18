@@ -16,6 +16,8 @@ provisioner:
     skip-tags: runtime_pkg
   lint:
     name: ansible-lint
+    options:
+      x: ["701"]
   inventory:
     links:
       group_vars: ../../../../group_vars/

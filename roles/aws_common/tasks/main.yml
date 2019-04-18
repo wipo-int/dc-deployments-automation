@@ -3,6 +3,10 @@
 - name: Install distro-specific prerequisites
   include_tasks: "{{ ansible_distribution|lower }}.yml"
 
+- name: Use EC2 instance ID for cluster node ID
+  set_fact:
+    atl_cluster_node_id: "{{ ansible_ec2_instance_id }}"
+
 - name: Fetch local EC2 metadata
   ec2_metadata_facts:
   # Guard is mostly for testing
