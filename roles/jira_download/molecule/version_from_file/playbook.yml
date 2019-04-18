@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    atl_product_family: "jira"
+    atl_product_edition: "jira-software"
+    atl_product_user: "jira"
+
+  pre_tasks:
+    - name: Create cache dir
+      file:
+        path: '/media/atl/jira/shared/'
+        state: directory
+    - name: Seed version
+      copy:
+        dest: '/media/atl/jira/shared/jira-software.version'
+        content: "7.9.0"
+
+  roles:
+    - role: linux_common
+    - role: product_common
+    - role: jira_download
