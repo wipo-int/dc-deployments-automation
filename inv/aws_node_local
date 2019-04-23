@@ -1,2 +1,2 @@
-[all]
+[aws_node_local]
 localhost ansible_connection=local
