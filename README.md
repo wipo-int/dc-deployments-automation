@@ -23,8 +23,9 @@ In practice, the Ansible roles require some information about the infrastructure
 that was deployed (e.g. RDS endpoint/password). The way this is currently
 achieved (on AWS) is that have the CloudFormation template dump this information
 into the file `/etc/atl` as `RESOURCE_VAR=<resource>` lines. This can be then
-sourced as environment variables to be retrieved at runtime. See the
-helper-script `bin/ansible-with-atl-env` for an example.
+sourced as environment variables to be retrieved at runtime . See the
+helper-script `bin/ansible-with-atl-env` and the corresponding
+`groups_vars/aws_node_local.yml` var-file.
 
 ### Maintenance playbooks
 
@@ -49,14 +50,20 @@ should be run firs).
 
 ## Ansible layout
 
-
-
-* Global defaults in group_vars/all.yml
-** This is where env-vars should be converted to Ansible vars. It also acts as a required-env list.
-** The CF env is usually stored in /etc/atl. The script `bin/ansible-with-atl-env` will run Ansible with that environment set.
-* Runtime information about the EC2 environment can be injected by depending on
-  `apws_common` in a role's `meta/main.yml` (or adding it to the playbook before
-  the requiring role.
+* Helper script are in `bin/`. In particular the `bin/ansible-with-atl-env`
+  wrapper is of use during AWS node initialisation. See _Usage_ above for more
+  information.
+* Inventory files are under `inv/`. For AWS `cfn-init` the inventory
+  `inv/aws_node_local` inventory is probably what you want.
+ * Note that this expects the environment to be setup with infrastructure
+   information; see _Usage_ above.
+* Global group vars loaded automatically from `group_vars/<group>.yml`. In
+  particular note `group_vars/aws_node_local.yml` which loads infrastructure
+  information from the environment.
+* Roles are under `roles/`
+ * Platform specific roles start with `<platform-shortname>_...`,
+   e.g. `roles/aws_common/`.
+ * Similarly, product-specific roles should start with `<product>_...`.
 
 ## License
 
