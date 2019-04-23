@@ -2,8 +2,12 @@
 
 # This file is the place for cross-role defaults for all products, and
 # common parameters from the infrastructure-deployment phase of the
-# build (e.g. CloudFormation). More specific vars should go in
-# <role>/defaults/main.yml or in the various playbooks.
+# build (e.g. CloudFormation). Variables defined here will override
+# those defined in `<role>/defaults/main.yml`, although defaults
+# should usually be defined there too. For variable precedence
+# information see:
+#
+#    https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 
 java_version: "1.8.0"
 postgres_version: "9.6"
@@ -47,12 +51,17 @@ atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc
 
 atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP') or '2048m' }}"
 atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS') or '' }}"
-atl_catalina_opts_extra: >-
-  -XX:+UseG1GC
-  -XX:+PrintAdaptiveSizePolicy
-  -XX:+PrintGCDetails
-  -XX:NumberOfGCLogFiles=10
-  -XX:GCLogFileSize=5m
-  -XX:+UseGCLogFileRotation
-  -XX:+PrintTenuringDistribution
-  -Dfile.encoding=UTF-8
+atl_proxy_name:  "{{ lookup('env', 'ATL_PROXY_NAME') }}"
+atl_proxy_port:  "{{ lookup('env', 'ATL_TOMCAT_PROXYPORT') }}"
+atl_tomcat_port: "{{ lookup('env', 'ATL_TOMCAT_DEFAULTCONNECTORPORT') or '8080' }}"
+
+atl_tomcat_acceptcount: "{{ lookup('env', 'ATL_TOMCAT_ACCEPTCOUNT') or '10' }}"
+atl_tomcat_connectiontimeout: "{{ lookup('env', 'ATL_TOMCAT_CONNECTIONTIMEOUT') or '20000' }}"
+atl_tomcat_contextpath: "{{ lookup('env', 'ATL_TOMCAT_CONTEXTPATH') or '' }}"
+atl_tomcat_enablelookups: "{{ lookup('env', 'ATL_TOMCAT_ENABLELOOKUPS') or 'false' }}"
+atl_tomcat_maxthreads: "{{ lookup('env', 'ATL_TOMCAT_MAXTHREADS') or '200' }}"
+atl_tomcat_minsparethreads: "{{ lookup('env', 'ATL_TOMCAT_MINSPARETHREADS') or '10' }}"
+atl_tomcat_protocol: "{{ lookup('env', 'ATL_TOMCAT_PROTOCOL') or 'HTTP/1.1' }}"
+atl_tomcat_redirectport: "{{ lookup('env', 'ATL_TOMCAT_REDIRECTPORT') or '' }}"
+atl_tomcat_scheme: "{{ lookup('env', 'ATL_TOMCAT_SCHEME') or 'http' }}"
+atl_tomcat_secure: "{{ lookup('env', 'ATL_TOMCAT_SECURE') or 'false' }}"

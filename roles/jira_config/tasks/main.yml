@@ -12,6 +12,11 @@
     dest: "{{ atl_product_home }}/cluster.properties"
     owner: "{{ atl_product_user }}"
 
+- name: Create server config
+  template:
+    src: server.xml.j2
+    dest: "{{ atl_product_installation_target }}/conf/server.xml"
+
 - name: Override JVM memory settings.
   # Ugly but necessary as the product installs this file so we need to make the change here.
   lineinfile:

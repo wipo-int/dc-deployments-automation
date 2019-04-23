@@ -25,3 +25,10 @@ def test_cluster_file(host):
     assert f.exists
     assert f.contains('jira.node.id = FAKEID')
     assert f.contains('jira.shared.home = /media/atl/jira/shared')
+
+def test_server_file(host):
+    f = host.file('/opt/atlassian/jira-software/current/conf/server.xml')
+    assert f.exists
+    assert f.contains('Connector port="8080"')
+    assert f.contains('Server port="8005"')
+    assert not f.contains('proxyName=')
