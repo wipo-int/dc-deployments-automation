@@ -19,4 +19,4 @@
   roles:
     - role: linux_common
     - role: product_common
-    - role: jira_download
+    - role: product_download

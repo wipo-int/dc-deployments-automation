@@ -12,7 +12,7 @@
     - aws_common
     - aws_efs_config
     - product_common
+    - product_download
     - database_config
-    - jira_download
     - jira_config
     - jira_startup
