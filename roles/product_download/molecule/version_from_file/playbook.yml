@@ -3,7 +3,7 @@
   hosts: all
   vars:
     atl_product_family: "jira"
-    atl_product_edition: "jira-software"
+    atl_product_edition: "jira-core"
     atl_product_user: "jira"
 
   pre_tasks:
@@ -13,7 +13,7 @@
         state: directory
     - name: Seed version
       copy:
-        dest: '/media/atl/jira/shared/jira-software.version'
+        dest: '/media/atl/jira/shared/jira-core.version'
         content: "7.9.0"
 
   roles:

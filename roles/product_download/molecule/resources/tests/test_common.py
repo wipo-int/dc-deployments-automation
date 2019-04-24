@@ -8,14 +8,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_version_downloaded(host):
-    verfile = host.file('/media/atl/jira/shared/jira-software.version')
+    verfile = host.file('/media/atl/jira/shared/jira-core.version')
     assert verfile.exists
 
 def test_symlink_created(host):
-    target = host.file('/opt/atlassian/jira-software/current')
+    target = host.file('/opt/atlassian/jira-core/current')
     assert target.exists
     assert target.is_symlink
 
 def test_unpacked(host):
-    verfile = host.file('/opt/atlassian/jira-software/current/bin/catalina.sh')
+    verfile = host.file('/opt/atlassian/jira-core/current/bin/catalina.sh')
     assert verfile.exists
