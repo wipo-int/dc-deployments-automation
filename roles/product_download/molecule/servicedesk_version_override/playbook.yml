@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    atl_product_family: "jira"
+    atl_product_edition: "servicedesk"
+    atl_product_user: "jira"
+    atl_product_version: "3.16.3"
+  roles:
+    - role: linux_common
+    - role: product_common
+    - role: product_download
