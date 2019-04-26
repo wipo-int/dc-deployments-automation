@@ -5,6 +5,8 @@
     atl_product_family: "jira"
     atl_product_edition: "jira-core"
     atl_product_user: "jira"
+    # NOTE: This should be ignored because the version file exists.
+    atl_product_version: "latest"
 
   pre_tasks:
     - name: Create cache dir
