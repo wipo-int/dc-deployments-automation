@@ -28,6 +28,8 @@ atl_installer_temp: "{{ atl_installation_base }}/tmp"
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper
+atl_product_version: "{{ lookup('env', 'ATL_PRODUCT_VERSION') | lower }}"
+
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
 
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"
