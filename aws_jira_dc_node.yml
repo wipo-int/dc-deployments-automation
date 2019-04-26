@@ -4,7 +4,7 @@
 
   vars:
     atl_product_family: "jira"
-    atl_product_edition: "jira-software"
+    atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
     atl_product_user: "jira"
 
   roles:
