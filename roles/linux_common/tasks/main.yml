@@ -11,5 +11,6 @@
       - jq
       - tar
       - curl
+      - unzip
       - fontconfig
       - python-psycopg2

@@ -24,3 +24,6 @@ atl_tomcat_protocol: "HTTP/1.1"
 atl_tomcat_redirectport: ""
 atl_tomcat_scheme: "http"
 atl_tomcat_secure: "false"
+
+atl_servicedesk_latest_version_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest"
+atl_servicedesk_download_file: "{{ atl_installer_temp }}/jira-servicedesk-{{ atl_servicedesk_version }}.obr"

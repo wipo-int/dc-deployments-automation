@@ -4,8 +4,18 @@
 
   vars:
     atl_product_family: "jira"
-    atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
     atl_product_user: "jira"
+
+    # FIXME: Slightly hacky workaround for specifying All or
+    # ServiceDesk; override to use Software and install plugins later.
+    atl_product_bundle: "{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
+    bundle_map:
+      all: software
+      servicedesk: software
+      core: core
+      software: software
+
+    atl_product_edition: "jira-{{ bundle_map[atl_product_bundle] }}"
 
   roles:
     - linux_common
