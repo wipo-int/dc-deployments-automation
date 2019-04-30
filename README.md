@@ -46,11 +46,11 @@ Roles should be reasonably self-contained, with sensible defaults configured in
 implicitly depend on variables being defined elsewhere where they cannot define
 them natively (e.g. the `jira_config` role depends on the `atl_cluster_node_id`
 var being defined; on AWS this is provided by the `aws_common` role, which
-should be run firs).
+should be run first).
 
 ## Ansible layout
 
-* Helper script are in `bin/`. In particular the `bin/ansible-with-atl-env`
+* Helper scripts are in `bin/`. In particular the `bin/ansible-with-atl-env`
   wrapper is of use during AWS node initialisation. See _Usage_ above for more
   information.
 * Inventory files are under `inv/`. For AWS `cfn-init` the inventory
