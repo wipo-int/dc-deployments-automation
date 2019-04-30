@@ -25,5 +25,20 @@ atl_tomcat_redirectport: ""
 atl_tomcat_scheme: "http"
 atl_tomcat_secure: "false"
 
-atl_servicedesk_latest_version_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest"
+# As SD releases need to be mapped to a Jira release, and there's now
+# straightforward way of doing this via the Marketplace REST API we do
+# a course mapping here and rely on UPM to prompt to upgrade to the
+# latest. See:
+#
+#     https://marketplace.atlassian.com/apps/1213632/jira-service-desk/version-history
+#
+# for version details.
+atl_servicedesk_download_map:
+  '8':
+    version: "4.1.0"
+    url: "https://marketplace.atlassian.com/download/apps/1213632/version/1040010000"
+  '7':
+    version: "3.16.3"
+    url: "https://marketplace.atlassian.com/download/apps/1213632/version/1030160003"
+
 atl_servicedesk_download_file: "{{ atl_installer_temp }}/jira-servicedesk-{{ atl_servicedesk_version }}.obr"

@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+
   vars:
     atl_product_bundle: servicedesk
     bundle_map:
@@ -12,6 +13,7 @@
     atl_product_edition: "jira-{{ bundle_map[atl_product_bundle] }}"
     atl_product_family: "jira"
     atl_product_user: "jira"
+    atl_product_version: "latest"
 
     atl_jdbc_user: 'atljira'
     atl_jvm_heap: 'PLACEHOLDER'

@@ -35,15 +35,15 @@
 - name: Install ServiceDesk if required
   block:
 
-    - name: Fetch the latest version data
+    - name: Extract the Jira major version, default to 8 if not found or 'latest'
       set_fact:
-        atl_servicedesk_version_json: "{{ lookup('url', '{{ atl_servicedesk_latest_version_url }}') }}"
+        atl_jira_major_version: "{{ atl_product_version | regex_search('^\\d+') | default('8', true) }}"
     - name: Extract the latest version number
       set_fact:
-        atl_servicedesk_version: "{{ atl_servicedesk_version_json.name }}"
+        atl_servicedesk_version: "{{ atl_servicedesk_download_map[atl_jira_major_version].version }}"
     - name: Extract the download url
       set_fact:
-        atl_servicedesk_download_url: "{{ atl_servicedesk_version_json._embedded.artifact._links.binary.href }}"
+        atl_servicedesk_download_url: "{{ atl_servicedesk_download_map[atl_jira_major_version].url }}"
 
     - name: Download ServiceDesk
       get_url:
