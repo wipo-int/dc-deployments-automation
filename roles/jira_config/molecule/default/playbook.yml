@@ -4,6 +4,7 @@
   vars:
     atl_product_family: "jira"
     atl_product_edition: "jira-software"
+    atl_product_bundle: "software"
     atl_product_user: "jira"
     atl_product_version: "7.13.2"
     atl_jdbc_user: 'atljira'
