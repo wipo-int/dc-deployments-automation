@@ -17,6 +17,21 @@
 
     atl_product_edition: "jira-{{ bundle_map[atl_product_bundle] }}"
 
+
+    # Another quirk; we need to map servicedesk versions to the
+    # appropriate Jira version:
+    atl_servicedesk_major_version: "{{ atl_product_version | regex_search('^\\d+') | default('latest', true) }}"
+    atl_servicedesk_version_map:
+      '3': "7.13.3"
+      '4': "latest"
+      'latest': 'latest'
+
+  pre_tasks:
+    - name: Set the Jira version for ServiceDesk if necessary
+      set_fact:
+        atl_product_version: "{{ atl_servicedesk_version_map[atl_servicedesk_major_version] }}"
+      when: atl_product_bundle == "servicedesk" or atl_product_bundle == "all"
+
   roles:
     - linux_common
     - aws_common
