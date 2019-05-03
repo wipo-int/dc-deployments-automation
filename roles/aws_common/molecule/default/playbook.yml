@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    ansible_ec2_instance_id: "NONE"
   roles:
     - role: aws_common
