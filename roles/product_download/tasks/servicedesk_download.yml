@@ -1,0 +1,71 @@
+---
+
+- name: Check for and load cached version
+  include_tasks: "cached_version_fetch.yml"
+
+
+# Case: File doesn't exist and no version has been set; find latest.
+- name: Fetch and cache latest version when no override
+  block:
+
+    - name: Fetch the ServiceDesk metadata from marketplace
+      set_fact:
+        atl_servicedesk_version_json: "{{ lookup('url', '{{ atl_servicedesk_latest_url }}') }}"
+
+    - name: Set the Jira version for ServiceDesk
+      set_fact:
+        atl_product_version: "{{ atl_servicedesk_version_json.name }}"
+        atl_download_version: "{{ atl_servicedesk_version_json.name }}"
+
+  when:
+    not cached.stat.exists and
+    (atl_product_version is undefined or
+     not atl_product_version or
+     atl_product_version == "latest")
+
+
+- name: Cache download version if necessary
+  include_tasks: "cached_version_write.yml"
+
+
+# We now have a ServiceDesk version, fetch the metadata to give us the
+# download URL and Jira versioning information.
+- name: Fetch the ServiceDesk metadata from marketplace
+  set_fact:
+    atl_servicedesk_version_json: "{{ lookup('url', '{{ atl_servicedesk_versioned_url }}') }}"
+
+- name: Extract the version and download information from the ServiceDesk metadata
+  set_fact:
+    atl_download_edition: "jira-software"
+    atl_download_version: "{{ atl_servicedesk_version_json.compatibilities[0].hosting.server.max.version }}"
+    atl_servicedesk_download_url: "{{ atl_servicedesk_version_json._embedded.artifact._links.binary.href }}"
+
+
+- name: Fetch and unpack the Jira edition
+  include_tasks: "fetch_product.yml"
+
+
+# FIXME: The following is a bit of a special-case for now; ideally we
+# should convert this into a general plugin-installation role
+# (esp. when we get to supporting Portfolio), but there's no use for ATM.
+- name: Download ServiceDesk
+  get_url:
+    url: "{{ atl_servicedesk_download_url }}"
+    dest: "{{ atl_servicedesk_download_file }}"
+    mode: 0640
+    force: false
+
+- name: Extract the plugin to the shared plugin directory
+  command: /usr/bin/unzip -jn "{{ atl_servicedesk_download_file }}" "*.jar"
+  args:
+    chdir: "{{ atl_product_shared_plugins }}"
+    creates: "{{ atl_product_shared_plugins }}/*servicedesk*.jar"
+    warn: false
+
+- name: Make plugins writable by the Jira user
+  file:
+    path: "{{ atl_product_shared_plugins }}"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0750
+    recurse: true

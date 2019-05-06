@@ -5,6 +5,17 @@ atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition
 
 atl_release_base_url: "https://product-downloads.atlassian.com/software"
 atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downloads"
-atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_product_edition }}-{{ atl_product_version }}.tar.gz"
-atl_product_download_filename: "{{ atl_product_edition }}.{{ atl_product_version }}.tar.gz"
+atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_download_version | default(atl_product_version) }}.tar.gz"
+
+atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_download_version | default(atl_product_version) }}.tar.gz"
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
+
+atl_marketplace_base: "https://marketplace.atlassian.com"
+atl_servicedesk_latest_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest"
+atl_servicedesk_versioned_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/name/{{ atl_product_version }}"
+atl_servicedesk_url_map:
+  latest: "{{ atl_servicedesk_latest_url }}"
+  default: "{{ atl_servicedesk_versioned_url }}"
+atl_servicedesk_metadata_url: "{{ atl_servicedesk_url_map[atl_product_version] | default(atl_servicedesk_url_map['default']) }}"
+
+atl_servicedesk_download_file: "{{ atl_installer_temp }}/jira-servicedesk.{{ atl_product_version }}.obr"

@@ -1,0 +1,38 @@
+---
+
+# Note: We don't the cache binary in the shared drive to the complexity
+# around download race-conditions if multiple nodes are starting at
+# the same time. When downloading from product-downloads.atlassian.com
+# (which is a CDN) takes seconds anyway.
+- name: Fetch product installer
+  get_url:
+    url: "{{ atl_product_download_url }}"
+    dest: "{{ atl_product_download }}"
+    mode: 0644
+    force: false
+
+- name: Create target version directory
+  file:
+    path: "{{ atl_product_installation_base }}/{{ atl_product_version }}"
+    state: directory
+    owner: "{{ atl_product_user }}"
+
+- name: Unpack the product packages
+  unarchive:
+    remote_src: true
+    src: "{{ atl_product_download }}"
+    dest: "{{ atl_product_installation_base }}/{{ atl_product_version }}"
+    creates: "{{ atl_product_installation_base }}/{{ atl_product_version }}/bin/catalina.sh"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0755
+    # Strip off the lead product/version specific directory to normaise naming
+    extra_opts:
+      - "--strip-components=1"
+
+- name: Symlink the installed version to current
+  file:
+    src: "{{ atl_product_installation_base }}/{{ atl_product_version }}"
+    dest: "{{ atl_product_installation_target }}"
+    state: link
+    force: true

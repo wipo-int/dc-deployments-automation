@@ -5,39 +5,14 @@
   vars:
     atl_product_family: "jira"
     atl_product_user: "jira"
-
-    # FIXME: Slightly hacky workaround for specifying All or
-    # ServiceDesk; override to use Software and install plugins later.
-    atl_product_bundle: "{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
-    bundle_map:
-      all: software
-      servicedesk: software
-      core: core
-      software: software
-
-    atl_product_edition: "jira-{{ bundle_map[atl_product_bundle] }}"
-
-
-    # Another quirk; we need to map servicedesk versions to the
-    # appropriate Jira version:
-    atl_servicedesk_major_version: "{{ atl_product_version | regex_search('^\\d+') | default('latest', true) }}"
-    atl_servicedesk_version_map:
-      '3': "7.13.3"
-      '4': "latest"
-      'latest': 'latest'
-
-  pre_tasks:
-    - name: Set the Jira version for ServiceDesk if necessary
-      set_fact:
-        atl_product_version: "{{ atl_servicedesk_version_map[atl_servicedesk_major_version] }}"
-      when: atl_product_bundle == "servicedesk"
+    atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
 
   roles:
-    - linux_common
-    - aws_common
-    - aws_efs_config
-    - product_common
-    - product_download
-    - database_config
-    - jira_config
-    - jira_startup
+    - role: linux_common
+    - role: aws_common
+    - role: aws_efs_config
+    - role: product_common
+    - role: product_download
+    - role: database_config
+    - role: jira_config
+    - role: jira_startup
