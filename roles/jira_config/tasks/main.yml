@@ -67,4 +67,4 @@
         mode: 0750
         recurse: true
 
-  when: atl_product_bundle == "servicedesk" or atl_product_bundle == "all"
+  when: atl_product_bundle == "servicedesk"

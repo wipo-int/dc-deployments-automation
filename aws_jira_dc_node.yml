@@ -30,7 +30,7 @@
     - name: Set the Jira version for ServiceDesk if necessary
       set_fact:
         atl_product_version: "{{ atl_servicedesk_version_map[atl_servicedesk_major_version] }}"
-      when: atl_product_bundle == "servicedesk" or atl_product_bundle == "all"
+      when: atl_product_bundle == "servicedesk"
 
   roles:
     - linux_common
