@@ -1,10 +1,18 @@
 ---
 
-- name: Install Java and other base packages on Ubuntu
+- name: Install JDK if necessary on Ubuntu
   package:
     name:
       - openjdk-{{ java_major_version }}-jdk-headless
+  when: use_system_jdk
+  tags:
+    - runtime_pkg
+
+- name: Install other base packages on Ubuntu
+  package:
+    name:
       - postgresql-client
+      - fonts-dejavu-core
       - git
   tags:
     - runtime_pkg

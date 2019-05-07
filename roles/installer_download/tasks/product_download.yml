@@ -1,0 +1,31 @@
+---
+
+- name: Check for and load cached version
+  include_tasks: "cached_version_fetch.yml"
+
+
+# Case: File doesn't exist and no version has been set; find latest.
+- name: Fetch and cache latest version when no override
+  block:
+
+    - name: Fetch the latest version from URL
+      set_fact:
+        atl_product_version_json: "{{ lookup('url', '{{ atl_product_latest_version_url }}') }}"
+
+    - name: Set the local var to retrieved version
+      set_fact:
+        atl_product_version: "{{ atl_product_version_json.version }}"
+
+  when:
+    not cached.stat.exists and
+    (atl_product_version is undefined or
+     not atl_product_version or
+     atl_product_version == "latest")
+
+
+- name: Cache download version if necessary
+  include_tasks: "cached_version_write.yml"
+
+
+- name: Fetch and unpack the product distribution
+  include_tasks: "fetch_product.yml"

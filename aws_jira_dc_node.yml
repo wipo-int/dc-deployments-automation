@@ -12,7 +12,7 @@
     - role: aws_common
     - role: aws_efs_config
     - role: product_common
-    - role: tgz_download
+    - role: installer_download
     - role: database_config
     - role: jira_config
     - role: jira_startup

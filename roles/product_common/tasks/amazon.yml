@@ -1,17 +1,19 @@
 ---
 
-- name: Install Java and other base packages on Amazon Linux
+- name: Install JDK if necessary on Amazon Linux
   yum:
     name:
       - java-{{ java_version }}-openjdk-devel
+  when: use_system_jdk
+
+- name: Install other base packages on Amazon Linux
+  yum:
+    name:
       - git-{{ git_version }}
-  tags:
-    - runtime_pkg
+      - dejavu-fonts-common
 
 # Amazon Linux 2 supplies extra packages via a special command.
 - name: Enable Postgresql from 'extras'
   command: amazon-linux-extras install -y "postgresql{{ postgres_version }}"
   args:
     creates: /usr/bin/psql
-  tags:
-    - runtime_pkg

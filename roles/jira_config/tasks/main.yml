@@ -1,5 +1,6 @@
 ---
 
+
 - name: Create database config
   template:
     src: dbconfig.xml.j2
@@ -15,15 +16,27 @@
 - name: Create server config
   template:
     src: server.xml.j2
-    dest: "{{ atl_product_installation_target }}/conf/server.xml"
+    dest: "{{ atl_product_installation_versioned }}/conf/server.xml"
 
 - name: Override JVM memory settings.
   # Ugly but necessary as the product installs this file so we need to make the change here.
   lineinfile:
-    path: "{{ atl_product_installation_target }}/bin/setenv.sh"
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
     backrefs: true
     regexp: "^{{ item }}="
     line: "{{ item }}=\"{{ atl_jvm_heap }}\""
   with_items:
     - 'JVM_MINIMUM_MEMORY'
     - 'JVM_MAXIMUM_MEMORY'
+
+
+- name: Create application directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+  with_items:
+    - "{{ atl_product_home_shared }}"
+    - "{{ atl_product_shared_plugins }}"
