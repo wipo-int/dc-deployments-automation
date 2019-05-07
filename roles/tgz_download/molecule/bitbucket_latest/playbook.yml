@@ -8,4 +8,4 @@
   roles:
     - role: linux_common
     - role: product_common
-    - role: product_download
+    - role: tgz_download

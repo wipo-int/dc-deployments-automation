@@ -5,9 +5,9 @@
     atl_product_edition: "jira-servicedesk"
     atl_product_family: "jira"
     atl_product_user: "jira"
-    atl_product_version: "4.1.0"
+    atl_product_version: "3.0.2"
 
   roles:
     - role: linux_common
     - role: product_common
-    - role: product_download
+    - role: tgz_download
