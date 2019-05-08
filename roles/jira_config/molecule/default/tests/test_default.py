@@ -48,6 +48,6 @@ def test_install_permissions(host):
     assert host.file('/opt/atlassian/jira-software/current/conf/server.xml').user == 'root'
     assert host.file('/opt/atlassian/jira-software/current/atlassian-jira/WEB-INF/web.xml').user == 'root'
 
-    assert host.file('/opt/atlassian/jira-software/current/logs/').user == 'root'
-    assert host.file('/opt/atlassian/jira-software/current/work/').user == 'root'
-    assert host.file('/opt/atlassian/jira-software/current/temp/').user == 'root'
+    assert host.file('/opt/atlassian/jira-software/current/logs/').user == 'jira'
+    assert host.file('/opt/atlassian/jira-software/current/work/').user == 'jira'
+    assert host.file('/opt/atlassian/jira-software/current/temp/').user == 'jira'
