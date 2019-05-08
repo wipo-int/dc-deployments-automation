@@ -2,7 +2,7 @@
 
 set -e
 
-for role in `find -name molecule`; do
+for role in `find roles/ -name molecule`; do
     pushd `dirname $role`
     molecule test --all
     popd
