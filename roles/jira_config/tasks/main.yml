@@ -33,7 +33,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: "u=rwX,g=rX,o-a"
+    mode: 0750
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
   with_items:
@@ -60,7 +60,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0750
+    mode: "u=rwX,g=rX,o-a"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     recurse: true
