@@ -33,7 +33,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0750
+    mode: "u=rwX,g=rX,o-a"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
   with_items:
@@ -48,7 +48,7 @@
     path: "{{ atl_product_installation_versioned }}"
     owner: "root"
     group: "root"
-    mode: "u=rwX,g=rX,o-rX"
+    mode: "u=rwX,g=rX,o=rX"
     recurse: true
   with_items:
     - "{{ atl_installer_temp }}"
