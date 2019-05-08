@@ -31,7 +31,9 @@ helper-script `bin/ansible-with-atl-env` and the corresponding
 
 (None currently; TBW)
 
-## Development philosophy
+## Development
+
+### Development philosophy
 
 The suite is intended to consist of a number of small, composable roles that can
 be combined together into playbooks. Wherever possible the roles should be
@@ -47,6 +49,11 @@ implicitly depend on variables being defined elsewhere where they cannot define
 them natively (e.g. the `jira_config` role depends on the `atl_cluster_node_id`
 var being defined; on AWS this is provided by the `aws_common` role, which
 should be run first).
+
+### Development and testing
+
+See [Development](DEVELOPMENT.md) for details on setting up a development
+environment and running tests.
 
 ## Ansible layout
 
