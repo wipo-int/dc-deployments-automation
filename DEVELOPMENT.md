@@ -39,7 +39,7 @@ We’re going to check that the role that downloads the products works for both
 Jira Core and Confluence, on boths supported Linux distributions. So run the
 following:
 
-    cd roles/installer_download/
+    cd roles/product_install/
     molecule test -s jira_version_latest
     molecule test -s servicedesk3
 

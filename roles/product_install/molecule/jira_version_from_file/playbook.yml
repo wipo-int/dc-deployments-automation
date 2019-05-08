@@ -21,4 +21,4 @@
   roles:
     - role: linux_common
     - role: product_common
-    - role: installer_download
+    - role: product_install
