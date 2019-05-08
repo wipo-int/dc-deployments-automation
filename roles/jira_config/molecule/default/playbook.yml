@@ -12,5 +12,5 @@
   roles:
     - role: linux_common
     - role: product_common
-    - role: tgz_download
+    - role: installer_download
     - role: jira_config

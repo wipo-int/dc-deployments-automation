@@ -1,15 +1,5 @@
 ---
 
-- name: Create installation directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-  with_items:
-    - "{{ atl_installer_temp }}"
-    - "{{ atl_product_home_shared }}"
-
-
 # Common case for most products and Jira editions.
 - name: Fetch ServiceDesk metadata if necessary
   include_tasks: "servicedesk_download.yml"
@@ -17,7 +7,8 @@
 
 # Differences for ServiceDesk become fiddly enough that it's better to
 # just split them out and move common functionality into individual
-# task files.
+# task files. This gives us some flexibility in the future if
+# necessary.
 - name: Fetch product metadata if necessary
   include_tasks: "product_download.yml"
   when: atl_product_edition != "jira-servicedesk"

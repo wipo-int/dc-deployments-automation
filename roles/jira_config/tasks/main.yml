@@ -29,7 +29,6 @@
     - 'JVM_MINIMUM_MEMORY'
     - 'JVM_MAXIMUM_MEMORY'
 
-
 - name: Create application directories
   file:
     path: "{{ item }}"
@@ -38,5 +37,35 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
   with_items:
+    - "{{ atl_product_home }}"
     - "{{ atl_product_home_shared }}"
     - "{{ atl_product_shared_plugins }}"
+  changed_when: false  # For Molecule idempotence check
+
+
+- name: Limit permissions on the installation directory
+  file:
+    path: "{{ atl_product_installation_versioned }}"
+    owner: "root"
+    group: "root"
+    mode: "u=rwX,g=rX,o-rwx"
+    recurse: true
+  with_items:
+    - "{{ atl_installer_temp }}"
+    - "{{ atl_product_installation_versioned }}"
+    - "{{ atl_product_version_cache_dir }}"
+  changed_when: false  # For Molecule idempotence check
+
+- name: Grant access to the product working directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: "root"
+    group: "root"
+    recurse: true
+  with_items:
+    - "{{ atl_product_installation_versioned }}/logs"
+    - "{{ atl_product_installation_versioned }}/temp"
+    - "{{ atl_product_installation_versioned }}/work"
+  changed_when: false  # For Molecule idempotence check

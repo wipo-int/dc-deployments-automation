@@ -12,22 +12,9 @@ def test_user_created(host):
     assert user.exists
 
 
-@pytest.mark.parametrize('target', [
-    '/opt/atlassian/product',
-    '/opt/atlassian/temp',
-    '/media/atl/jira/shared'
-])
-def test_dirs_created(host, target):
-    d = host.file(target)
-    assert d.exists
-    assert d.is_directory
-    assert d.user == 'testuser'
-
-
 @pytest.mark.parametrize('exe', [
     '/usr/bin/git',
-    '/usr/bin/psql',
-    '/usr/bin/javac'
+    '/usr/bin/psql'
 ])
 def test_package_exes(host, exe):
     assert host.file(exe).exists

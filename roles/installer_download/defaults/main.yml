@@ -1,6 +1,7 @@
 ---
 
 atl_product_latest_version_url: "https://marketplace.atlassian.com/rest/2/applications/{{ atl_product_family }}/versions/latest"
+atl_product_version_cache_dir: "{{ atl_product_home_shared }}"
 atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
 
 atl_release_base_url: "https://product-downloads.atlassian.com/software"

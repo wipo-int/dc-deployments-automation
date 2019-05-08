@@ -7,4 +7,3 @@
   user:
     name: "{{ atl_product_user }}"
     comment: "Product runtime user"
-  when: create_product_user

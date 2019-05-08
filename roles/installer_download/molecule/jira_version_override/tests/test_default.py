@@ -23,4 +23,3 @@ def test_is_unpacked(host):
     assert installer.exists
     assert installer.is_directory
     assert installer.user == 'jira'
-    assert installer.mode == 0o0755

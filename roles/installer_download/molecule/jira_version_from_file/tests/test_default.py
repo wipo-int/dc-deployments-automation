@@ -19,7 +19,7 @@ def test_is_downloaded(host):
     assert installer.user == 'root'
 
 def test_is_unpacked(host):
-    installer = host.file('/opt/atlassian/jira-core/7.9.0')
+    installer = host.file('/opt/atlassian/jira-core/7.9.0/atlassian-jira/')
     assert installer.exists
     assert installer.is_directory
     assert installer.user == 'jira'

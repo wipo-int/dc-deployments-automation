@@ -43,3 +43,11 @@ def test_server_file(host):
     assert f.contains('scheme="http"')
     assert not f.contains('proxyName=')
     assert not f.contains('proxyPort=')
+
+def test_install_permissions(host):
+    assert host.file('/opt/atlassian/jira-software/current/conf/server.xml').user == 'root'
+    assert host.file('/opt/atlassian/jira-software/current/atlassian-jira/WEB-INF/web.xml').user == 'root'
+
+    assert host.file('/opt/atlassian/jira-software/current/logs/').user == 'root'
+    assert host.file('/opt/atlassian/jira-software/current/work/').user == 'root'
+    assert host.file('/opt/atlassian/jira-software/current/temp/').user == 'root'

@@ -14,5 +14,3 @@
       - postgresql-client
       - fonts-dejavu-core
       - git
-  tags:
-    - runtime_pkg
