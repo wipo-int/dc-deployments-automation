@@ -4,3 +4,4 @@
   yum:
     name:
       - shadow-utils
+      - xmllint
