@@ -6,9 +6,6 @@ atl_catalina_opts: ""
 atl_catalina_opts_extra: >-
   -XX:+UseG1GC
   -XX:+PrintAdaptiveSizePolicy
-  -XX:+PrintGCDetails
-  -XX:NumberOfGCLogFiles=10
-  -XX:GCLogFileSize=5m
   -XX:+UseGCLogFileRotation
   -XX:+PrintTenuringDistribution
   -Dfile.encoding=UTF-8
