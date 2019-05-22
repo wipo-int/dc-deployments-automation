@@ -1,0 +1,34 @@
+---
+
+atl_jvm_heap: "2048m"
+
+atl_catalina_opts: ""
+atl_catalina_opts_extra: >-
+  -Datlassian.event.thread_pool_configuration.queue_size=4096
+  -Datlassian.plugins.enable.wait=300
+  -Dconfluence.upgrade.recovery.file.enabled=false
+  -Dfile.encoding=UTF-8
+  -Djava.net.preferIPv4Stack=true
+  -Dshare.group.email.mapping=atlassian-all:atlassian-all@atlassian.com,atlassian-staff:atlassian-staff@atlassian.com
+  -XX:+PrintAdaptiveSizePolicy
+  -XX:+PrintGCDetails
+  -XX:+PrintTenuringDistribution
+  -Dsynchrony.proxy.enabled=false
+  -Dsynchrony.service.url=${ATL_SYNCHRONY_SERVICE_URL}
+  -Dconfluence.cluster.node.name=${_ATL_PRIVATE_IPV4}
+  -Dconfluence.cluster.hazelcast.max.no.heartbeat.seconds=60
+
+atl_tomcat_port: "8080"
+atl_tomcat_mgmt_port: "8005"
+atl_tomcat_acceptcount: "10"
+atl_tomcat_connectiontimeout: "20000"
+atl_tomcat_contextpath: ""
+atl_tomcat_maxthreads: "200"
+atl_tomcat_minsparethreads: "10"
+atl_tomcat_protocol: "HTTP/1.1"
+atl_tomcat_redirectport: ""
+atl_tomcat_scheme: "http"
+atl_tomcat_secure: "false"
+
+atl_autologin_cookie_age: "{{ lookup('env', 'ATL_AUTOLOGIN_COOKIE_AGE') }}"
+atl_synchrony_service_url: "{{ lookup('env', 'ATL_SYNCHRONY_SERVICE_URL') }}"
