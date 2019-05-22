@@ -1,6 +1,6 @@
 ---
 
-- name: Create installation directories if necesary
+- name: Create installation directories if necessary
   include_tasks: "create_dirs.yml"
 
 - name: Check for and load cached version

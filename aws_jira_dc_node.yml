@@ -3,6 +3,7 @@
   become: true
 
   vars:
+    # See group_vars/aws_node_local.yml, which pull vars from the environment.
     atl_product_family: "jira"
     atl_product_user: "jira"
     atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
