@@ -1,8 +1,0 @@
----
-
-# At this point atl_product_version should be set, cache if necessary.
-- name: Write override cached version when specified
-  template:
-    src: version.j2
-    dest: "{{ atl_product_version_cache }}"
-    force: false
