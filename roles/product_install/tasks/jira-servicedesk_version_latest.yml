@@ -6,4 +6,4 @@
 
 - name: Set the version for ServiceDesk
   set_fact:
-    atl_product_version: "{{ atl_servicedesk_version_json.name }}"
+    atl_latest_version: "{{ atl_servicedesk_version_json.name }}"

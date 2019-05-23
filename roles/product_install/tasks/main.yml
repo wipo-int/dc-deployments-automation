@@ -1,20 +1,5 @@
 ---
 
-- name: Create installation directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0750
-    owner: "{{ atl_product_user }}"
-    group: "{{ atl_product_user }}"
-  with_items:
-    - "{{ atl_installer_temp }}"
-    - "{{ atl_product_home }}"
-    - "{{ atl_product_installation_versioned }}"
-    - "{{ atl_product_version_cache_dir }}"
-  changed_when: false  # For Molecule idempotence check
-
-
 - name: Check for existing version cache file
   stat:
     path: "{{ atl_product_version_cache }}"
@@ -31,10 +16,16 @@
 
     - name: Set the local var to cached version
       set_fact:
-        atl_product_version: "{{ atl_product_version_file.stdout }}"
+        atl_cached_version: "{{ atl_product_version_file.stdout }}"
 
   when: cached.stat.exists
 
+
+- name: Determine if requested version is 'latest'
+  set_fact:
+    version_is_latest: "{{ atl_product_version is undefined or
+                           not atl_product_version or
+                           atl_product_version == 'latest' }}"
 
 # Case: File doesn't exist and no version has been set; find latest.
 - name: Fetch and cache latest version when no override
@@ -43,15 +34,89 @@
     - name: Fetch the latest edition version
       include_tasks: "{{ atl_product_edition }}_version_latest.yml"
 
-  when:
-    not cached.stat.exists and
-    (atl_product_version is undefined or
-     not atl_product_version or
-     atl_product_version == "latest")
+  when: not cached.stat.exists and version_is_latest
+
+
+######################################################################
+# Version logic:
+#
+# At this point we have 3 values (possibly empty):
+#
+# * atl_product_version (supplied)
+# * atl_cached_version
+# * atl_latest_version
+#
+# If no cached value, use the supplied value or 'latest' if unset.
+#
+# If a cached file exists, and the requested version is 'latest' (or
+# unset), cache wins.
+#
+# If a version is set, then it is honoured _if_ it is higher than the
+# cached value (i.e. upgrade path).
+
+- name: "Case: Version is latest"
+  block:
+
+    - name: "Case: Cached version exists, has precedence over 'latest'"
+      set_fact:
+        atl_download_version: "{{ atl_cached_version }}"
+      when: cached.stat.exists
+
+    - name: "Case: No cached version, use latest"
+      set_fact:
+        atl_download_version: "{{ atl_latest_version }}"
+      when: not cached.stat.exists
+
+  when: version_is_latest
+
+- name: "Case: Version is not latest"
+  block:
+
+    - name: "Case: No cached version, or but supplied is higher; use supplied"
+      set_fact:
+        atl_download_version: "{{ atl_product_version }}"
+      when: (not cached.stat.exists) or
+            atl_product_version is version(atl_cached_version, '>')
+
+    - name: "Case: Cached version is higher, ignore supplied"
+      set_fact:
+        atl_download_version: "{{ atl_cached_version }}"
+      when: cached.stat.exists and
+            atl_product_version is version(atl_cached_version, '<=')
+
+  when: not version_is_latest
+
+
+- name: "Fallthrough guard: Use cached or supplied version if nothing set"
+  set_fact:
+    atl_download_version: "{{ atl_cached_version or atl_product_version }}"
+  when: atl_download_version is not defined or
+        atl_download_version|length == 0
+
+- name: Override the supplied version with the calculated one
+  set_fact:
+    atl_product_version: "{{ atl_download_version }}"
+
+######################################################################
 
 
 - name: Perform any additional per-edition version setup
   include_tasks: "{{ atl_product_edition }}_extra_tasks.yml"
+
+
+- name: Create installation directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+  with_items:
+    - "{{ atl_installer_temp }}"
+    - "{{ atl_product_home }}"
+    - "{{ atl_product_installation_versioned }}"
+    - "{{ atl_product_version_cache_dir }}"
+  changed_when: false  # For Molecule idempotence check
 
 
 # At this point atl_product_version should be set, cache if necessary.
@@ -59,7 +124,7 @@
   template:
     src: version.j2
     dest: "{{ atl_product_version_cache }}"
-    force: false
+    force: true
 
 # Note: We don't the cache binary in the shared drive to the complexity
 # around download race-conditions if multiple nodes are starting at
