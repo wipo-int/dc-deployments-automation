@@ -9,6 +9,7 @@
     atl_jdbc_user: 'atljira'
     atl_jvm_heap: 'PLACEHOLDER'
     atl_cluster_node_id: 'FAKEID'
+
   roles:
     - role: linux_common
     - role: product_common

@@ -29,6 +29,18 @@
     - 'JVM_MINIMUM_MEMORY'
     - 'JVM_MAXIMUM_MEMORY'
 
+- name: Set Jira home directory
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
+    regexp: "JIRA_HOME="
+    line: 'JIRA_HOME="{{ atl_product_home }}"'
+
+- name: Set the Tomcat environment
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
+    insertafter: "EOF"
+    line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
+
 - name: Create application directories
   file:
     path: "{{ item }}"

@@ -17,8 +17,11 @@ def test_dbconfig_file(host):
 def test_setenv_file(host):
     f = host.file('/opt/atlassian/jira-software/current/bin/setenv.sh')
     assert f.exists
-    assert f.contains('JVM_MINIMUM_MEMORY="PLACEHOLDER"')
-    assert f.contains('JVM_MAXIMUM_MEMORY="PLACEHOLDER"')
+    assert f.contains('^JVM_MINIMUM_MEMORY="PLACEHOLDER"')
+    assert f.contains('^JVM_MAXIMUM_MEMORY="PLACEHOLDER"')
+    assert f.contains('^JIRA_HOME="/var/atlassian/application-data/jira"')
+    assert f.contains('^export CATALINA_OPTS="')
+
 
 def test_cluster_file(host):
     f = host.file('/var/atlassian/application-data/jira/cluster.properties')
