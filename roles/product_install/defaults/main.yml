@@ -1,14 +1,18 @@
 ---
 
+# Empty values to simplify logic (no undefineds)
+atl_latest_version: ''
+atl_cached_version: ''
+
 atl_product_latest_version_url: "https://marketplace.atlassian.com/rest/2/applications/{{ atl_product_family }}/versions/latest"
 atl_product_version_cache_dir: "{{ atl_product_home_shared }}"
 atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
 
 atl_release_base_url: "https://product-downloads.atlassian.com/software"
 atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downloads"
-atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_download_version | default(atl_product_version) }}-x64.bin"
+atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}-x64.bin"
 
-atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_download_version | default(atl_product_version) }}.bin"
+atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_product_version }}.bin"
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
 atl_product_varfile: "{{ atl_installer_temp }}/{{ atl_product_family }}.varfile"
 
