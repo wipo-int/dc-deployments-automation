@@ -3,6 +3,6 @@
 atl_db_port: '5432'
 atl_db_root_user: 'postgres'
 atl_jdbc_encoding: 'UTF-8'
-atl_jdbc_collation: 'en_US.UTF-8'
-atl_jdbc_ctype: 'en_US.UTF-8'
+atl_jdbc_collation: 'C'
+atl_jdbc_ctype: 'C'
 atl_jdbc_template: 'template1'
