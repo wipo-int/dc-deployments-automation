@@ -36,6 +36,20 @@
                useBodyEncodingForURI="true"
                disableUploadTimeout="true" />
 
+    {% if atl_tomcat_redirectport is defined and atl_tomcat_redirectport != '' %}
+    <Connector port="{{ atl_tomcat_redirectport }}"
+               protocol="{{ atl_tomcat_protocol }}"
+               connectionTimeout="{{ atl_tomcat_connectiontimeout }}"
+
+               relaxedPathChars="[]|"
+               relaxedQueryChars="[]|{}^\`&quot;&lt;&gt;"
+               maxHttpHeaderSize="65536"
+               URIEncoding="UTF-8"
+               useBodyEncodingForURI="true"
+               compression="on"
+               compressableMimeType="text/html,text/xml,text/plain,text/css,application/json,application/javascript,application/x-javascript" />
+    {% endif %}
+
     <Engine name="Catalina"
             defaultHost="localhost">
       <Host name="localhost"
