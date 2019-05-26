@@ -11,5 +11,5 @@
     path: "{{ atl_shared_mountpoint }}"
     src: "{{ efs_target }}:/"
     fstype: efs
-    opts: "rw"
+    opts: "defaults,_netdev"
     state: mounted
