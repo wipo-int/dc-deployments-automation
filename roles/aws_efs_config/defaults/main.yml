@@ -1,2 +1,2 @@
 ---
-efs_target: "{{ ansible_ec2_placement_availability_zone }}.{{ atl_efs_id }}.efs.{{ ansible_ec2_placement_region }}.amazonaws.com"
+efs_target: "{{ atl_efs_id }}"
