@@ -1,26 +1,5 @@
 ---
 
-- name: Configure login properties
-  template:
-    src: seraph-config.xml.j2
-    dest: "{{ atl_product_installation_versioned }}/confluence/WEB-INF/classes/seraph-config.xml"
-
-- name: Override JVM memory settings.
-  replace:
-    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
-    regexp: "-{{ item }}\\d+m "
-    replace: "-{{ item }}{{ atl_jvm_heap }} "
-  with_items:
-    - 'Xmx'
-    - 'Xms'
-
-- name: Create server config
-  template:
-    src: server.xml.j2
-    dest: "{{ atl_product_installation_versioned }}/conf/server.xml"
-
-
-
 - name: Create application directories
   file:
     path: "{{ item }}"
@@ -33,6 +12,40 @@
     - "{{ atl_product_home_shared }}"
     - "{{ atl_product_shared_plugins }}"
   changed_when: false  # For Molecule idempotence check
+
+
+- name: Create Tomcat server config
+  template:
+    src: server.xml.j2
+    dest: "{{ atl_product_installation_versioned }}/conf/server.xml"
+
+- name: Override JVM memory settings.
+  replace:
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
+    regexp: "-{{ item }}\\d+m "
+    replace: "-{{ item }}{{ atl_jvm_heap }} "
+  with_items:
+    - 'Xmx'
+    - 'Xms'
+
+- name: Set the Tomcat environment
+  lineinfile:    
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
+    insertafter: "EOF"
+    line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
+
+
+- name: Configure login properties
+  template:
+    src: seraph-config.xml.j2
+    dest: "{{ atl_product_installation_versioned }}/confluence/WEB-INF/classes/seraph-config.xml"
+
+- name: Create Confluence configuration
+  template:
+    src: confluence.cfg.xml.j2
+    dest: "{{ atl_product_home }}/confluence.cfg.xml"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
 
 
 - name: Limit permissions on the installation directory

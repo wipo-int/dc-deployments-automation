@@ -16,6 +16,7 @@ def test_setenv_file(host):
     assert f.exists
     assert f.contains('-XmsPLACEHOLDER')
     assert f.contains('-XmxPLACEHOLDER')
+    assert f.contains('-Dconfluence.cluster.node.name=1.1.1.1')
 
 def test_server_file(host):
     f = host.file('/opt/atlassian/confluence/current/conf/server.xml')
@@ -52,18 +53,9 @@ def test_home_directories(host, directory):
     assert d.exists
     assert d.user == 'confluence'
 
-
-# def test_dbconfig_file(host):
-#     f = host.file('/var/atlassian/application-data/jira/dbconfig.xml')
-#     assert f.exists
-#     assert f.user == 'jira'
-#     assert f.contains("<driver-class>org.postgresql.Driver</driver-class>")
-#     assert f.contains("<username>atljira</username>")
-#     assert f.contains("<pool-min-size>20</pool-min-size>")
-
-
-# def test_cluster_file(host):
-#     f = host.file('/var/atlassian/application-data/jira/cluster.properties')
-#     assert f.exists
-#     assert f.contains('jira.node.id = FAKEID')
-#     assert f.contains('jira.shared.home = /media/atl/jira/shared')
+def test_confluence_config_file(host):
+    f = host.file('/var/atlassian/application-data/confluence/confluence.cfg.xml')
+    assert f.exists
+    assert f.user == 'confluence'
+    assert f.contains('<property name="confluence.cluster.home">/media/atl/confluence/shared-home</property>')
+    assert f.contains('<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>')
