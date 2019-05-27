@@ -17,7 +17,11 @@ atl_shared_mountpoint: "/media/atl"
 # FIXME: Some of these should be overridden from the environment?
 atl_home_base: "/var/atlassian/application-data"
 atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
-atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/shared"
+atl_product_shared_home_map:
+  confluence: "shared-home"
+  jira: "shared"
+  stash: "shared"
+atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/{{ atl_product_shared_home_map[atl_product_family] }}"
 atl_product_shared_plugins: "{{ atl_product_home_shared }}/plugins/installed-plugins"
 
 atl_installation_base: "/opt/atlassian"
@@ -33,6 +37,7 @@ atl_installer_temp: "{{ atl_installation_base }}/tmp"
 atl_product_version: "{{ lookup('env', 'ATL_PRODUCT_VERSION') | lower }}"
 
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
+atl_aws_stack_name: "{{ lookup('env', 'ATL_AWS_STACK_NAME') }}"
 
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"
 atl_db_port: "{{ lookup('env', 'ATL_DB_PORT') or '5432' }}"
