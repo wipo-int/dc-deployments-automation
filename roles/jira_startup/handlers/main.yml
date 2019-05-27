@@ -1,7 +1,0 @@
----
-
-- name: Restart Jira
-  service: name=jira.service state=restarted
-
-- name: Enable Jira
-  command: systemctl enable jira.service

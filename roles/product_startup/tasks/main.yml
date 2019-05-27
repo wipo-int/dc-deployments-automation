@@ -1,0 +1,9 @@
+---
+
+- name: "Install systemd service file"
+  template:
+    src: "product.service.j2"
+    dest: "/etc/systemd/system/{{ atl_systemd_service_name }}"
+  notify:
+    - Enable Product
+    - Restart Product

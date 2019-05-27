@@ -1,12 +1,12 @@
 [Unit]
-Description=Atlassian Jira
+Description=Atlassian {{ atl_product_edition }}
 After=network-online.target
 
 [Service]
 User={{ atl_product_user }}
 Group={{ atl_product_user }}
 
-ExecStart={{ atl_product_installation_current }}/bin/start-jira.sh -fg
+ExecStart={{ atl_product_installation_current }}/bin/{{ atl_startup_script_map[atl_product_family] }} -fg
 Restart=on-failure
 
 [Install]

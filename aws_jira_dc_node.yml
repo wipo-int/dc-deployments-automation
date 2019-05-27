@@ -16,4 +16,4 @@
     - role: product_install
     - role: database_init
     - role: jira_config
-    - role: jira_startup
+    - role: product_startup

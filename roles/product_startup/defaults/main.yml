@@ -1,0 +1,8 @@
+---
+
+atl_startup_script_map:
+  jira: "start-jira.sh"
+  confluence: "start-confluence.sh"
+  stash: "start-bitbucket.sh"
+
+atl_systemd_service_name: "{{ atl_product_edition }}.service"
