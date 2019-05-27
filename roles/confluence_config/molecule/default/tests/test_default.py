@@ -11,6 +11,11 @@ def test_seraph_file(host):
     assert f.exists
     assert f.contains('<param-value>COOKIEAGE</param-value>')
 
+def test_conf_init_file(host):
+    f = host.file('/opt/atlassian/confluence/current/confluence/WEB-INF/classes/confluence-init.properties')
+    assert f.exists
+    assert f.contains('confluence.home = /var/atlassian/application-data/confluence')
+
 def test_setenv_file(host):
     f = host.file('/opt/atlassian/confluence/current/bin/setenv.sh')
     assert f.exists

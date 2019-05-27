@@ -40,6 +40,11 @@
     src: seraph-config.xml.j2
     dest: "{{ atl_product_installation_versioned }}/confluence/WEB-INF/classes/seraph-config.xml"
 
+- name: Configure Confluence home directory
+  template:
+    src: confluence-init.properties.j2
+    dest: "{{ atl_product_installation_versioned }}/confluence/WEB-INF/classes/confluence-init.properties"
+
 - name: Create Confluence configuration
   template:
     src: confluence.cfg.xml.j2
