@@ -3,7 +3,7 @@
 - name: Restart Product
   service:
     name: "{{ atl_systemd_service_name }}"
-    stat: restarted
+    state: restarted
 
 - name: Enable Product
   command: systemctl enable "{{ atl_systemd_service_name }}"
