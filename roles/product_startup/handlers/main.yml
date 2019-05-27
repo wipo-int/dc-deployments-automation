@@ -5,5 +5,5 @@
     name: "{{ atl_systemd_service_name }}"
     stat: restarted
 
-- name: Enable Jira
+- name: Enable Product
   command: systemctl enable "{{ atl_systemd_service_name }}"
