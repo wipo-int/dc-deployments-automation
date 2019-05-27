@@ -17,7 +17,11 @@ atl_shared_mountpoint: "/media/atl"
 # FIXME: Some of these should be overridden from the environment?
 atl_home_base: "/var/atlassian/application-data"
 atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
-atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/shared"
+atl_product_shared_home_map:
+  confluence: "shared-home"
+  jira: "shared"
+  stash: "FIXME"
+atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/{{ atl_product_shared_home_map[atl_product_family] }}"
 atl_product_shared_plugins: "{{ atl_product_home_shared }}/plugins/installed-plugins"
 
 atl_installation_base: "/opt/atlassian"

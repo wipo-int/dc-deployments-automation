@@ -1,4 +1,5 @@
 import os
+import pytest
 
 import testinfra.utils.ansible_runner
 
@@ -41,6 +42,16 @@ def test_install_permissions(host):
     assert host.file('/opt/atlassian/confluence/current/logs/').user == 'confluence'
     assert host.file('/opt/atlassian/confluence/current/work/').user == 'confluence'
     assert host.file('/opt/atlassian/confluence/current/temp/').user == 'confluence'
+
+@pytest.mark.parametrize('directory', [
+    '/var/atlassian/application-data/confluence/',
+    '/media/atl/confluence/shared-home/'
+])
+def test_home_directories(host, directory):
+    d = host.file(directory)
+    assert d.exists
+    assert d.user == 'confluence'
+
 
 # def test_dbconfig_file(host):
 #     f = host.file('/var/atlassian/application-data/jira/dbconfig.xml')
