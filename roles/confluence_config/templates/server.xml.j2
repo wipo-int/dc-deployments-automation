@@ -50,32 +50,37 @@
                compressableMimeType="text/html,text/xml,text/plain,text/css,application/json,application/javascript,application/x-javascript" />
     {% endif %}
 
-    <Engine name="Catalina"
-            defaultHost="localhost">
+
+    <Engine name="Standalone"
+            defaultHost="localhost"
+            debug="0">
       <Host name="localhost"
+            debug="0"
             appBase="webapps"
             unpackWARs="true"
-            autoDeploy="true">
-
+            autoDeploy="false"
+            startStopThreads="4">
         <Context path="{{ atl_tomcat_contextpath }}"
-                 docBase="${catalina.home}/confluence"
+                 docBase="../confluence"
+                 debug="0"
                  reloadable="false"
                  useHttpOnly="true">
-          <Resource name="UserTransaction"
-                    auth="Container"
-                    type="javax.transaction.UserTransaction"
-                    factory="org.objectweb.jotm.UserTransactionFactory"
-                    jotm.timeout="60"/>
+          <!-- Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
           <Manager pathname=""/>
-          <JarScanner scanManifest="false"/>
           <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
-                 threshold="120" />
+                 threshold="60"/>
+        </Context>
+
+        <Context path="${confluence.context.path}/synchrony-proxy"
+                 docBase="../synchrony-proxy"
+                 debug="0"
+                 reloadable="false"
+                 useHttpOnly="true">
+          <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
+                 threshold="60"/>
         </Context>
 
       </Host>
-      <Valve className="org.apache.catalina.valves.AccessLogValve"
-             pattern="%a %{jira.request.id}r %{jira.request.username}r %t &quot;%m %U%q %H&quot; %s %b %D &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot; &quot;%{jira.request.assession.id}r&quot;"/>
     </Engine>
 
-  </Service>
 </Server>
