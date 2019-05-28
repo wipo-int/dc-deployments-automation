@@ -9,7 +9,8 @@ Group={{ atl_product_user }}
 EnvironmentFile=/etc/atl
 EnvironmentFile=/etc/atl.synchrony
 
-ExecStart={{ atl_product_installation_current }}/bin/{{ atl_startup_script_map[atl_product_family] }} -fg
+ExecStart={{ atl_installation_base }}/bin/start-synchrony
+
 Restart=on-failure
 
 [Install]
