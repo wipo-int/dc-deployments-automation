@@ -1,0 +1,20 @@
+---
+
+- hosts: aws_node_local
+  become: true
+
+  vars:
+    # See group_vars/aws_node_local.yml, which pull vars from the environment.
+    atl_product_family: "confluence"
+    atl_product_user: "confluence"
+    atl_product_edition: "confluence"
+
+  roles:
+    - role: linux_common
+    - role: aws_common
+    - role: aws_efs_config
+    - role: product_common
+    - role: product_install
+    - role: confluence_common
+    # Synchrony is 12-factor, so configuration in the startup
+    - role: synchrony_startup

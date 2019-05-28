@@ -1,0 +1,16 @@
+[Unit]
+Description=Atlassian Synchrony Server
+After=network-online.target
+
+[Service]
+User={{ atl_product_user }}
+Group={{ atl_product_user }}
+
+EnvironmentFile=/etc/atl
+EnvironmentFile=/etc/atl.synchrony
+
+ExecStart={{ atl_product_installation_current }}/bin/{{ atl_startup_script_map[atl_product_family] }} -fg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-target.target

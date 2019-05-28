@@ -29,7 +29,7 @@
     - 'Xms'
 
 - name: Set the Tomcat environment
-  lineinfile:    
+  lineinfile:
     path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
     insertafter: "EOF"
     line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'

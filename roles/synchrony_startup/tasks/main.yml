@@ -1,0 +1,27 @@
+---
+
+- name: Install the startup wrapper script
+  copy:
+    src: start-synchrony
+    dest: "{{ atl_installation_base }}/bin/start-synchrony"
+    group: "{{ atl_product_user }}"
+    mode: "0750"
+  notify:
+    - Restart Synchrony
+
+- name: Install the Synchrony environment settings
+  template:
+    src: "atl.synchrony.j2"
+    dest: "/etc/atl.synchrony"
+    group: "{{ atl_product_user }}"
+    mode: "0640"    
+  notify:
+    - Restart Synchrony
+
+- name: "Install Synchrony service file"
+  template:
+    src: "synchrony.service.j2"
+    dest: "/etc/systemd/system/synchrony.service"
+  notify:
+    - Enable Synchrony
+    - Restart Synchrony
