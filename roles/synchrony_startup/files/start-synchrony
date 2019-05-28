@@ -56,7 +56,7 @@ function waitForConfluenceConfigInSharedHome() {
 waitForConfluenceConfigInSharedHome
 
 exec ${_RUNJAVA} \
-     ${SYNCHRONY_CLASSPATH} \
+     -classpath ${SYNCHRONY_CLASSPATH} \
      ${ATL_SYNCHRONY_JVM_PROPERTIES} \
      -Djwt.private.key=${SYNCHRONY_JWT_PRIVATE_KEY} \
      -Djwt.public.key=${SYNCHRONY_JWT_PUBLIC_KEY} \
