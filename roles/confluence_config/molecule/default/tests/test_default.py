@@ -64,3 +64,4 @@ def test_confluence_config_file(host):
     assert f.user == 'confluence'
     assert f.contains('<property name="confluence.cluster.home">/media/atl/confluence/shared-home</property>')
     assert f.contains('<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>')
+    assert f.contains('<property name="confluence.cluster.aws.host.header">ec2.amazonaws.com</property>')

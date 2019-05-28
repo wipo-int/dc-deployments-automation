@@ -2,6 +2,8 @@
 
 atl_jvm_heap: "2048m"
 
+atl_autologin_cookie_age: "{{ lookup('env', 'ATL_AUTOLOGIN_COOKIE_AGE') }}"
+
 atl_db_timeout: "{{ lookup('env', 'ATL_DB_TIMEOUT') or '30' }}"
 atl_db_idletestperiod: "{{ lookup('env', 'ATL_DB_IDLETESTPERIOD') or '100' }}"
 atl_db_maxstatements: "{{ lookup('env', 'ATL_DB_MAXSTATEMENTS') or '0' }}"
@@ -13,10 +15,6 @@ atl_hazelcast_network_aws_host_header: "ec2.amazonaws.com"
 atl_hazelcast_network_aws_iam_region: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_IAM_REGION') }}"
 atl_hazelcast_network_aws_iam_role: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE') }}"
 atl_hazelcast_network_aws_tag_value: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_TAG_VALUE') }}"
-
-atl_autologin_cookie_age: "{{ lookup('env', 'ATL_AUTOLOGIN_COOKIE_AGE') }}"
-atl_synchrony_service_url: "{{ lookup('env', 'ATL_SYNCHRONY_SERVICE_URL') }}"
-
 
 atl_catalina_opts: ""
 atl_catalina_opts_extra: >-
@@ -31,7 +29,7 @@ atl_catalina_opts_extra: >-
   -XX:+PrintTenuringDistribution
   -Dsynchrony.proxy.enabled=false
   -Dsynchrony.service.url={{ atl_synchrony_service_url }}
-  -Dconfluence.cluster.node.name={{ ansible_ec2_local_ipv4 | default(ansible_default_ipv4.address) }}
+  -Dconfluence.cluster.node.name={{ atl_local_ipv4 }}
   -Dconfluence.cluster.hazelcast.max.no.heartbeat.seconds=60
 
 atl_tomcat_port: "8080"

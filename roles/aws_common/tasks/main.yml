@@ -11,3 +11,4 @@
 - name: Use EC2 instance ID for cluster node ID
   set_fact:
     atl_cluster_node_id: "{{ ansible_ec2_instance_id }}"
+    atl_local_ipv4: "{{ ansible_ec2_local_ipv4 | default(ansible_default_ipv4.address) }}"
