@@ -30,6 +30,22 @@ def test_dbconfig_file(host):
     assert f.contains("<pool-test-on-borrow>true</pool-test-on-borrow>")
 
 
+def test_setenv_file(host):
+    f = host.file('/opt/atlassian/jira-software/current/bin/setenv.sh')
+    assert f.exists
+    assert f.contains('^JVM_MINIMUM_MEMORY="PLACEHOLDER"')
+    assert f.contains('^JVM_MAXIMUM_MEMORY="PLACEHOLDER"')
+    assert f.contains('^JIRA_HOME="/var/atlassian/application-data/jira"')
+    assert f.contains('^export CATALINA_OPTS="')
+
+
+def test_cluster_file(host):
+    f = host.file('/var/atlassian/application-data/jira/cluster.properties')
+    assert f.exists
+    assert f.contains('jira.node.id = FAKEID')
+    assert f.contains('jira.shared.home = /media/atl/jira/shared')
+
+
 def test_server_file(host):
     f = host.file('/opt/atlassian/jira-software/current/conf/server.xml')
     assert f.exists
