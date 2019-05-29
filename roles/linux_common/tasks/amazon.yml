@@ -5,3 +5,4 @@
     name:
       - shadow-utils
       - libxml2
+      - git-{{ git_version }}

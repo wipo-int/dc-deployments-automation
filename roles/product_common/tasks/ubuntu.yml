@@ -12,5 +12,4 @@
   package:
     name:
       - postgresql-client
-      - fonts-dejavu-core
-      - git
+      - fonts-dejavu-core  # Required by installer

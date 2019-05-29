@@ -11,4 +11,3 @@
   roles:
     - role: linux_common
     - role: aws_common
-    - role: aws_efs_config

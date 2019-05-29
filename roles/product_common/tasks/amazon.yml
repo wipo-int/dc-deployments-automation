@@ -9,8 +9,7 @@
 - name: Install other base packages on Amazon Linux
   yum:
     name:
-      - git-{{ git_version }}
-      - dejavu-fonts-common
+      - dejavu-fonts-common  # Required by the installer
 
 # Amazon Linux 2 supplies extra packages via a special command.
 - name: Enable Postgresql from 'extras'
