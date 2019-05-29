@@ -1,0 +1,5 @@
+---
+
+atl_nfs_server_device: "{{ lookup('env', 'ATL_NFS_SERVER_DEVICE') }}"
+atl_nfs_fs_type: "xfs"
+atl_nfs_fs_label: "BB-Shared"
