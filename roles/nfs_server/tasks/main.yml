@@ -1,22 +1,34 @@
 ---
 
-- name: Create the filesystem if necessary
-  filesystem:
-    dev: "{{ atl_nfs_server_device }}"
-    fstype: "{{ atl_nfs_fs_type }}"
-    opts:
-      - "-L {{ atl_nfs_fs_label }}"
+- name: Create product user for mapping
+  user:
+    name: "{{ atl_product_user }}"
+    comment: "Product runtime user"
 
 - name: Create mountpoint
   file:
     path: "{{ atl_shared_mountpoint }}"
     state: directory
-    mode: 0750
-    owner: "{{ atl_product_user }}"
-    group: "{{ atl_product_user }}"
+
+- name: Setup the disk partition
+  parted:
+    device: "{{ atl_nfs_server_device }}"
+    label: gpt
+    name: "{{ atl_nfs_fs_label }}"
+    number: 1
+    flags:
+      - "{{ atl_nfs_fs_type }}"
+
+
+- name: Create the filesystem
+  filesystem:
+    dev: "{{ atl_nfs_server_device }}"
+    fstype: "{{ atl_nfs_fs_type }}"
+    opts: "-L {{ atl_nfs_fs_label }}"
 
 - name: Setup fstab and mount the filesystem
   mount:
     path: "{{ atl_shared_mountpoint }}"
-    src: "{{ atl_nfs_server_device }}:/"
+    src: "LABEL={{ atl_nfs_fs_label }}"
+    fstype: "{{ atl_nfs_fs_type }}"
     state: mounted
