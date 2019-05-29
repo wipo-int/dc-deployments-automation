@@ -4,7 +4,7 @@
 ## Introduction
 
 This repository is a suite of Ansible roles, playbooks and support scripts to
-automate the installation and maintenance of Atlassian Data-Center products in
+automate the installation and maintenance of Atlassian Data Center products in
 cloud environments.
 
 ## Usage
