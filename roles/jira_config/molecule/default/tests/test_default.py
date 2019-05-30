@@ -12,7 +12,23 @@ def test_dbconfig_file(host):
     assert f.user == 'jira'
     assert f.contains("<driver-class>org.postgresql.Driver</driver-class>")
     assert f.contains("<username>atljira</username>")
-    assert f.contains("<pool-min-size>20</pool-min-size>")
+    assert f.contains("<password>molecule_password</password>")
+
+    assert f.contains("<pool-min-size>1111</pool-min-size>")
+    assert f.contains("<pool-max-size>1111</pool-max-size>")
+    assert f.contains("<pool-min-idle>1111</pool-min-idle>")
+    assert f.contains("<pool-max-idle>1111</pool-max-idle>")
+
+    assert f.contains("<pool-max-wait>1111</pool-max-wait>")
+    assert f.contains("<min-evictable-idle-time-millis>1111</min-evictable-idle-time-millis>")
+    assert f.contains("<pool-remove-abandoned>false</pool-remove-abandoned>")
+    assert f.contains("<time-between-eviction-runs-millis>1111</time-between-eviction-runs-millis>")
+    assert f.contains("<min-evictable-idle-time-millis>1111</min-evictable-idle-time-millis>")
+    assert f.contains("<pool-remove-abandoned>false</pool-remove-abandoned>")
+    assert f.contains("<pool-remove-abandoned-timeout>1111</pool-remove-abandoned-timeout>")
+    assert f.contains("<pool-test-while-idle>false</pool-test-while-idle>")
+    assert f.contains("<pool-test-on-borrow>true</pool-test-on-borrow>")
+
 
 def test_setenv_file(host):
     f = host.file('/opt/atlassian/jira-software/current/bin/setenv.sh')
@@ -28,6 +44,7 @@ def test_cluster_file(host):
     assert f.exists
     assert f.contains('jira.node.id = FAKEID')
     assert f.contains('jira.shared.home = /media/atl/jira/shared')
+
 
 def test_server_file(host):
     f = host.file('/opt/atlassian/jira-software/current/conf/server.xml')
@@ -46,6 +63,7 @@ def test_server_file(host):
     assert f.contains('scheme="http"')
     assert not f.contains('proxyName=')
     assert not f.contains('proxyPort=')
+
 
 def test_install_permissions(host):
     assert host.file('/opt/atlassian/jira-software/current/conf/server.xml').user == 'root'

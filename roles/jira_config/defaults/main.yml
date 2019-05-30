@@ -21,3 +21,16 @@ atl_tomcat_protocol: "HTTP/1.1"
 atl_tomcat_redirectport: ""
 atl_tomcat_scheme: "http"
 atl_tomcat_secure: "false"
+
+atl_db_poolminsize: '20'
+atl_db_poolmaxsize: '100'
+atl_db_minidle: '10'
+atl_db_maxidle: '20'
+
+atl_db_maxwaitmillis: '30000'
+atl_db_timebetweenevictionrunsmillis: '30000'
+atl_db_minevictableidletimemillis: '5000'
+atl_db_removeabandoned: 'true'
+atl_db_removeabandonedtimeout: '300'
+atl_db_testwhileidle: 'true'
+atl_db_testonborrow: 'false'

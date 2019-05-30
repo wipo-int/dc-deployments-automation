@@ -16,13 +16,13 @@
     <pool-min-idle>{{ atl_db_minidle }}</pool-min-idle>
     <pool-max-idle>{{ atl_db_maxidle }}</pool-max-idle>
 
-    <pool-max-wait>30000</pool-max-wait>
+    <pool-max-wait>{{ atl_db_maxwaitmillis }}</pool-max-wait>
     <validation-query>select 1</validation-query>
-    <time-between-eviction-runs-millis>30000</time-between-eviction-runs-millis>
-    <min-evictable-idle-time-millis>5000</min-evictable-idle-time-millis>
-    <pool-remove-abandoned>true</pool-remove-abandoned>
-    <pool-remove-abandoned-timeout>300</pool-remove-abandoned-timeout>
-    <pool-test-while-idle>true</pool-test-while-idle>
-    <pool-test-on-borrow>false</pool-test-on-borrow>
+    <time-between-eviction-runs-millis>{{ atl_db_timebetweenevictionrunsmillis }}</time-between-eviction-runs-millis>
+    <min-evictable-idle-time-millis>{{ atl_db_minevictableidletimemillis }}</min-evictable-idle-time-millis>
+    <pool-remove-abandoned>{{ atl_db_removeabandoned }}</pool-remove-abandoned>
+    <pool-remove-abandoned-timeout>{{ atl_db_removeabandonedtimeout }}</pool-remove-abandoned-timeout>
+    <pool-test-while-idle>{{ atl_db_testwhileidle }}</pool-test-while-idle>
+    <pool-test-on-borrow>{{ atl_db_testonborrow }}</pool-test-on-borrow>
   </jdbc-datasource>
 </jira-database-config>
