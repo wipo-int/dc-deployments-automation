@@ -1,9 +1,8 @@
 ---
 
-- name: Create product user for mapping
-  user:
-    name: "{{ atl_product_user }}"
-    comment: "Product runtime user"
+- name: Install distro-specific NFS packages
+  include_tasks: "{{ ansible_distribution|lower }}.yml"
+
 
 - name: Create mountpoint
   file:
@@ -32,3 +31,17 @@
     src: "LABEL={{ atl_nfs_fs_label }}"
     fstype: "{{ atl_nfs_fs_type }}"
     state: mounted
+
+
+- name: Create the NFS export file
+  template:
+    src: "media-atl.exports.j2"
+    dest: "/etc/exports.d/20-media-atl.exports"
+  notify:
+    - Restart NFS
+
+- name: Enable NFS
+  service:
+    name: nfs.service
+    enabled: true
+    state: started
