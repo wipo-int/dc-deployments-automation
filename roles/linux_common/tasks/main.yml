@@ -14,3 +14,9 @@
       - unzip
       - fontconfig
       - python-psycopg2
+
+- name: Create product user
+  user:
+    name: "{{ atl_product_user }}"
+    uid: "{{ atl_product_user_uid }}"
+    comment: "Product runtime user"

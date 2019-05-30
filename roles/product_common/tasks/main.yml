@@ -2,8 +2,3 @@
 
 - name: Perform distro-specific tasks
   include_tasks: "{{ ansible_distribution|lower }}.yml"
-
-- name: Create product user
-  user:
-    name: "{{ atl_product_user }}"
-    comment: "Product runtime user"
