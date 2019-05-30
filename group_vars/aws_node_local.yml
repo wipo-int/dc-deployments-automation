@@ -41,6 +41,8 @@ atl_product_version: "{{ lookup('env', 'ATL_PRODUCT_VERSION') | lower }}"
 
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
 atl_aws_stack_name: "{{ lookup('env', 'ATL_AWS_STACK_NAME') }}"
+atl_aws_region: "{{ lookup('env', 'ATL_AWS_REGION') }}"
+atl_aws_iam_role: "{{ lookup('env', 'ATL_AWS_IAM_ROLE') }}"
 
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"
 atl_db_port: "{{ lookup('env', 'ATL_DB_PORT') or '5432' }}"
@@ -88,3 +90,6 @@ atl_tomcat_scheme: "{{ lookup('env', 'ATL_TOMCAT_SCHEME') or 'http' }}"
 atl_tomcat_secure: "{{ lookup('env', 'ATL_TOMCAT_SECURE') or 'false' }}"
 
 atl_fileserver_host: "{{ lookup('env', 'ATL_FILESERVER_IP') }}"
+atl_elasticsearch_endpoint: "{{ lookup('env', 'ATL_ELASTICSEARCH_ENDPOINT') }}"
+
+atl_ssl_proxy: "{{ lookup('env', 'ATL_SSL_PROXY') or 'false' }}"

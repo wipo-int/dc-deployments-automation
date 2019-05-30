@@ -1,0 +1,6 @@
+---
+
+- name: Create Bitbucket config file
+  template:
+    src: bitbucket.properties.j2
+    dest: "{{ atl_product_home_shared }}/bitbucket.properties"
