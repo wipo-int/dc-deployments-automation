@@ -13,5 +13,5 @@
     path: "{{ atl_shared_mountpoint }}"
     src: "{{ atl_fileserver_host }}:{{ atl_shared_mountpoint }}"
     fstype: nfs
-    opts: "rw,nfsvers=4,_netdev"
+    opts: "rw,nfsvers=4.1,_netdev"
     state: mounted
