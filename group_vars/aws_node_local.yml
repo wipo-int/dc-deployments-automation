@@ -21,10 +21,10 @@ atl_product_user_uid: '2001'
 atl_home_base: "/var/atlassian/application-data"
 atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
 atl_product_shared_home_map:
-  confluence: "shared-home"
-  jira: "shared"
-  stash: "shared"
-atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_family }}/{{ atl_product_shared_home_map[atl_product_family] }}"
+  confluence: "confluence/shared-home"
+  jira: "jira/shared"
+  stash: "bitbucket/shared"
+atl_product_home_shared: "{{ atl_shared_mountpoint }}/{{ atl_product_shared_home_map[atl_product_family] }}"
 atl_product_shared_plugins: "{{ atl_product_home_shared }}/plugins/installed-plugins"
 
 atl_installation_base: "/opt/atlassian"
