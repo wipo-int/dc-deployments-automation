@@ -1,6 +1,6 @@
 ---
 
-- name: Restart Product
+- name: Restart NFS
   service:
     name: "{{ atl_systemd_service_name }}"
     state: restarted
