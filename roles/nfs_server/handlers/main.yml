@@ -2,5 +2,5 @@
 
 - name: Restart NFS
   service:
-    name: "{{ atl_systemd_service_name }}"
+    name: "nfs.service"
     state: restarted
