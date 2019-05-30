@@ -4,6 +4,8 @@
   template:
     src: bitbucket.properties.j2
     dest: "{{ atl_product_home_shared }}/bitbucket.properties"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
 
 - name: Remove write permissions from installation directory
   file:
@@ -12,3 +14,14 @@
     group: "root"
     mode: "u=rwX,g=rX,o=rX"
     recurse: true
+
+- name: "Install Bitbucket service file"
+  template:
+    src: "bitbucket.service.j2"
+    dest: "/etc/systemd/system/bitbucket.service"
+
+- name: Enable Bitbucket
+  service:
+    name: bitbucket.service
+    enabled: true
+    state: started

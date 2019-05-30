@@ -1,0 +1,14 @@
+[Unit]
+Description=Atlassian Bitbucket
+After=network-online.target
+
+[Service]
+User={{ atl_product_user }}
+Group={{ atl_product_user }}
+
+Environment=BITBUCKET_HOME={{ atl_product_home_shared }}
+ExecStart={{ atl_product_installation_current }}/bin/start-bitbucket.sh -fg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-target.target
