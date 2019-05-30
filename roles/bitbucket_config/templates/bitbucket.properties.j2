@@ -16,12 +16,13 @@ plugin.search.elasticsearch.aws.region={{ atl_aws_region }}
 plugin.search.elasticsearch.baseurl={{ atl_elasticsearch_endpoint }}
 
 server.proxy-name={{ atl_proxy_name }}
-server.proxy-port={{ atl_proxy_port }}
 server.secure={{ atl_ssl_proxy }}
 server.require-ssl={{ atl_ssl_proxy }}
 {% if atl_ssl_proxy == 'true' %}
 server.scheme=https
+server.proxy-port=80
 server.additional-connector.1.port=7991
 {% else %}
 server.scheme=http
+server.proxy-port=443
 {% endif %}
