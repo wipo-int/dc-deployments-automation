@@ -11,6 +11,6 @@
   roles:
     - role: linux_common
     - role: aws_common
-    - role: aws_efs_config
+    - role: nfs_mount
     - role: product_common
     - role: product_install

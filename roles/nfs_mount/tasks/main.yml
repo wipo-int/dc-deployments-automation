@@ -1,0 +1,17 @@
+---
+
+- name: Create mountpoint
+  file:
+    state: directory
+    path: "{{ atl_shared_mountpoint }}"
+    mode: 0755
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+
+- name: Enable mountpoint in fstab
+  mount:
+    path: "{{ atl_shared_mountpoint }}"
+    src: "{{ atl_fileserver_host }}:{{ atl_shared_mountpoint }}"
+    fstype: nfs
+    opts: "rw,nfsvers=4,_netdev"
+    state: mounted
