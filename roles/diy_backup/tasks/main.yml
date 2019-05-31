@@ -1,0 +1,7 @@
+---
+
+
+- name: Fetch the DIY backups repository
+  git:
+    repo: "https://bitbucket.org/atlassianlabs/atlassian-bitbucket-diy-backup.git"
+    dest: "{{ atl_diy_backup_dir }}"

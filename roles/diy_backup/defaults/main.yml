@@ -1,0 +1,3 @@
+---
+
+atl_diy_backup_dir: "{{ atl_installation_base }}/bitbucket-diy-backup"
