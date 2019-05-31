@@ -8,6 +8,14 @@
     atl_product_edition: "bitbucket"
     atl_product_user: "bitbucket"
 
+    atl_startup_systemd_params:
+      - "UMask=0027"
+      - "LimitNOFILE=4096"
+      - "Environment=BITBUCKET_HOME={{ atl_product_home_shared }}"
+    atl_startup_exec_options:
+      - "-fg"
+      - "--no-search"
+
   roles:
     - role: linux_common
     - role: aws_common
@@ -15,3 +23,4 @@
     - role: product_common
     - role: product_install
     - role: bitbucket_config
+    - role: product_startup

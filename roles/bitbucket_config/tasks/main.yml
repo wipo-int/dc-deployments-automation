@@ -14,14 +14,3 @@
     group: "root"
     mode: "u=rwX,g=rX,o=rX"
     recurse: true
-
-- name: "Install Bitbucket service file"
-  template:
-    src: "bitbucket.service.j2"
-    dest: "/etc/systemd/system/bitbucket.service"
-
-- name: Enable Bitbucket
-  service:
-    name: bitbucket.service
-    enabled: true
-    state: started
