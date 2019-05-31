@@ -6,7 +6,12 @@ After=network-online.target
 User={{ atl_product_user }}
 Group={{ atl_product_user }}
 
-ExecStart={{ atl_product_installation_current }}/bin/{{ atl_startup_script_map[atl_product_family] }} -fg
+{% for p in atl_startup_systemd_params -%}
+  {{ p }}
+{% endfor %}
+
+ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %}
+
 Restart=on-failure
 
 [Install]
