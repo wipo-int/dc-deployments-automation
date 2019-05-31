@@ -9,6 +9,14 @@
     atl_product_user: "confluence"
     atl_product_edition: "confluence"
 
+    atl_startup_systemd_params:
+      - "EnvironmentFile=/etc/atl"
+      - "EnvironmentFile=/etc/atl.synchrony"
+      - "WorkingDirectory={{ atl_product_installation_current }}/logs/"
+    atl_startup_exec_options: []
+    atl_startup_exec_path: "{{ atl_installation_base }}/bin/start-synchrony"
+    atl_systemd_service_name: "synchrony.service"
+
   roles:
     - role: linux_common
     - role: aws_common
@@ -16,5 +24,5 @@
     - role: product_common
     - role: product_install
     - role: confluence_common
-    # Synchrony is 12-factor, so configuration in the startup
-    - role: synchrony_startup
+    - role: synchrony_config
+    - role: product_startup

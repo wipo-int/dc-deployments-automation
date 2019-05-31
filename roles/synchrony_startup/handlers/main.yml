@@ -1,9 +1,0 @@
----
-
-- name: Restart Synchrony
-  service:
-    name: synchrony.service
-    state: restarted
-
-- name: Enable Synchrony
-  command: systemctl enable synchrony.service
