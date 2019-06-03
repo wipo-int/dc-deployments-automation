@@ -9,7 +9,7 @@
     atl_product_edition: "confluence"
 
     atl_jdbc_encoding: 'UTF-8'
-    atl_jdbc_collation: 'UTF-8'
+    atl_jdbc_collation: 'en_US.UTF-8'
 
   roles:
     - role: linux_common
