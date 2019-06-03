@@ -1,0 +1,13 @@
+---
+
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+    - step:
+        services:
+          - docker
+        script:
+          - apt-get update && apt-get install -y virtualenv python-dev
+          - ./bin/install-ansible
+          - ./bin/run-all-tests
