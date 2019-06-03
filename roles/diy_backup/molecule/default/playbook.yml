@@ -15,6 +15,6 @@
     - name: Install git
       package:
         name: git
-    
+
   roles:
     - role: diy_backup

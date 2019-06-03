@@ -7,6 +7,7 @@
   when: atl_startup_restart
 
 - name: Enable Product
-  command: systemctl enable "{{ atl_systemd_service_name }}"
+  service:
+    name: "{{ atl_systemd_service_name }}"
+    enabled: true
   when: atl_startup_enable
-
