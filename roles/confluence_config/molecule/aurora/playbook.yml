@@ -6,8 +6,8 @@
     atl_product_edition: "confluence"
     atl_product_user: "confluence"
     atl_product_version: "latest"
-    atl_db_engine: "postgres"
-    atl_db_host: "postgres-db.ap-southeast-2.rds.amazonaws.com"
+    atl_db_engine: "aurora_postgres"
+    atl_db_host: "aurora-postgres-db.ap-southeast-2.rds.amazonaws.com"
     atl_jdbc_db_name: "confluence"
     atl_jdbc_user: 'confluence'
     atl_jvm_heap: 'PLACEHOLDER'
