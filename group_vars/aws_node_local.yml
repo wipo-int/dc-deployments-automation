@@ -44,6 +44,7 @@ atl_aws_stack_name: "{{ lookup('env', 'ATL_AWS_STACK_NAME') }}"
 atl_aws_region: "{{ lookup('env', 'ATL_AWS_REGION') }}"
 atl_aws_iam_role: "{{ lookup('env', 'ATL_AWS_IAM_ROLE') }}"
 
+atl_db_engine: "{{ lookup('env', 'ATL_DB_ENGINE') }}"
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"
 atl_db_port: "{{ lookup('env', 'ATL_DB_PORT') or '5432' }}"
 atl_db_root_user: "{{ lookup('env', 'ATL_DB_ROOT_USER') or 'postgres' }}"
@@ -70,7 +71,9 @@ atl_jdbc_encoding: "{{ lookup('env', 'ATL_JDBC_ENCODING') or 'UTF-8' }}"
 atl_jdbc_collation: "{{ lookup('env', 'ATL_JDBC_COLLATION') or 'en_US.UTF-8' }}"
 atl_jdbc_ctype: "{{ lookup('env', 'ATL_JDBC_CTYPE') or 'en_US.UTF-8' }}"
 atl_jdbc_template: "{{ lookup('env', 'ATL_JDBC_TEMPLATE') or 'template1' }}"
-atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}"
+atl_jdbc_query_params_for_engine:
+  aurora_postgres: "?targetServerType=master"
+atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}{{ atl_jdbc_query_params_for_engine[atl_db_engine]| default('') }}"
 
 atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP') or '2048m' }}"
 atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS') or '' }}"
