@@ -6,3 +6,9 @@
     repo: "{{ atl_diy_backup_repo }}"
     dest: "{{ atl_diy_backup_dir }}"
     version: "master"
+
+- name: Configure DIY backup for BB on AWS
+  template:
+    src: "bitbucket.diy-backup.vars.sh.j2"
+    dest: "{{ atl_diy_backup_dir }}/bitbucket.diy-backup.vars.sh"
+    mode: 0640

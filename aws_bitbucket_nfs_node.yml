@@ -12,3 +12,4 @@
     - role: linux_common
     - role: aws_common
     - role: nfs_server
+    - role: diy_backup

@@ -10,3 +10,7 @@ def test_git_clone(host):
     f = host.file('/opt/atlassian/bitbucket-diy-backup')
     assert f.exists
     assert f.is_directory
+
+def test_diy_config(host):
+    f = host.file('/opt/atlassian/bitbucket-diy-backup/bitbucket.diy-backup.vars.sh')
+    assert f.exists
