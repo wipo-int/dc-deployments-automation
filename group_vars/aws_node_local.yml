@@ -96,6 +96,8 @@ atl_tomcat_secure: "{{ lookup('env', 'ATL_TOMCAT_SECURE') or 'false' }}"
 atl_fileserver_host: "{{ lookup('env', 'ATL_FILESERVER_IP') }}"
 atl_elasticsearch_host: "{{ lookup('env', 'ATL_ELASTICSEARCH_HOST') }}"
 atl_elasticsearch_endpoint: "http://{{ lookup('env', 'ATL_ELASTICSEARCH_HOST') }}"
+atl_elasticsearch_s3_bucket: "{{ lookup('env', 'ATL_ELASTICSEARCH_S3_BUCKET') }}"
+
 atl_nfs_server_device: "{{ lookup('env', 'ATL_NFS_SERVER_DEVICE') }}"
 atl_nfs_disk_volume_type: "{{ lookup('env', 'ATL_NFS_DISK_VOLUME_TYPE') }}"
 atl_nfs_disk_volume_iops: "{{ lookup('env', 'ATL_NFS_DISK_VOLUME_IOPS') }}"
