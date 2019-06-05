@@ -1,3 +1,5 @@
+# Created by Ansible
+
 INSTANCE_NAME={{ atl_aws_stack_name }}
 
 AWS_INFO=$(curl -Lsf http://169.254.169.254/latest/dynamic/instance-identity/document)
@@ -9,7 +11,7 @@ AWS_EC2_INSTANCE_ID=$(echo "${AWS_INFO}" | jq -r .instanceId)
 BITBUCKET_VERBOSE_BACKUP=true
 KEEP_BACKUPS=5
 
-{% if atl_ssl_proxy is defined and atl_ssl_proxy %}
+{% if atl_ssl_proxy is defined and atl_ssl_proxy == 'true' %}
 BITBUCKET_URL=https://{{ atl_proxy_name }}
 {% else %}
 BITBUCKET_URL=http://{{ atl_proxy_name }}
