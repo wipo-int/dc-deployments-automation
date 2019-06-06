@@ -8,6 +8,10 @@
     atl_product_edition: "bitbucket"
     atl_product_user: "bitbucket"
 
+    atl_nfs_mountpoint: "{{ atl_shared_mountpoint }}/bitbucket/shared"
+    atl_nfs_target: "{{ atl_shared_mountpoint }}/bitbucket/shared"
+
+
     atl_startup_systemd_params:
       - "UMask=0027"
       - "LimitNOFILE=4096"

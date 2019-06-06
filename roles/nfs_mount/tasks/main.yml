@@ -10,8 +10,8 @@
 
 - name: Enable mountpoint in fstab
   mount:
-    path: "{{ atl_shared_mountpoint }}"
-    src: "{{ atl_fileserver_host }}:{{ atl_shared_mountpoint }}"
+    src: "{{ atl_fileserver_host }}:{{ atl_nfs_target }}"
+    path: "{{ atl_nfs_mountpoint }}"
     fstype: nfs
     opts: "rw,nfsvers=4.1,lookupcache=pos,noatime,intr,rsize=32768,wsize=32768,_netdev"
     state: mounted
