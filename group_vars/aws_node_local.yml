@@ -43,6 +43,7 @@ atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
 atl_aws_stack_name: "{{ lookup('env', 'ATL_AWS_STACK_NAME') }}"
 atl_aws_region: "{{ lookup('env', 'ATL_AWS_REGION') }}"
 atl_aws_iam_role: "{{ lookup('env', 'ATL_AWS_IAM_ROLE') }}"
+atl_aws_iam_role_arn: "{{ lookup('env', 'ATL_AWS_IAM_ROLE_ARN') }}"
 
 atl_db_engine: "{{ lookup('env', 'ATL_DB_ENGINE') }}"
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"
