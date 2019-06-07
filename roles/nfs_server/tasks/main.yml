@@ -33,6 +33,15 @@
     state: mounted
 
 
+- name: Create the shared home as BB mounts this directly
+  file:
+    path: "{{ atl_shared_mountpoint }}/bitbucket/shared"
+    state: directory
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0750
+
+
 - name: Create the NFS export file
   template:
     src: "media-atl.exports.j2"
