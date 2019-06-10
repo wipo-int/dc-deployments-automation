@@ -22,6 +22,6 @@
       file:
         path: '/etc/systemd/system/'
         state: directory
-    
+
   roles:
     - role: product_startup
