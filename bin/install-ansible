@@ -7,4 +7,6 @@ set -e
 
 virtualenv --system-site-packages .venv
 source .venv/bin/activate
+pip install -U setuptools
 pip install ansible==2.7.10
+pip list
