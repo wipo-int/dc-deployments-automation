@@ -11,4 +11,4 @@ def test_service_file(host):
     assert f.contains("^ExecStart=/opt/atlassian/bitbucket/current/bin/start-bitbucket.sh -fg --no-search$")
     assert f.contains("^UMask=0027$")
     assert f.contains("^LimitNOFILE=4096$")
-    assert f.contains("^Environment=BITBUCKET_HOME=/media/atl/bitbucket/shared$")
+    assert f.contains("^Environment=BITBUCKET_HOME=/media/atl/bitbucket$")
