@@ -8,7 +8,7 @@ if [[ -f .venv/bin/ansible ]]; then
     pip install molecule docker six
 fi
 
-for role in `find roles/ -name molecule`; do
+for role in `find roles/ -name molecule | sort`; do
     pushd `dirname $role`
     molecule test --all
     popd
