@@ -12,7 +12,7 @@
     atl_startup_systemd_params:
       - "UMask=0027"
       - "LimitNOFILE=4096"
-      - "Environment=BITBUCKET_HOME={{ atl_product_home_shared }}"
+      - "Environment=BITBUCKET_HOME={{ atl_product_home }}"
 
     atl_startup_exec_options:
       - "-fg"

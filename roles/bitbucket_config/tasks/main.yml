@@ -2,7 +2,7 @@
 
 - name: Create Bitbucket shared dir if necessary
   file:
-    path: "{{ atl_product_home_shared }}/shared/"
+    path: "{{ atl_product_home_shared }}"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
@@ -11,7 +11,7 @@
 - name: Create Bitbucket config file
   template:
     src: bitbucket.properties.j2
-    dest: "{{ atl_product_home_shared }}/shared/bitbucket.properties"
+    dest: "{{ atl_product_home_shared }}/bitbucket.properties"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
 

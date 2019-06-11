@@ -9,10 +9,9 @@
     atl_product_user: "bitbucket"
 
     atl_product_home: "{{ atl_shared_mountpoint }}/{{ atl_product_edition }}"
-    atl_product_home_shared: "{{ atl_product_home }}/shared"
+
     atl_nfs_mountpoint: "{{ atl_shared_mountpoint }}/bitbucket/shared"
     atl_nfs_target: "{{ atl_shared_mountpoint }}/bitbucket/shared"
-
 
     atl_startup_systemd_params:
       - "UMask=0027"
