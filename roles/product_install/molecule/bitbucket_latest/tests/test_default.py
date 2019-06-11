@@ -8,7 +8,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 def test_version_downloaded(host):
-    verfile = host.file('/media/atl/stash/shared/bitbucket.version')
+    verfile = host.file('/media/atl/bitbucket/shared/bitbucket.version')
     assert verfile.exists
 
 def test_symlink_created(host):
@@ -21,7 +21,7 @@ def test_unpacked(host):
     assert verfile.exists
 
 def test_version_file_is_latest(host):
-    verfile = host.file('/media/atl/stash/shared/bitbucket.version')
+    verfile = host.file('/media/atl/bitbucket/shared/bitbucket.version')
     assert verfile.exists
 
     upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
