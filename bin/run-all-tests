@@ -5,10 +5,10 @@ set -e
 # Use Ansible from virtualenv if provided
 if [[ -f .venv/bin/ansible ]]; then
     source .venv/bin/activate
-    pip install molecule docker
+    pip install molecule docker six
 fi
 
-for role in `find roles/ -name molecule`; do
+for role in `find roles/ -name molecule | sort`; do
     pushd `dirname $role`
     molecule test --all
     popd

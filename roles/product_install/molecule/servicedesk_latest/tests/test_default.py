@@ -1,6 +1,6 @@
 import os
 import json
-import urllib.request
+from six.moves import urllib
 
 import testinfra.utils.ansible_runner
 
