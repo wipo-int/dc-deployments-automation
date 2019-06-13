@@ -10,7 +10,7 @@ set -e
 # Luckily AmazonLinux2 and Ubuntu use the same package name for
 # pip. This may need some logic if other distros are added. Note:
 # Parsing /etc/os-release is probably a good starting point for that.
-./bin/pacapt install python-pip
+./bin/pacapt install --noconfirm python-pip
 
 # See Pipfile and Pipfile.lock.
 pip install pipenv
