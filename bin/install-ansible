@@ -12,4 +12,4 @@ set -e
 
 pip install pipenv
 
-pipenv install
+pipenv sync

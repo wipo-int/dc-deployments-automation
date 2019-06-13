@@ -3,7 +3,7 @@
 set -e
 
 # Use Ansible from virtualenv if provided
-pipenv install molecule docker six
+pipenv sync --dev
 
 for role in `find roles/ -name molecule | sort`; do
     pushd `dirname $role`
