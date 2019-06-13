@@ -2,11 +2,12 @@
 
 set -e
 
-# Use Ansible from virtualenv if provided
+# Install dev packages from Pipfile.loc if necessary.
 pipenv sync --dev
 
 for role in `find roles/ -name molecule | sort`; do
     pushd `dirname $role`
-    pipenv run molecule test --all
+    pipenv run \
+           molecule test --all
     popd
 done
