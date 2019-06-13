@@ -10,9 +10,3 @@
   yum:
     name:
       - dejavu-fonts-common  # Required by the installer
-
-# Amazon Linux 2 supplies extra packages via a special command.
-- name: Enable Postgresql from 'extras'
-  command: amazon-linux-extras install -y "postgresql{{ postgres_version }}"
-  args:
-    creates: /usr/bin/psql
