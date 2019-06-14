@@ -2,7 +2,7 @@
 
 set -e
 
-# Install dev packages from Pipfile.loc if necessary.
+# Install dev packages from Pipfile.lock if necessary.
 pipenv sync --dev
 
 for role in `find roles/ -name molecule | sort`; do
