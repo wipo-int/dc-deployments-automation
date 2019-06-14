@@ -3,10 +3,15 @@
 set -e
 
 # The Amazon Linux 2 Ansible package is 2.4, which has issue
-# interacting with RDS, so use the PIP version.
+# interacting with RDS, so use pipenv to install a known-good version.
+# Another alternative here would be nix, however that has issues
+# installing as root, and can be slow in practice.
 
-virtualenv --system-site-packages .venv
-source .venv/bin/activate
-pip install -U setuptools
-pip install ansible==2.7.10
-pip list --format columns
+# Luckily AmazonLinux2 and Ubuntu use the same package name for
+# pip. This may need some logic if other distros are added. Note:
+# Parsing /etc/os-release is probably a good starting point for that.
+./bin/pacapt install --noconfirm python-pip
+
+# See Pipfile and Pipfile.lock.
+pip install pipenv
+pipenv sync

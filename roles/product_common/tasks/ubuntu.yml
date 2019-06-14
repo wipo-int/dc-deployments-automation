@@ -11,5 +11,4 @@
 - name: Install other base packages on Ubuntu
   package:
     name:
-      - postgresql-client
       - fonts-dejavu-core  # Required by installer

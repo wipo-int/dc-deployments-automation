@@ -2,14 +2,12 @@
 
 set -e
 
-# Use Ansible from virtualenv if provided
-if [[ -f .venv/bin/ansible ]]; then
-    source .venv/bin/activate
-    pip install molecule docker six
-fi
+# Install dev packages from Pipfile.lock if necessary.
+pipenv sync --dev
 
 for role in `find roles/ -name molecule | sort`; do
     pushd `dirname $role`
-    molecule test --all
+    pipenv run \
+           molecule test --all
     popd
 done

@@ -15,25 +15,40 @@ All other requirements will be installed under Virtualenv.
 
     git clone git@bitbucket.org:atlassian/dc-deployments-automation.git
 
-### Step 1.2: Install Ansible
+### Step 1.2: Install development environment dependencies
 
-To ensure compatibility we specify a specific Ansible version; currently 2.7.10
-(some older versions had issues with RDS). We do this by creating a virtualenv
-and installing a pinned version:
+To ensure compatibility we specify a specific Ansible version; currently 2.7.11
+(some older versions had issues with RDS). We do this with
+[Pipenv](https://docs.pipenv.org/) to lock the dependency tree. There are 2 main
+ways to do this; either directly if packaged, or via pip...
 
-    virtualenv -p python3 .venv
-    source .venv/bin/activate
-    pip install ansible==2.7.10
+    # Ubuntu 19.04+, Debian 10+
+    sudo apt-get install pipenv python-dev
+    
+    # Older versions & RHEL/Amazon Linux, etc.
+    sudo apt-get install -y python-pip python-dev
+    # Or...
+    sudo yum install -y python-pip python-dev
 
-### Step 1.3: Install Molecule for testing
+    pip install pipenv
+
+    # Mac via Homebrew
+    brew install pipenv
+
+### Step 1.3: Enter the development environment
+
+pipenv has 2 methods of entering the environment; `pipenv shell` and `pipenv
+run`. As we need additional testing dependencies we all need to specify the
+development environment:
+
+    pipenv sync --dev
+    pipenv shell --dev
+
+### Step 1.4: Run some tests against a role
 
 Molecule is a testing framework for Ansible. We use this to test the
 functionality of individual and groups of roles, and to ensure cross-platform
 compatibility (currently Amazon Linux 2 and Ubuntu LTS).
-
-    pip install molecule docker
-
-### Step 1.4: Run some tests against a role
 
 We’re going to check that the role that downloads the products works for both
 Jira Core and Confluence, on boths supported Linux distributions. So run the
@@ -58,14 +73,11 @@ that uses the baseline Amazon Linux 2 AMI and Ansible. The branch containing the
 changes is in the Atlassian Github fork of the upstream repository, in the
 branch DCD-221-jira-dc-linux2-ansible-rework.
 
-### Step 2.2: Install taskcat
+### Step 2.2: Setup taskcat
 
 Taskcat is a tool for testing Cloudformation templates. It is generally the
-simplest method of getting a template up and running from local changes.
-
-Assuming you’re still in the virtualenv, install it with:
-
-    pip install taskcat
+simplest method of getting a template up and running from local changes. It is
+automatically installed as part of the pipenv environment.
 
 You may also need to create the file ~/.aws/taskcat_global_override.json and set
 the KeyPair parameter to access the deployed EC2 instances. See the taskcat docs
