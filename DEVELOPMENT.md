@@ -26,7 +26,10 @@ ways to do this; either directly if packaged, or via pip...
     sudo apt-get install pipenv python-dev
     
     # Older versions & RHEL/Amazon Linux, etc.
-    sudo apt-get install python-pip python-dev
+    sudo apt-get install -y python-pip python-dev
+    # Or...
+    sudo yum install -y python-pip python-dev
+
     pip install pipenv
 
     # Mac via Homebrew
