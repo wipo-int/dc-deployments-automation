@@ -8,11 +8,16 @@
 
     atl_product_home: "{{ atl_shared_mountpoint }}/{{ atl_product_edition }}"
     atl_product_home_shared: "{{ atl_product_home }}/shared"
+    atl_jvm_heap: "dummy_heap"
+    atl_jvm_opts: "dummy_opts"
 
     atl_startup_systemd_params:
       - "UMask=0027"
       - "LimitNOFILE=4096"
       - "Environment=BITBUCKET_HOME={{ atl_product_home }}"
+      - "Environment=JVM_MAXIMUM_MEMORY={{ atl_jvm_heap }}"
+      - "Environment=JVM_MINIMUM_MEMORY={{ atl_jvm_heap }}"
+      - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
 
     atl_startup_exec_options:
       - "-fg"
