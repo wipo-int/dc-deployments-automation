@@ -13,8 +13,7 @@ def test_user_created(host):
 
 
 @pytest.mark.parametrize('exe', [
-    '/usr/bin/git',
-    '/usr/bin/psql'
+    '/usr/bin/git'
 ])
 def test_package_exes(host, exe):
     assert host.file(exe).exists
