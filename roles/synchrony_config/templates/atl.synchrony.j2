@@ -9,11 +9,12 @@ ATL_SYNCHRONY_JAR_PATH="{{ atl_product_installation_current }}/confluence/WEB-IN
 AWS_EC2_PRIVATE_IP="{{ atl_local_ipv4 }}"
 _RUNJAVA="{{ atl_product_installation_current }}/jre/bin/java"
 
+SYNCHRONY_DATABASE_USERNAME="{{ atl_jdbc_user }}"
+SYNCHRONY_DATABASE_PASSWORD="{{ atl_jdbc_password }}"
+
 ATL_SYNCHRONY_JVM_PROPERTIES="{{ atl_synchrony_stack_space }} {{ atl_synchrony_memory }} \
  -Dsynchrony.cluster.impl=hazelcast-btf \
  -Dsynchrony.database.url={{ atl_jdbc_url }} \
- -Dsynchrony.database.username={{ atl_jdbc_user }} \
- -Dsynchrony.database.password={{ atl_jdbc_password }} \
  -Dsynchrony.bind={{ atl_local_ipv4 }} \
  -Dsynchrony.cluster.bind={{ atl_local_ipv4 }} \
  -Dcluster.interfaces={{ atl_local_ipv4 }} \
