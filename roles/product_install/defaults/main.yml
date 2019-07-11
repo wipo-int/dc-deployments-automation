@@ -10,7 +10,7 @@ atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition
 
 atl_release_base_url: "https://product-downloads.atlassian.com/software"
 atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downloads"
-atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}-x64.bin "
+atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}-x64.bin"
 atl_crowd_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}.tar.gz"
 atl_crowd_latest_url: "https://www.atlassian.com/software/crowd/downloads/binary/crowd-standalone-distribution-{{atl_latest_version}}.tar.gz"
 

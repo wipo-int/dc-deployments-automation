@@ -1,3 +1,5 @@
+---
+
 - name: Check for existing version cache file
   stat:
     path: "{{ atl_product_version_cache }}"
@@ -95,13 +97,7 @@
   set_fact:
     atl_product_version: "{{ atl_download_version }}"
 
-#- set_fact:
-#    atl_product_version: '3.4.4'
-
 ######################################################################
-
-#- debug:
-#    msg: "{{ atl_product_edition }}_extra_tasks.yml"
 
 - name: Perform any additional per-edition version setup
   include_tasks: "{{ atl_product_edition }}_extra_tasks.yml"
@@ -122,9 +118,6 @@
     - "{{ atl_product_installation_versioned }}"
     - "{{ atl_product_version_cache_dir }}"
   changed_when: false  # For Molecule idempotence check
-
-- debug:
-    msg: "atl_installer_temp - {{atl_installer_temp}} atl_product_home - {{atl_product_home}} atl_product_installation_versioned- {{atl_product_installation_versioned}} atl_product_version_cache_dir- {{atl_product_version_cache_dir}}"
 
 # At this point atl_product_version should be set, cache if necessary.
 - name: Write override cached version when specified
