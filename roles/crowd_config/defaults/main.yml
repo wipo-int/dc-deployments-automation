@@ -1,6 +1,6 @@
 ---
 
-atl_jvm_heap: "2048m"
+atl_jvm_heap: "512m"
 
 atl_catalina_opts: ""
 atl_catalina_opts_extra: >-
