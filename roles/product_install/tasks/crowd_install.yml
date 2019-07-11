@@ -19,7 +19,7 @@
 
 
 - name: locate installer
-  find: paths="{{ atl_crowd_download }}" patterns="*crowd*.tar.gz"
+  find: paths="{{ atl_crowd_download }}" patterns="*{{atl_product_edition}}*.tar.gz"
   register: find_result
 
 - debug: msg = " {{find_result }}"
@@ -29,11 +29,8 @@
   unarchive:
     src: "{{ item.path }}"
     dest: "{{atl_product_installation_versioned}}"
-#    remote_src: yes
   with_items: "{{ find_result.files }}"
 
-#- name: unpack crowd
-#  shell: tar -xvzf {{atl_crowd_download}}/*crowd*{{atl_product_version}}.tar.gz .
 
 - name: Symlink the installed version to current
   file:
