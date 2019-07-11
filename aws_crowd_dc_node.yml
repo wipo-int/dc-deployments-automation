@@ -7,6 +7,7 @@
     atl_product_family: "crowd"
     atl_product_user: "crowd"
     atl_product_edition: "crowd"
+    atl_use_system_jdk: true
 
   roles:
     - role: linux_common
