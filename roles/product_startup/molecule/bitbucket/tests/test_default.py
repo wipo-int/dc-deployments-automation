@@ -12,3 +12,6 @@ def test_service_file(host):
     assert f.contains("^UMask=0027$")
     assert f.contains("^LimitNOFILE=4096$")
     assert f.contains("^Environment=BITBUCKET_HOME=/media/atl/bitbucket$")
+    assert f.contains("^Environment=JVM_MINIMUM_MEMORY=dummy_heap$")
+    assert f.contains("^Environment=JVM_MAXIMUM_MEMORY=dummy_heap$")
+    assert f.contains("^Environment=JVM_SUPPORT_RECOMMENDED_ARGS=dummy_opts$")

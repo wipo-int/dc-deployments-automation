@@ -78,6 +78,7 @@ atl_jdbc_query_params_for_engine:
 atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}{{ atl_jdbc_query_params_for_engine[atl_db_engine]| default('') }}"
 
 atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP') or '2048m' }}"
+atl_jvm_opts: "{{ lookup('env', 'ATL_JVM_OPTS') or '' }}"
 atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS') or '' }}"
 atl_proxy_name:  "{{ lookup('env', 'ATL_PROXY_NAME') | lower }}"
 atl_proxy_port:  "{{ lookup('env', 'ATL_TOMCAT_PROXYPORT') }}"

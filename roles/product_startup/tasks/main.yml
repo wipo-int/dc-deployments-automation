@@ -4,6 +4,7 @@
   template:
     src: "product.service.j2"
     dest: "/etc/systemd/system/{{ atl_systemd_service_name }}"
+<<<<<<< HEAD
   when: atl_product_edition != "crowd"
   notify:
     - Enable Product
@@ -14,6 +15,11 @@
     src: "crowd.service.j2"
     dest: "/etc/systemd/system/{{ atl_systemd_service_name }}"
   when: atl_product_edition == "crowd"
+=======
+    owner: root
+    group: root
+    mode: 0640
+>>>>>>> origin/master
   notify:
     - Enable Product
     - Restart Product

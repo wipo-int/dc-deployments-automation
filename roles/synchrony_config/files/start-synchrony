@@ -55,9 +55,11 @@ function waitForConfluenceConfigInSharedHome() {
 
 waitForConfluenceConfigInSharedHome
 
+# Additional settings are in /etc/atl.synchrony
+export SYNCHRONY_JWT_PRIVATE_KEY
+export SYNCHRONY_JWT_PUBLIC_KEY
+
 exec ${_RUNJAVA} \
      -classpath ${SYNCHRONY_CLASSPATH} \
      ${ATL_SYNCHRONY_JVM_PROPERTIES} \
-     -Djwt.private.key=${SYNCHRONY_JWT_PRIVATE_KEY} \
-     -Djwt.public.key=${SYNCHRONY_JWT_PUBLIC_KEY} \
      synchrony.core sql
