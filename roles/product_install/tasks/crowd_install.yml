@@ -1,0 +1,44 @@
+- debug:
+    msg: "atl_latest_version - {{atl_latest_version}}"
+
+- name: Fetch crowd installer
+  get_url:
+    url: "{{atl_crowd_download_url}}"
+    dest: "{{atl_crowd_download}}"
+    mode: 0755
+    force: false
+  when: not atl_latest_version
+
+- name: Fetch latest crowd installer
+  get_url:
+    url: "{{ atl_crowd_latest_url }}"
+    dest: "{{atl_crowd_download}}"
+    mode: 0755
+    force: false
+  when: atl_latest_version != ""
+
+
+- name: locate installer
+  find: paths="{{ atl_crowd_download }}" patterns="*crowd*.tar.gz"
+  register: find_result
+
+- debug: msg = " {{find_result }}"
+
+- name: unarchive
+  become: true
+  unarchive:
+    src: "{{ item.path }}"
+    dest: "{{atl_product_installation_versioned}}"
+#    remote_src: yes
+  with_items: "{{ find_result.files }}"
+
+#- name: unpack crowd
+#  shell: tar -xvzf {{atl_crowd_download}}/*crowd*{{atl_product_version}}.tar.gz .
+
+- name: Symlink the installed version to current
+  file:
+    src: "{{ atl_product_installation_versioned }}/atlassian-crowd-{{atl_product_version}}"
+    dest: "{{ atl_product_installation_current }}"
+    state: link
+    force: true
+
