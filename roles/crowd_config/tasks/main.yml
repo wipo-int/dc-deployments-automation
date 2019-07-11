@@ -1,11 +1,5 @@
 ---
 
-- name: Create cluster config
-  template:
-    src: cluster.properties.j2
-    dest: "{{ atl_product_home }}/cluster.properties"
-    owner: "{{ atl_product_user }}"
-
 - name: Create server config
   template:
     src: server.xml.j2
