@@ -1,12 +1,5 @@
 ---
 
-
-- name: Create database config
-  template:
-    src: dbconfig.xml.j2
-    dest: "{{ atl_product_home }}/dbconfig.xml"
-    owner: "{{ atl_product_user }}"
-
 - name: Create cluster config
   template:
     src: cluster.properties.j2
