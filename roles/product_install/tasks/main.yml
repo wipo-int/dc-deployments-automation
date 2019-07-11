@@ -101,8 +101,6 @@
 
 - name: Perform any additional per-edition version setup
   include_tasks: "{{ atl_product_edition }}_extra_tasks.yml"
-  when: atl_product_edition!= "crowd"
-  
 
 
 - name: Create installation directories
