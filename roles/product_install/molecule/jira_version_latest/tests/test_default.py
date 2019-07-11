@@ -2,6 +2,7 @@ import os
 from six.moves import urllib
 
 import testinfra.utils.ansible_runner
+import json
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
