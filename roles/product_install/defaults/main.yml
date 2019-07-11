@@ -16,7 +16,6 @@ atl_crowd_latest_url: "https://www.atlassian.com/software/crowd/downloads/binary
 
 atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_product_version }}.bin"
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
-atl_crowd_download: "{{ atl_installer_temp }}"
 atl_product_varfile: "{{ atl_installer_temp }}/{{ atl_product_family }}.varfile"
 
 atl_marketplace_base: "https://marketplace.atlassian.com"

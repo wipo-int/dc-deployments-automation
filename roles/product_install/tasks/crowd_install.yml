@@ -4,7 +4,7 @@
 - name: Fetch crowd installer
   get_url:
     url: "{{atl_crowd_download_url}}"
-    dest: "{{atl_crowd_download}}"
+    dest: "{{atl_installer_temp}}"
     mode: 0755
     force: false
   when: not atl_latest_version
@@ -12,14 +12,14 @@
 - name: Fetch latest crowd installer
   get_url:
     url: "{{ atl_crowd_latest_url }}"
-    dest: "{{atl_crowd_download}}"
+    dest: "{{atl_installer_temp}}"
     mode: 0755
     force: false
   when: atl_latest_version != ""
 
 
 - name: locate installer
-  find: paths="{{ atl_crowd_download }}" patterns="*{{atl_product_edition}}*.tar.gz"
+  find: paths="{{ atl_installer_temp }}" patterns="*{{atl_product_edition}}*.tar.gz"
   register: find_result
 
 - debug: msg = " {{find_result }}"
