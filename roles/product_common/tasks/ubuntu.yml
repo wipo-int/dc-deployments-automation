@@ -4,7 +4,7 @@
   package:
     name:
       - openjdk-{{ java_major_version }}-jdk-headless
-  when: use_system_jdk
+  when: atl_use_system_jdk
   tags:
     - runtime_pkg
 
