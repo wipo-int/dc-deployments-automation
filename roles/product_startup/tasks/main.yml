@@ -7,19 +7,6 @@
     owner: root
     group: root
     mode: 0640
-  when: atl_product_edition != "crowd"
-  notify:
-    - Enable Product
-    - Restart Product
-
-- name: "Install systemd service file for crowd"
-  template:
-    src: "crowd.service.j2"
-    dest: "/etc/systemd/system/{{ atl_systemd_service_name }}"
-    owner: root
-    group: root
-    mode: 0640
-  when: atl_product_edition == "crowd"
   notify:
     - Enable Product
     - Restart Product
