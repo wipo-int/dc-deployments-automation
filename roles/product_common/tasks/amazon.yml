@@ -4,7 +4,7 @@
   yum:
     name:
       - java-{{ java_version }}-openjdk-devel
-  when: use_system_jdk
+  when: atl_use_system_jdk
 
 - name: Install other base packages on Amazon Linux
   yum:

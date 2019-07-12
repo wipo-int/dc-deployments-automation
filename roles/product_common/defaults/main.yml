@@ -6,4 +6,4 @@ git_version: "2.14.4"
 
 # Disable these when using the product installer, otherwise we end up
 # fighting with it.
-use_system_jdk: false
+atl_use_system_jdk: false
