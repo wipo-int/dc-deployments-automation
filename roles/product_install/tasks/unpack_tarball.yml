@@ -8,7 +8,7 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0755
-    # Strip off the lead product/version specific directory to normaise naming
+    # Strip off the lead product/version specific directory to normalise naming
     extra_opts:
       - "--strip-components=1"
     # NOTE: Currently all products contain a `README.txt`, so use that as an 'unpacked' marker.
