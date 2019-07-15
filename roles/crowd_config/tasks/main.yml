@@ -1,14 +1,19 @@
 ---
 
+- name: Create crowd.cfg.xml
+  template:
+    src: crowd.cfg.xml.j2
+    dest: "{{ atl_product_home_shared }}/crowd.cfg.xml"
+
 - name: Create server config
   template:
     src: server.xml.j2
-    dest: "{{ atl_product_installation_versioned }}/atlassian-crowd-{{atl_product_version}}/apache-tomcat/conf/server.xml"
+    dest: "{{ atl_product_installation_versioned }}/apache-tomcat/conf/server.xml"
 
 - name: Override JVM memory settings.
   # Ugly but necessary as the product installs this file so we need to make the change here.
   lineinfile:
-    path: "{{ atl_product_installation_versioned }}/atlassian-crowd-{{atl_product_version}}/apache-tomcat/bin/setenv.sh"
+    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
     backrefs: true
     regexp: "^{{ item }}="
     line: "{{ item }}=\"{{ atl_jvm_heap }}\""
@@ -18,15 +23,26 @@
 
 - name: Set Crowd home directory
   lineinfile:
-    path: "{{ atl_product_installation_versioned }}/atlassian-crowd-{{atl_product_version}}/apache-tomcat/bin/setenv.sh"
+    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
     regexp: "CROWD_HOME="
     line: 'CROWD_HOME="{{ atl_product_home }}"'
 
+- name: Set Crowd home directory in crowd-init.properties file
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/crowd-webapp/WEB-INF/classes/crowd-init.properties"
+    line: 'crowd.home="{{ atl_product_home }}"'
+
 - name: Set the Tomcat environment
   lineinfile:
-    path: "{{ atl_product_installation_versioned }}/atlassian-crowd-{{atl_product_version}}/apache-tomcat/bin/setenv.sh"
+    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
     insertafter: "EOF"
     line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
+
+- name: Set JAVA_HOME
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
+    insertafter: "EOF"
+    line: 'export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.201.b09-0.amzn2.x86_64'
 
 - name: Create application directories
   file:

@@ -8,17 +8,16 @@ atl_product_latest_version_url: "https://marketplace.atlassian.com/rest/2/applic
 atl_product_version_cache_dir: "{{ atl_product_home_shared }}"
 atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
 
-atl_download_format: 'installer'
+atl_download_format: 'tarball'
 atl_download_format_suffix_map:
   installer: '-x64.bin'
   tarball: '.tar.gz'
 atl_download_suffix: "{{ atl_download_format_suffix_map[atl_download_format] }}"
+atl_crowd_suffix: "{{ atl_download_format_suffix_map[atl_download_format] }}"
 
 atl_release_base_url: "https://product-downloads.atlassian.com/software"
 atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downloads"
-#atl_crowd_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}.tar.gz"
-#atl_crowd_latest_url: "https://www.atlassian.com/software/crowd/downloads/binary/crowd-standalone-distribution-{{atl_latest_version}}.tar.gz"
-atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}{{ atl_download_suffix }}"
+atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}{{ atl_crowd_suffix }}"
 
 atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_product_version }}{{ atl_download_suffix }}"
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
