@@ -8,6 +8,7 @@
     atl_product_user: "crowd"
     atl_product_edition: "crowd"
     atl_use_system_jdk: true
+    atl_download_format: "tarball"
 
   roles:
     - role: linux_common

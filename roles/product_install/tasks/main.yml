@@ -142,6 +142,7 @@
     src: "{{ atl_product_family }}.varfile.j2"
     dest: "{{ atl_product_varfile }}"
     mode: 0755
+  when: atl_product_edition!= "crowd"
 
 # NOTE: We run the installer as the user rather than root to limit its
 # actions. For example, if root and the 'jira' user exists then it
@@ -154,6 +155,10 @@
   become: true
   become_user: "{{ atl_product_user }}"
   when: atl_product_edition!= "crowd"
+
+
+- debug: 
+    msg: "FORMAT - {{ atl_download_format }}"
 
 - name: Unpack the downloaded application depending on format
   include_tasks: "unpack_{{ atl_download_format }}.yml"
