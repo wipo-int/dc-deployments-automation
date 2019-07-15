@@ -159,6 +159,9 @@
 - import_tasks: crowd_install.yml
   when: atl_product_edition == "crowd"
 
+- name: Unpack the downloaded application depending on format
+  include_tasks: "unpack_{{ atl_download_format }}.yml"
+
 - name: Symlink the installed version to current
   file:
     src: "{{ atl_product_installation_versioned }}"
