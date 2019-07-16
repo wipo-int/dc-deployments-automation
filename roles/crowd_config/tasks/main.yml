@@ -1,10 +1,5 @@
 ---
 
-- name: Create crowd.cfg.xml
-  template:
-    src: crowd.cfg.xml.j2
-    dest: "{{ atl_product_home_shared }}/crowd.cfg.xml"
-
 - name: Create server config
   template:
     src: server.xml.j2
