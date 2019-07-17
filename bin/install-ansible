@@ -11,6 +11,7 @@ set -e
 # pip. This may need some logic if other distros are added. Note:
 # Parsing /etc/os-release is probably a good starting point for that.
 ./bin/pacapt install --noconfirm python-pip
+export PATH=$PATH:/usr/local/bin
 
 # See Pipfile and Pipfile.lock.
 pip install pipenv
