@@ -16,12 +16,6 @@
     - 'JVM_MINIMUM_MEMORY'
     - 'JVM_MAXIMUM_MEMORY'
 
-- name: Set Crowd home directory
-  lineinfile:
-    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    regexp: "CROWD_HOME="
-    line: 'CROWD_HOME="{{ atl_product_home }}"'
-
 - name: Set Crowd home directory in crowd-init.properties file
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/crowd-webapp/WEB-INF/classes/crowd-init.properties"
@@ -75,7 +69,16 @@
     group: "{{ atl_product_user }}"
     recurse: true
   with_items:
-    - "{{ atl_product_installation_versioned }}/logs"
-    - "{{ atl_product_installation_versioned }}/temp"
-    - "{{ atl_product_installation_versioned }}/work"
+    - "{{ atl_product_installation_versioned }}/apache-tomcat/logs"
+    - "{{ atl_product_installation_versioned }}/apache-tomcat/temp"
+    - "{{ atl_product_installation_versioned }}/apache-tomcat/work"
+  changed_when: false  # For Molecule idempotence check
+
+- name: Symlink Crowd shared home directory
+  file:
+    src: "{{ atl_product_home_shared }}"
+    dest: "{{ atl_product_home }}/shared"
+    state: link
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
   changed_when: false  # For Molecule idempotence check
