@@ -50,8 +50,8 @@
 - name: Limit permissions on the installation directory
   file:
     path: "{{ atl_product_installation_versioned }}"
-    owner: "root"
-    group: "root"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
     mode: "u=rwX,g=rX,o=rX"
     recurse: true
   with_items:
