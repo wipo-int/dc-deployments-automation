@@ -1,5 +1,6 @@
 ---
 
+
 - name: Check for existing version cache file
   stat:
     path: "{{ atl_product_version_cache }}"
@@ -99,7 +100,6 @@
 
 ######################################################################
 
-
 - name: Perform any additional per-edition version setup
   include_tasks: "{{ atl_product_edition }}_extra_tasks.yml"
 
@@ -118,13 +118,13 @@
     - "{{ atl_product_version_cache_dir }}"
   changed_when: false  # For Molecule idempotence check
 
-
 # At this point atl_product_version should be set, cache if necessary.
 - name: Write override cached version when specified
   template:
     src: version.j2
     dest: "{{ atl_product_version_cache }}"
     force: true
+
 
 # Note: We don't the cache binary in the shared drive to the complexity
 # around download race-conditions if multiple nodes are starting at
