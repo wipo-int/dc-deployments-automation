@@ -18,7 +18,7 @@ atl_shared_mountpoint: "/media/atl"
 atl_product_user_uid: '2001'
 
 # FIXME: Some of these should be overridden from the environment?
-atl_home_base: "/var/atlassian/application-data"
+atl_home_base: /var/atlassian/application-data
 atl_product_home: "{{ atl_home_base }}/{{ atl_product_family }}"
 atl_product_shared_home_map:
   confluence: "confluence/shared-home"
