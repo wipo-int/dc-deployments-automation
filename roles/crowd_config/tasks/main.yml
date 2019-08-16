@@ -19,7 +19,7 @@
 - name: Set Crowd home directory in crowd-init.properties file
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/crowd-webapp/WEB-INF/classes/crowd-init.properties"
-    line: 'crowd.home="{{ atl_product_home }}"'
+    line: 'crowd.home={{ atl_product_home }}'
 
 - name: Set the Tomcat environment
   lineinfile:
