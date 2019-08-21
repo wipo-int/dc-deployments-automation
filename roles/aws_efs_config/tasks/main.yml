@@ -9,7 +9,7 @@
 - name: Enable mountpoint in fstab
   mount:
     path: "{{ atl_shared_mountpoint }}"
-    src: "{{ efs_target }}:/"
-    fstype: efs
-    opts: "defaults,_netdev"
+    src: "{{ efs_target }}:{{ efs_src_dir }}"
+    fstype: "{{ efs_type }}"
+    opts: "{{ efs_mount_options }}"
     state: mounted
