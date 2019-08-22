@@ -15,7 +15,7 @@ git_version: "2.14.4"
 atl_shared_mountpoint: "/media/atl"
 
 # Simplify NFS mapping by using a fixed UID
-atl_product_user_uid: '2001'
+atl_product_user_uid: "{{ lookup('env', 'ATL_PRODUCT_USER_UID') or '2001' }}"
 
 # FIXME: Some of these should be overridden from the environment?
 atl_home_base: "/var/atlassian/application-data"
