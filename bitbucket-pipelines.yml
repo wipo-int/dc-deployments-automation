@@ -2,6 +2,11 @@
 
 image: atlassian/default-image:2
 
+definitions:
+  services:
+    docker:
+      memory: 3072
+
 pipelines:
   default:
     - step:
