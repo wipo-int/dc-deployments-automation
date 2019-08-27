@@ -23,6 +23,7 @@
     atl_db_removeabandonedtimeout: 1111
     atl_db_testwhileidle: 'false'
     atl_db_testonborrow: 'true'
+    atl_db_type: 'postgres96'
 
   roles:
     - role: linux_common
