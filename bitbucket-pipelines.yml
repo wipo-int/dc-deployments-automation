@@ -1,11 +1,13 @@
 ---
 
 image: atlassian/default-image:2
+options:
+  size: 2x
 
 definitions:
   services:
     docker:
-      memory: 3072
+      memory: 4096
 
 pipelines:
   default:
