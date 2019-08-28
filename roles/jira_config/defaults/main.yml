@@ -26,7 +26,6 @@ atl_db_poolminsize: '20'
 atl_db_poolmaxsize: '100'
 atl_db_minidle: '10'
 atl_db_maxidle: '20'
-atl_db_type: 'postgres72'
 
 atl_db_maxwaitmillis: '30000'
 atl_db_timebetweenevictionrunsmillis: '30000'
