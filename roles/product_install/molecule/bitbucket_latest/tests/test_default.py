@@ -24,17 +24,19 @@ def test_version_file_is_latest(host):
     verfile = host.file('/media/atl/bitbucket/shared/bitbucket.version')
     assert verfile.exists
 
-    upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
+    upstream_fd = urllib.request.urlopen(
+        "https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
     assert verfile.content.decode("UTF-8").strip() == upstream.strip()
 
 def test_latest_is_downloaded(host):
-    upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
+    upstream_fd = urllib.request.urlopen(
+        "https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    installer = host.file('/opt/atlassian/tmp/bitbucket.'+upstream+'.bin')
+    installer = host.file('/opt/atlassian/tmp/bitbucket.' + upstream + '-x64.bin')
     assert installer.exists
     assert installer.user == 'root'

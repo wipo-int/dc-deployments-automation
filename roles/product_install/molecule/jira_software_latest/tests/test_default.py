@@ -35,6 +35,6 @@ def test_latest_is_downloaded(host):
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    installer = host.file('/opt/atlassian/tmp/jira-software.'+upstream+'.bin')
+    installer = host.file('/opt/atlassian/tmp/jira-software.'+upstream+'-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
