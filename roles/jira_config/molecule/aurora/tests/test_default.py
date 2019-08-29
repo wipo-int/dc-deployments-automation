@@ -10,7 +10,7 @@ def test_dbconfig_file(host):
     f = host.file('/var/atlassian/application-data/jira/dbconfig.xml')
     assert f.exists
     assert f.user == 'jira'
-    assert f.contains("<database-type>postgres72</database-type>")
+    assert f.contains("<database-type>postgresaurora96</database-type>")
     assert f.contains("<driver-class>org.postgresql.Driver</driver-class>")
     assert f.contains("<username>atljira</username>")
     assert f.contains("<password>molecule_password</password>")

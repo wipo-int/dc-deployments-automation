@@ -14,7 +14,7 @@ def test_version_is_correct(host):
     assert verfile.content.decode("UTF-8").strip() == "3.9.0"
 
 def test_is_downloaded(host):
-    installer = host.file('/opt/atlassian/tmp/servicedesk.3.9.0.bin')
+    installer = host.file('/opt/atlassian/tmp/servicedesk.3.9.0-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
