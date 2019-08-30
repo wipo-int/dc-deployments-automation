@@ -5,7 +5,7 @@ atl_startup_enable: true
 atl_startup_restart: "{{ lookup('env', 'ATL_STARTUP_RESTART') or true }}"
 
 atl_startup_script_map:
-  jira: "/bin/start-jira.sh"
+  jira: "bin/start-jira.sh"
   confluence: "bin/start-confluence.sh"
   stash: "bin/start-bitbucket.sh"
   crowd: "start_crowd.sh"

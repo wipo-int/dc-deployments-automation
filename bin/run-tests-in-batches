@@ -6,7 +6,7 @@ set -e
 # Install dev packages from Pipfile.lock if necessary.
 pipenv sync --dev
 
-BATCH_SIZE=3
+BATCH_SIZE=1
 BATCH_NUMBER=""
 batch_args="$1"
 
@@ -29,17 +29,25 @@ case ${BATCH_NUMBER} in
     *) echo "Bad Input for Batch number. ${BATCH_NUMBER} is not a valid batch number (Should be a number >= 1)" && exit -1 ;;
 esac
 
-scenarios=( $(ls -d1 roles/**/molecule/* | sort) )
+scenarios=( $(find roles -type f -name 'molecule.yml' -exec dirname {} ';' | sort) )
 
 offset=$(( ${BATCH_NUMBER} - 1))
 test_start_index=$(( ${offset} * $BATCH_SIZE ))
 scenario_batch="${scenarios[@]:$test_start_index:$BATCH_SIZE}"
 
-echo "Scenarios that will be executed as part of this batch: ${scenario_batch}"
+if [[ ${scenario_batch[@]} ]]; then
+    echo "Scenarios that will be executed as part of this batch: ${scenario_batch}"
+else
+    echo "Scenario Batch for ${BATCH_NUMBER} is empty. Exiting (Non zero) now"
+    exit -1
+fi
 
 for scenario in ${scenario_batch}; do
-    pushd $(dirname $(dirname $scenario))
+    scenario_name=$(basename ${scenario})
+    role_name=$(dirname $(dirname ${scenario}))
+    echo "Running scenario ${scenario_name} in ${role_name}"
+    pushd ${role_name}
     pipenv run \
-       molecule test --all
+       molecule test -s ${scenario_name}
     popd
 done;

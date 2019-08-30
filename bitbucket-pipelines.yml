@@ -14,78 +14,251 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 9 batches of 3 scenarios (max) each"
+          - echo "Running tests in 26 batches"
+    - step:
+        name: Check if number of batches match actual number of scenarios
+        script:
+          - |
+              actual_scenario_count=$(find ./roles -type f -name "molecule.yml" -exec dirname {} ';' | wc -l |  sed -e 's/^[[:space:]]*//')
+              grep  "Running tests in ${actual_scenario_count} batches" bitbucket-pipelines.yml
+              GREP_RETURN_CODE=$?
+              if [[ $GREP_RETURN_CODE -ne 0 ]]; then
+                  echo "Mismatch between expected and actual number [${actual_scenario_count}] of scenarios. Please look at https://bitbucket.org/atlassian/dc-deployments-automation/src/master/DEVELOPMENT.md for instructions on how to fix this error."
+                  exit $GREP_RETURN_CODE
+              fi
     - parallel:
-        - step:
-            name: Molecule test batch 1
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 1
-        - step:
-            name: Molecule test batch 2
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 2
-        - step:
-            name: Molecule test batch 3
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 3
-        - step:
-            name: Molecule test batch 4
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 4
-        - step:
-            name: Molecule test batch 5
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 5
-        - step:
-            name: Molecule test batch 6
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 6
-        - step:
-            name: Molecule test batch 7
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 7
-        - step:
-            name: Molecule test batch 8
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 8
-        - step:
-            name: Molecule test batch 9
-            services:
-              - docker
-            script:
-              - apt-get update && apt-get install -y virtualenv python-dev
-              - ./bin/install-ansible
-              - ./bin/run-all-tests --batch 9
-
+       - step:
+           name: Molecule Test Batch 1
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 1
+           
+       - step:
+           name: Molecule Test Batch 2
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 2
+           
+       - step:
+           name: Molecule Test Batch 3
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 3
+           
+       - step:
+           name: Molecule Test Batch 4
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 4
+           
+       - step:
+           name: Molecule Test Batch 5
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 5
+           
+       - step:
+           name: Molecule Test Batch 6
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 6
+           
+       - step:
+           name: Molecule Test Batch 7
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 7
+           
+       - step:
+           name: Molecule Test Batch 8
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 8
+           
+       - step:
+           name: Molecule Test Batch 9
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 9
+           
+       - step:
+           name: Molecule Test Batch 10
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 10
+           
+       - step:
+           name: Molecule Test Batch 11
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 11
+           
+       - step:
+           name: Molecule Test Batch 12
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 12
+           
+       - step:
+           name: Molecule Test Batch 13
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 13
+           
+       - step:
+           name: Molecule Test Batch 14
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 14
+           
+       - step:
+           name: Molecule Test Batch 15
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 15
+           
+       - step:
+           name: Molecule Test Batch 16
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 16
+           
+       - step:
+           name: Molecule Test Batch 17
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 17
+           
+       - step:
+           name: Molecule Test Batch 18
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 18
+           
+       - step:
+           name: Molecule Test Batch 19
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 19
+           
+       - step:
+           name: Molecule Test Batch 20
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 20
+           
+       - step:
+           name: Molecule Test Batch 21
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 21
+           
+       - step:
+           name: Molecule Test Batch 22
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 22
+           
+       - step:
+           name: Molecule Test Batch 23
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 23
+           
+       - step:
+           name: Molecule Test Batch 24
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 24
+           
+       - step:
+           name: Molecule Test Batch 25
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 25
+           
+       - step:
+           name: Molecule Test Batch 26
+           services:
+             - docker
+           script:
+           - apt-get update && apt-get install -y virtualenv python-dev
+           - ./bin/install-ansible
+           - ./bin/run-tests-in-batches --batch 26
+           
+       

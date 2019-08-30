@@ -11,6 +11,7 @@ molecule = "==2.20.1"
 docker = "==4.0.1"
 six = "*"
 taskcat = "*"
+Jinja2 = "*"
 
 [requires]
 python_version = "2.7"
