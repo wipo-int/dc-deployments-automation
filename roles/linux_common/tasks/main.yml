@@ -15,8 +15,14 @@
       - fontconfig
       - python-psycopg2
 
+- name: Create product group
+  group:
+    name: "{{ atl_product_user }}"
+    gid: "{{ atl_product_user_uid }}"
+
 - name: Create product user
   user:
     name: "{{ atl_product_user }}"
     uid: "{{ atl_product_user_uid }}"
+    group: "{{ atl_product_user }}"
     comment: "Product runtime user"

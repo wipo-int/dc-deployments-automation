@@ -1,2 +1,0 @@
----
-efs_target: "{{ atl_efs_id }}"
