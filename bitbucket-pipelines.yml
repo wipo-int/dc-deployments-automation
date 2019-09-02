@@ -28,7 +28,7 @@ pipelines:
               fi
     - parallel:
        - step:
-           name: Molecule Test Batch 1
+           name: Molecule Test Batch - 1
            services:
              - docker
            script:
@@ -37,7 +37,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 1
            
        - step:
-           name: Molecule Test Batch 2
+           name: Molecule Test Batch - 2
            services:
              - docker
            script:
@@ -46,7 +46,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 2
            
        - step:
-           name: Molecule Test Batch 3
+           name: Molecule Test Batch - 3
            services:
              - docker
            script:
@@ -55,7 +55,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 3
            
        - step:
-           name: Molecule Test Batch 4
+           name: Molecule Test Batch - 4
            services:
              - docker
            script:
@@ -64,7 +64,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 4
            
        - step:
-           name: Molecule Test Batch 5
+           name: Molecule Test Batch - 5
            services:
              - docker
            script:
@@ -73,7 +73,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 5
            
        - step:
-           name: Molecule Test Batch 6
+           name: Molecule Test Batch - 6
            services:
              - docker
            script:
@@ -82,7 +82,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 6
            
        - step:
-           name: Molecule Test Batch 7
+           name: Molecule Test Batch - 7
            services:
              - docker
            script:
@@ -91,7 +91,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 7
            
        - step:
-           name: Molecule Test Batch 8
+           name: Molecule Test Batch - 8
            services:
              - docker
            script:
@@ -100,7 +100,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 8
            
        - step:
-           name: Molecule Test Batch 9
+           name: Molecule Test Batch - 9
            services:
              - docker
            script:
@@ -109,7 +109,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 9
            
        - step:
-           name: Molecule Test Batch 10
+           name: Molecule Test Batch - 10
            services:
              - docker
            script:
@@ -118,7 +118,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 10
            
        - step:
-           name: Molecule Test Batch 11
+           name: Molecule Test Batch - 11
            services:
              - docker
            script:
@@ -127,7 +127,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 11
            
        - step:
-           name: Molecule Test Batch 12
+           name: Molecule Test Batch - 12
            services:
              - docker
            script:
@@ -136,7 +136,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 12
            
        - step:
-           name: Molecule Test Batch 13
+           name: Molecule Test Batch - 13
            services:
              - docker
            script:
@@ -145,7 +145,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 13
            
        - step:
-           name: Molecule Test Batch 14
+           name: Molecule Test Batch - 14
            services:
              - docker
            script:
@@ -154,7 +154,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 14
            
        - step:
-           name: Molecule Test Batch 15
+           name: Molecule Test Batch - 15
            services:
              - docker
            script:
@@ -163,7 +163,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 15
            
        - step:
-           name: Molecule Test Batch 16
+           name: Molecule Test Batch - 16
            services:
              - docker
            script:
@@ -172,7 +172,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 16
            
        - step:
-           name: Molecule Test Batch 17
+           name: Molecule Test Batch - 17
            services:
              - docker
            script:
@@ -181,7 +181,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 17
            
        - step:
-           name: Molecule Test Batch 18
+           name: Molecule Test Batch - 18
            services:
              - docker
            script:
@@ -190,7 +190,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 18
            
        - step:
-           name: Molecule Test Batch 19
+           name: Molecule Test Batch - 19
            services:
              - docker
            script:
@@ -199,7 +199,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 19
            
        - step:
-           name: Molecule Test Batch 20
+           name: Molecule Test Batch - 20
            services:
              - docker
            script:
@@ -208,7 +208,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 20
            
        - step:
-           name: Molecule Test Batch 21
+           name: Molecule Test Batch - 21
            services:
              - docker
            script:
@@ -217,7 +217,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 21
            
        - step:
-           name: Molecule Test Batch 22
+           name: Molecule Test Batch - 22
            services:
              - docker
            script:
@@ -226,7 +226,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 22
            
        - step:
-           name: Molecule Test Batch 23
+           name: Molecule Test Batch - 23
            services:
              - docker
            script:
@@ -235,7 +235,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 23
            
        - step:
-           name: Molecule Test Batch 24
+           name: Molecule Test Batch - 24
            services:
              - docker
            script:
@@ -244,7 +244,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 24
            
        - step:
-           name: Molecule Test Batch 25
+           name: Molecule Test Batch - 25
            services:
              - docker
            script:
@@ -253,7 +253,7 @@ pipelines:
            - ./bin/run-tests-in-batches --batch 25
            
        - step:
-           name: Molecule Test Batch 26
+           name: Molecule Test Batch - 26
            services:
              - docker
            script:
