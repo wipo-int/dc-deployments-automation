@@ -1,12 +1,12 @@
 ---
 
-- name: Install distro-specific prerequisites
-  include_tasks: "{{ ansible_distribution|lower }}.yml"
-
 - name: Fetch local EC2 metadata
   ec2_metadata_facts:
   tags:
     - notest
+
+- name: Install distro-specific prerequisites
+  include_tasks: "{{ ansible_distribution|lower }}.yml"
 
 - name: Use EC2 instance ID for cluster node ID
   set_fact:
