@@ -39,7 +39,7 @@ atl_product_log_locations:
     - "{{ atl_product_installation_current }}/logs"
   jira:
     - "{{ atl_product_installation_current }}/logs"
-    - "{{ atl_product_home }}/logs"
+    - "{{ atl_product_home }}/log"
   stash: []
   crowd: []
 
