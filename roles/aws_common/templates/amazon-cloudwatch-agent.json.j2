@@ -4,23 +4,27 @@
     "run_as_user": "root"
   },
 
-  "logs": {
-    "logs_collected": {
-      "files": {
-        "collect_list": [
-          {% set comma = joiner(',') %}
-          {% for path in atl_product_log_locations[atl_product_family] %}
-            {{ comma() }}
-            {
-              "file_path": "{{ path }}/*",
-              "log_group_name": "{{ atl_aws_log_group }}",
-              "log_stream_name": "{instance_id}"
-            }
-          {% endfor %}
-        ]
+  {% if atl_aws_enable_cw_logs == true or atl_aws_enable_cw_logs == 'true' %}
+    "logs": {
+      "logs_collected": {
+        "files": {
+          "collect_list": [
+
+            {% set comma = joiner(',') %}
+            {% for path in atl_product_log_locations[atl_product_family] %}
+              {{ comma() }}
+              {
+                "file_path": "{{ path }}/*",
+                "log_group_name": "{{ atl_aws_log_group }}",
+                "log_stream_name": "{instance_id}"
+              }
+            {% endfor %}
+
+          ]
+        }
       }
-    }
-  },
+    },
+  {% endif %}
 
   "metrics": {
     "append_dimensions": {
