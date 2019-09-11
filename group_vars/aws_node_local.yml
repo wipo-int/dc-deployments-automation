@@ -37,6 +37,7 @@ atl_installer_temp: "{{ atl_installation_base }}/tmp"
 atl_product_log_locations:
   confluence:
     - "{{ atl_product_installation_current }}/logs"
+    - "{{ atl_product_home }}/logs"
   jira:
     - "{{ atl_product_installation_current }}/logs"
     - "{{ atl_product_home }}/log"
