@@ -41,7 +41,8 @@ atl_product_log_locations:
   jira:
     - "{{ atl_product_installation_current }}/logs"
     - "{{ atl_product_home }}/log"
-  stash: []
+  stash:
+    - "{{ atl_product_home }}/log"
   crowd: []
 
 #  The following are imports from the environment. These are generally
