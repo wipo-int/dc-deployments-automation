@@ -6,4 +6,10 @@
       - ec2-utils
       - amazon-ssm-agent
       - amazon-efs-utils
+
+- name: Install CloudWatch Agent
+  yum:
+    name:
       - "{{ aws_cloudwatch_agent_rpm }}"
+  notify:
+    - Enable CloudWatch Agent

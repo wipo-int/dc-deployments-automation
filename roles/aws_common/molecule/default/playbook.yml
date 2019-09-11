@@ -6,5 +6,6 @@
     ansible_default_ipv4:
       address: "9.9.9.9"
     ansible_ec2_instance_id: "NONE"
+    atl_aws_agent_restart: false
   roles:
     - role: aws_common
