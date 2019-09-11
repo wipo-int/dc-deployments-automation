@@ -6,3 +6,5 @@ aws_cloudwatch_agent_rpm: "https://s3.{{ aws_download_region }}.amazonaws.com/am
 
 # Mostly for molecule testing, as skip-tags doesn't work with handlers.
 atl_aws_agent_restart: true
+
+atl_aws_log_group: "{{ atl_product_edition }}-{{ atl_aws_stack_name }}"

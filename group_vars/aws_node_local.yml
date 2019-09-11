@@ -34,6 +34,14 @@ atl_product_installation_versioned: "{{ atl_product_installation_base }}/{{ atl_
 atl_product_installation_current: "{{ atl_product_installation_base }}/current"
 atl_installer_temp: "{{ atl_installation_base }}/tmp"
 
+atl_product_log_locations:
+  confluence:
+    - "{{ atl_product_installation_current }}/logs"
+  jira:
+    - "{{ atl_product_installation_current }}/logs"
+    - "{{ atl_product_home }}/logs"
+  stash: []
+  crowd: []
 
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
