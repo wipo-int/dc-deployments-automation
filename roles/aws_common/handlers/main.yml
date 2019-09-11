@@ -11,5 +11,5 @@
   systemd:
     name: "amazon-cloudwatch-agent.service"
     enabled: true
-    status: restarted
+    state: restarted
   when: atl_aws_agent_restart
