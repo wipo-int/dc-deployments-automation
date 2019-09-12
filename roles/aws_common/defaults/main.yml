@@ -4,6 +4,9 @@
 aws_download_region: "{{ ansible_ec2_placement_region | default('us-west-2') }}"
 aws_cloudwatch_agent_rpm: "https://s3.{{ aws_download_region }}.amazonaws.com/amazoncloudwatch-agent-{{ aws_download_region }}/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm"
 
+atl_aws_enable_cw: true
+atl_aws_enable_cw_logs: false
+
 # Mostly for molecule testing, as skip-tags doesn't work with handlers.
 atl_aws_agent_restart: true
 

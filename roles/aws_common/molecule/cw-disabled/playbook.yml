@@ -11,10 +11,7 @@
     atl_product_edition: "jira-software"
     atl_aws_stack_name: "MY_STACK"
 
-    # The `bool` pipe is a sanity check for group file.
-    atl_aws_enable_cw: "{{ 'true'|bool }}"
-    atl_aws_enable_cw_logs: true
-    atl_aws_agent_restart: false
+    atl_aws_enable_cw: "{{ 'false'|bool }}"
 
   roles:
     - role: aws_common

@@ -4,7 +4,7 @@
     "run_as_user": "root"
   },
 
-  {% if atl_aws_enable_cw_logs == true or atl_aws_enable_cw_logs == 'true' %}
+  {% if atl_aws_enable_cw_logs is defined and atl_aws_enable_cw_logs %}
     "logs": {
       "logs_collected": {
         "files": {

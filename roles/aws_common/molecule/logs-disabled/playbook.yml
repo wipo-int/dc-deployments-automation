@@ -11,7 +11,8 @@
     atl_product_edition: "jira-software"
     atl_aws_stack_name: "MY_STACK"
 
-    atl_aws_enable_cw_logs: "false"
+    atl_aws_enable_cw: true
+    atl_aws_enable_cw_logs: false
 
     atl_aws_agent_restart: false
 
