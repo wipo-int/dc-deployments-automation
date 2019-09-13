@@ -12,8 +12,8 @@
     atl_aws_stack_name: "MY_STACK"
 
     # The `bool` pipe is a sanity check for group file.
-    atl_aws_enable_cw: "{{ 'true'|bool }}"
-    atl_aws_enable_cw_logs: true
+    atl_aws_enable_cloudwatch: "{{ 'true'|bool }}"
+    atl_aws_enable_cloudwatch_logs: true
     atl_aws_agent_restart: false
 
   roles:

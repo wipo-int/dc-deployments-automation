@@ -11,6 +11,6 @@
   yum:
     name:
       - "{{ aws_cloudwatch_agent_rpm }}"
-  when: atl_aws_enable_cw is defined and atl_aws_enable_cw
+  when: atl_aws_enable_cloudwatch is defined and atl_aws_enable_cloudwatch
   notify:
     - Enable CloudWatch Agent

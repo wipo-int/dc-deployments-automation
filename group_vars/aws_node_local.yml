@@ -56,8 +56,8 @@ atl_aws_region: "{{ lookup('env', 'ATL_AWS_REGION') }}"
 atl_aws_iam_role: "{{ lookup('env', 'ATL_AWS_IAM_ROLE') }}"
 atl_aws_iam_role_arn: "{{ lookup('env', 'ATL_AWS_IAM_ROLE_ARN') }}"
 
-atl_aws_enable_cw: "{{ lookup('env', 'ATL_AWS_ENABLE_CW')|bool or false }}"
-atl_aws_enable_cw_logs: "{{ lookup('env', 'ATL_AWS_ENABLE_CW_LOGS')|bool or false }}"
+atl_aws_enable_cloudwatch: "{{ lookup('env', 'ATL_AWS_ENABLE_CLOUDWATCH')|bool or false }}"
+atl_aws_enable_cloudwatch_logs: "{{ lookup('env', 'ATL_AWS_ENABLE_CLOUDWATCH_LOGS')|bool or false }}"
 
 atl_db_engine: "{{ lookup('env', 'ATL_DB_ENGINE') }}"
 atl_db_host: "{{ lookup('env', 'ATL_DB_HOST') }}"

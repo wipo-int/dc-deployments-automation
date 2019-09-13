@@ -20,6 +20,6 @@
     owner: root
     group: root
     mode: 0644
-  when: atl_aws_enable_cw is defined and atl_aws_enable_cw
+  when: atl_aws_enable_cloudwatch is defined and atl_aws_enable_cloudwatch
   notify:
     - Restart CloudWatch Agent
