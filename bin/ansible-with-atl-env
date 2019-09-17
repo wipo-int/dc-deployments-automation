@@ -15,4 +15,8 @@ set +a
 
 # Use Ansible from virtualenv if provided
 pipenv run \
-       ansible-playbook -v -i $INV $PLAYBOOK 2>&1 | tee --append $LOG_FILE
+    ansible-playbook -v \
+        $ATL_ANSIBLE_EXTRA_PARAMS \
+        -i $INV \
+        $PLAYBOOK \
+        2>&1 | tee --append $LOG_FILE
