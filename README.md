@@ -51,7 +51,7 @@ If you are using a CloudFormation template with places the stack details in
 `ansible-playbook` parameters in `bin/ansible-with-alt-env`. In this case you
 would only need to set it to:
 
-    -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
+    ATL_ANSIBLE_EXTRA_PARAMS="-e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball"
 
 ## Development
 
