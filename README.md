@@ -27,9 +27,31 @@ sourced as environment variables to be retrieved at runtime . See the
 helper-script `bin/ansible-with-atl-env` and the corresponding
 `groups_vars/aws_node_local.yml` var-file.
 
-### Maintenance playbooks
+#### Overriding parameters
 
-(None currently; TBW)
+If you want to customise the playbook behaviour the simplest method is to fork
+this repository and add your own. However for some one-off tasks may be OK to
+override the default and calculated settings with special values. This can be
+done by providing command-line overrides to
+[ansible-playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html).
+
+The most likely use-case for this is to download a custom product distribution
+for testing, e.g. a Jira pre-release. If you are running `ansible-playbook`
+directly, the command-line would look like e.g:
+
+    ansible-playbook \
+        -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz \
+        -e atl_use_system_jdk=true \
+        -e atl_download_format=tarball \
+        \
+        -i inv/aws_node_local aws_jira_dc_node.yml
+
+If you are using a CloudFormation template with places the stack details in
+`/etc/atl`, the special variable `ATL_ANSIBLE_EXTRA_PARAMS` is added to the
+`ansible-playbook` parameters in `bin/ansible-with-alt-env`. In this case you
+would only need to set it to:
+
+    -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
 ## Development
 
