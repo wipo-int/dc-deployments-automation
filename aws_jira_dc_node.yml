@@ -7,6 +7,8 @@
     atl_product_family: "jira"
     atl_product_user: "jira"
     atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
+    atl_enabled_product: "{{ lookup('env', 'ATL_ENABLED_PRODUCTS') | lower }}"
+    atl_systemd_service_name: "jira.service"
 
   roles:
     - role: linux_common
