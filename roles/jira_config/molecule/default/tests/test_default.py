@@ -38,6 +38,7 @@ def test_setenv_file(host):
     assert f.contains('^JVM_MAXIMUM_MEMORY="PLACEHOLDER"')
     assert f.contains('^JIRA_HOME="/var/atlassian/application-data/jira"')
     assert f.contains('^export CATALINA_OPTS="')
+    assert f.contains('^JVM_SUPPORT_RECOMMENDED_ARGS="PLACEHOLDER"')
 
 
 def test_cluster_file(host):
