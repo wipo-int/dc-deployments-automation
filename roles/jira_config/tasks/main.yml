@@ -41,6 +41,12 @@
     insertafter: "EOF"
     line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
 
+- name: Set support recommended JVM args
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/bin/setenv.sh"
+    regexp: "JVM_SUPPORT_RECOMMENDED_ARGS="
+    line: 'JVM_SUPPORT_RECOMMENDED_ARGS="{{ atl_jvm_opts }}"'
+
 - name: Create application directories
   file:
     path: "{{ item }}"
