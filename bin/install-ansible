@@ -2,24 +2,13 @@
 
 set -e
 
-# The Amazon Linux 2 Ansible package is 2.4, which has issue
-# interacting with RDS, so use pipenv to install a known-good version.
-# Another alternative here would be nix, however that has issues
-# installing as root, and can be slow in practice.
-
-# Luckily AmazonLinux2 and Ubuntu use the same package name for
-# pip. This may need some logic if other distros are added. Note:
-# Parsing /etc/os-release is probably a good starting point for that.
-#
-# Additionally we need to install boto3 and botocore, as the Ansible
-# AWS modules manage to escape the virtualenv and invoke the native python.
+# Amazon Linux 2 packages Ansible separately, so enable the repo
+. /etc/os-release
+if [[ $ID == 'amzn' ]]; then
+    amazon-linux-extras enable ansible2
+fi
 
 ./bin/pacapt install --noconfirm \
-             python-pip \
+             ansible \
              python-boto3 \
              python-botocore
-export PATH=$PATH:/usr/local/bin
-
-# See Pipfile and Pipfile.lock.
-pip install pipenv
-pipenv sync
