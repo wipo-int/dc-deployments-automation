@@ -17,6 +17,7 @@
         bucket: "{{ atl_backup_manifest_bucket }}"
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
+        mode: 0600
       when: atl_backup_manifest_url.scheme == 's3'
 
     - name: Fetch the manifest from remote host
