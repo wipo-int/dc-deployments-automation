@@ -1,5 +1,9 @@
 ---
 
+# This role will attempt to fetch and load the backup manifest from a
+# remote HTTP or S3 URL. On successful completion the contents of JSON
+# or YAML document will be in the var `atl_backup_manifest`.
+
 - block:
 
     - name: Ensure temp directory is present
