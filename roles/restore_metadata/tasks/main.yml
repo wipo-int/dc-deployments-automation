@@ -14,17 +14,16 @@
 
     - name: Fetch the manifest from S3
       aws_s3:
+        mode: get
         bucket: "{{ atl_backup_manifest_bucket }}"
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
-        mode: 0600
       when: atl_backup_manifest_url.scheme == 's3'
 
     - name: Fetch the manifest from remote host
       get_url:
         url: "{{ atl_backup_manifest_url }}"
         dest: "{{ atl_backup_manifest_dest }}"
-        mode: 0600
       when: atl_backup_manifest_url.scheme != 's3'
 
   when: atl_backup_manifest_url is defined and atl_backup_manifest_url != ''
