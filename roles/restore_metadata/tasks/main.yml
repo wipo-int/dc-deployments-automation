@@ -8,7 +8,7 @@
         atl_backup_manifest_bucket: "{{ atl_backup_manifest_url | urlsplit('hostname') }}"
         atl_backup_manifest_path: "{{ atl_backup_manifest_url | urlsplit('path') }}"
         atl_backup_manifest_filename: "{{ atl_backup_manifest_path | basename}}"
-        atl_backup_manifest_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest_filename }}"
+        atl_backup_manifest_dest: "{{ atl_installer_temp }}/{{ {{ atl_backup_manifest_path | basename}}"
 
     - name: Fetch the manifest from S3
       aws_s3:
