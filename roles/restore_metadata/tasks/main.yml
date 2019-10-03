@@ -2,6 +2,15 @@
 
 - block:
 
+    - name: Ensure temp directory is present
+      file:
+        path: "{{ atl_installer_temp }}"
+        state: directory
+        mode: 0750
+        owner: "{{ atl_product_user }}"
+        group: "{{ atl_product_user }}"
+      changed_when: false  # For Molecule idempotence check
+
     - name: Parse the manifest URL
       set_fact:
         atl_backup_manifest_url: "{{ atl_backup_manifest_url | urlsplit }}"
