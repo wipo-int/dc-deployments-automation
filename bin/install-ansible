@@ -10,7 +10,14 @@ set -e
 # Luckily AmazonLinux2 and Ubuntu use the same package name for
 # pip. This may need some logic if other distros are added. Note:
 # Parsing /etc/os-release is probably a good starting point for that.
-./bin/pacapt install --noconfirm python-pip
+#
+# Additionally we need to install boto3 and botocore, as the Ansible
+# AWS modules manage to escape the virtualenv and invoke the native python.
+
+./bin/pacapt install --noconfirm \
+             python-pip \
+             python-boto3 \
+             python-botocore
 export PATH=$PATH:/usr/local/bin
 
 # See Pipfile and Pipfile.lock.
