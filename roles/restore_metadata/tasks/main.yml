@@ -35,4 +35,9 @@
         dest: "{{ atl_backup_manifest_dest }}"
       when: atl_backup_manifest_url.scheme != 's3'
 
+    - name: Load parameters from manifest
+      include_vars:
+        file: "{{ atl_backup_manifest_dest }}"
+        name: atl_backup_manifest
+
   when: atl_backup_manifest_url is defined and atl_backup_manifest_url != ''
