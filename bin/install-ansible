@@ -12,3 +12,12 @@ fi
              ansible \
              python-boto3 \
              python-botocore
+
+if [[ $1 == "--dev" ]]; then
+    ./bin/pacapt install --noconfirm \
+                 python-dev python-pip \
+                 python3-dev python3-pip
+
+    pip install pipenv
+    pipenv sync --dev
+fi
