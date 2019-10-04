@@ -2,21 +2,13 @@
 
 set -e
 
-# Amazon Linux 2 packages Ansible separately, so enable the repo
-. /etc/os-release
-if [[ $ID == 'amzn' ]]; then
-    amazon-linux-extras enable ansible2
-fi
-
 ./bin/pacapt install --noconfirm \
-             ansible \
-             python-boto3 \
-             python-botocore
+             python3-dev \
+             python3-pip
+
+pip3 install pipenv
+pipenv sync
 
 if [[ $1 == "--dev" ]]; then
-    ./bin/pacapt install --noconfirm \
-                 python3-dev python3-pip
-
-    pip3 install pipenv
     pipenv sync --dev
 fi
