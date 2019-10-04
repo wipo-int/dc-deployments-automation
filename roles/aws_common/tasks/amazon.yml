@@ -6,7 +6,6 @@
       - ec2-utils
       - amazon-ssm-agent
       - amazon-efs-utils
-    lock_timeout: 30
 
 - name: Install CloudWatch Agent
   yum:
