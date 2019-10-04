@@ -46,7 +46,7 @@ class Step:
 
 
 class ScriptCommand:
-    PACKAGE_INSTALL_COMMAND = "./bin/install-ansible --dev"
+    PACKAGE_INSTALL_COMMAND = "apt-get update && ./bin/install-ansible --dev"
 
     def __init__(self, test_command):
         self.test_command = test_command

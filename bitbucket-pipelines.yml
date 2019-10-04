@@ -32,7 +32,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 1
            
        - step:
@@ -40,7 +40,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 2
            
        - step:
@@ -48,7 +48,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 3
            
        - step:
@@ -56,7 +56,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 4
            
        - step:
@@ -64,7 +64,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 5
            
        - step:
@@ -72,7 +72,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 6
            
        - step:
@@ -80,7 +80,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 7
            
        - step:
@@ -88,7 +88,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 8
            
        - step:
@@ -96,7 +96,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 9
            
        - step:
@@ -104,7 +104,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 10
            
        - step:
@@ -112,7 +112,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 11
            
        - step:
@@ -120,7 +120,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 12
            
        - step:
@@ -128,7 +128,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 13
            
        - step:
@@ -136,7 +136,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 14
            
        - step:
@@ -144,7 +144,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 15
            
        - step:
@@ -152,7 +152,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 16
            
        - step:
@@ -160,7 +160,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 17
            
        - step:
@@ -168,7 +168,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 18
            
        - step:
@@ -176,7 +176,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 19
            
        - step:
@@ -184,7 +184,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 20
            
        - step:
@@ -192,7 +192,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 21
            
        - step:
@@ -200,7 +200,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 22
            
        - step:
@@ -208,7 +208,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 23
            
        - step:
@@ -216,7 +216,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 24
            
        - step:
@@ -224,7 +224,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 25
            
        - step:
@@ -232,7 +232,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 26
            
        - step:
@@ -240,7 +240,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 27
            
        - step:
@@ -248,7 +248,7 @@ pipelines:
            services:
              - docker
            script:
-           - ./bin/install-ansible --dev
+           - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 28
            
        
