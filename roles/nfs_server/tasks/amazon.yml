@@ -4,3 +4,4 @@
   yum:
     name:
       - nfs-utils
+    lock_timeout: 30

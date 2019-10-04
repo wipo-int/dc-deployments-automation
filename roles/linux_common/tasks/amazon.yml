@@ -6,3 +6,4 @@
       - shadow-utils
       - libxml2
       - git-{{ git_version }}
+    lock_timeout: 30
