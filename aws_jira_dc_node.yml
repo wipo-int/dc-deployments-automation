@@ -15,6 +15,7 @@
     atl_jdbc_encoding: 'UNICODE'
     atl_jdbc_collation: 'C'
     atl_jdbc_ctype: 'C'
+    atl_jdbc_template: 'template0'
 
   roles:
     - role: linux_common
