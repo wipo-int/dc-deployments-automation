@@ -1,40 +1,57 @@
 ---
 
-- name: Create application DB user
-  postgresql_user:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    port: "{{ atl_db_port }}"
-    name: "{{ atl_jdbc_user }}"
-    password: "{{ atl_jdbc_password }}"
-    expires: 'infinity'
-  tags:
-    - new_only
+- block:
 
-- name: Update root privs for new user
-  postgresql_privs:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    database: postgres
-    roles: "{{ atl_db_root_user }}"
-    objs: "{{ atl_jdbc_user }}"
-    type: group
-  tags:
-    - new_only
+    - name: Create application DB user
+      postgresql_user:
+        login_host: "{{ atl_db_host }}"
+        login_user: "{{ atl_db_root_user }}"
+        login_password: "{{ atl_db_root_password }}"
+        port: "{{ atl_db_port }}"
+        name: "{{ atl_jdbc_user }}"
+        password: "{{ atl_jdbc_password }}"
+        expires: 'infinity'
 
-- name: Create application database
-  postgresql_db:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    port: "{{ atl_db_port }}"
-    name: "{{ atl_jdbc_db_name }}"
-    owner: "{{ atl_jdbc_user }}"
-    encoding: "{{ atl_jdbc_encoding }}"
-    lc_collate: "{{ atl_jdbc_collation }}"
-    lc_ctype: "{{ atl_jdbc_ctype }}"
-    template: "{{ atl_jdbc_template }}"
+    - name: Update root privs for new user
+      postgresql_privs:
+        login_host: "{{ atl_db_host }}"
+        login_user: "{{ atl_db_root_user }}"
+        login_password: "{{ atl_db_root_password }}"
+        database: postgres
+        roles: "{{ atl_db_root_user }}"
+        objs: "{{ atl_jdbc_user }}"
+        type: group
+
+    - name: Create new application database
+      postgresql_db:
+        login_host: "{{ atl_db_host }}"
+        login_user: "{{ atl_db_root_user }}"
+        login_password: "{{ atl_db_root_password }}"
+        port: "{{ atl_db_port }}"
+        name: "{{ atl_jdbc_db_name }}"
+        owner: "{{ atl_jdbc_user }}"
+        encoding: "{{ atl_jdbc_encoding }}"
+        lc_collate: "{{ atl_jdbc_collation }}"
+        lc_ctype: "{{ atl_jdbc_ctype }}"
+        template: "{{ atl_jdbc_template }}"
+      when: atl_backup_db_dest is not defined
+
+    - name: Restore application database
+      postgresql_db:
+        login_host: "{{ atl_db_host }}"
+        login_user: "{{ atl_db_root_user }}"
+        login_password: "{{ atl_db_root_password }}"
+        port: "{{ atl_db_port }}"
+        name: "{{ atl_jdbc_db_name }}"
+        owner: "{{ atl_jdbc_user }}"
+        encoding: "{{ atl_jdbc_encoding }}"
+        lc_collate: "{{ atl_jdbc_collation }}"
+        lc_ctype: "{{ atl_jdbc_ctype }}"
+        template: "{{ atl_jdbc_template }}"
+        # Depends on fetch_backup roles
+        state: restore
+        target: "{{ atl_backup_db_dest }}"
+      when: atl_backup_db_dest is defined
+
   tags:
     - new_only
