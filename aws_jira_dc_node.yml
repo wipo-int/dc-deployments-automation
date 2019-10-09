@@ -21,6 +21,7 @@
     - role: linux_common
     - role: aws_common
     - role: aws_shared_fs_config
+    - role: fetch_backups
     - role: product_common
     - role: product_install
     - role: database_init
