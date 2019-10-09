@@ -51,6 +51,7 @@
         # Depends on fetch_backup roles
         state: restore
         target: "{{ atl_backup_db_dest }}"
+        target_opts: "--no-owner --role={{ atl_jdbc_user }}"
       when: atl_backup_db_dest is defined
 
   tags:
