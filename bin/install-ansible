@@ -6,8 +6,12 @@ source /etc/os-release
 if [[ $ID = "amzn" ]]; then
     yum install -y \
         python3-devel \
-        python3-pip
+        python3-pip \
+        python2-boto3 \
+        python2-botocore
+
 else
+    # FIXME: Currently assumes Debian-based
     apt-get update && \
     apt-get install -y \
             python3-dev \
