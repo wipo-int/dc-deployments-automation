@@ -40,6 +40,8 @@
         dest: "{{ atl_backup_manifest_dest }}"
       when: atl_backup_manifest_url.scheme != 's3'
 
+    # FIXME: The manifest format is still undecided; everything
+    # referencing this variable should be considered a placeholder.
     - name: Load parameters from manifest
       include_vars:
         file: "{{ atl_backup_manifest_dest }}"
