@@ -1,2 +1,2 @@
 generate-pipeline:
-	@python pipeline.py
+	@python3 pipeline.py
