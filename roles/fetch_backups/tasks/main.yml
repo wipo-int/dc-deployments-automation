@@ -69,4 +69,7 @@
         object: "{{ atl_backup_manifest.shared_home_dump | urlsplit('path') }}"
         dest: "{{ atl_backup_home_dest }}"
 
+    - name: Install distro-specific restore support packages
+      include_tasks: "{{ ansible_distribution|lower }}.yml"
+
   when: atl_backup_manifest_url is defined and atl_backup_manifest_url != ''

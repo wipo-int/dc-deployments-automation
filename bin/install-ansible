@@ -4,9 +4,7 @@ set -e
 
 source /etc/os-release
 if [[ $ID = "amzn" ]]; then
-    amazon-linux-extras enable postgresql9.6
     yum install -y \
-        postgresql \
         python3-devel \
         python3-pip \
         python2-boto3 \
