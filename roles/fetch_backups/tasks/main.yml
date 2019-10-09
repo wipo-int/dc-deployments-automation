@@ -28,6 +28,7 @@
     - name: Fetch the manifest from S3
       aws_s3:
         mode: get
+        overwrite: different
         bucket: "{{ atl_backup_manifest_bucket }}"
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
@@ -55,6 +56,7 @@
     - name: Fetch DB backup from S3
       aws_s3:
         mode: get
+        overwrite: different
         bucket: "{{ atl_backup_manifest.db_dump | urlsplit('hostname') }}"
         object: "{{ atl_backup_manifest.db_dump | urlsplit('path') }}"
         dest: "{{ atl_backup_db_dest }}"
@@ -62,6 +64,7 @@
     - name: Fetch Home backup from S3
       aws_s3:
         mode: get
+        overwrite: different
         bucket: "{{ atl_backup_manifest.shared_home_dump | urlsplit('hostname') }}"
         object: "{{ atl_backup_manifest.shared_home_dump | urlsplit('path') }}"
         dest: "{{ atl_backup_home_dest }}"
