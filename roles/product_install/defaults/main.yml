@@ -22,6 +22,10 @@ atl_product_download_filename: "{{ atl_download_edition | default(atl_product_ed
 atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
 atl_product_varfile: "{{ atl_installer_temp }}/{{ atl_product_family }}.varfile"
 
+atl_product_home_shared_download_dir: "{{ atl_product_home_shared }}/downloads"
+atl_product_home_shared_download: "{{ atl_product_home_shared_download_dir }}/{{ atl_product_download_filename }}"
+atl_product_home_shared_download_lockdir: "{{ atl_product_home_shared_download }}_downloaded"
+
 atl_marketplace_base: "https://marketplace.atlassian.com"
 atl_servicedesk_latest_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest"
 atl_servicedesk_versioned_url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/name/{{ atl_product_version }}"

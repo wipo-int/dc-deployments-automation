@@ -11,7 +11,7 @@
 # will create 'jira1'; this potentially creates idempotency/upgrade
 # issues down the line.
 - name: Run the installer
-  command: /bin/sh "{{ atl_product_download }}" -q -varfile "{{ atl_product_varfile }}"
+  command: /bin/sh "{{ atl_product_home_shared_download }}" -q -varfile "{{ atl_product_varfile }}"
   args:
     creates: "{{ atl_product_installation_versioned }}/.install4j/"
   become: true
