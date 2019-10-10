@@ -120,7 +120,7 @@
 
         - name: Restore the shared-home backup
           unarchive:
-            src: "{{ atl_backup_home_restore_canary_path }}"
+            src: "{{ atl_backup_home_dest }}"
             dest: "{{ atl_product_home_shared }}"
             owner: "{{ atl_product_user }}"
             group: "{{ atl_product_user }}"
