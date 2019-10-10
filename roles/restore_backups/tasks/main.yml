@@ -108,22 +108,29 @@
         path: "{{ atl_backup_home_restore_canary_path }}"
       register: restore_canary
 
-    - name: Create shared home if necessary
-      file:
-        path: "{{ atl_product_home_shared }}"
-        state: directory
-        mode: 0750
-        owner: "{{ atl_product_user }}"
-        group: "{{ atl_product_user }}"
-      when: restore_canary.stat.exists
+    - block:
 
-    - name: Restore the shared-home backup
-      unarchive:
-        path: "{{ atl_backup_home_restore_canary_path }}"
-        dest: "{{ atl_product_home_shared }}"
-        owner: "{{ atl_product_user }}"
-        group: "{{ atl_product_user }}"
-      when: restore_canary.stat.exists
+        - name: Create shared home if necessary
+          file:
+            path: "{{ atl_product_home_shared }}"
+            state: directory
+            mode: 0750
+            owner: "{{ atl_product_user }}"
+            group: "{{ atl_product_user }}"
+
+        - name: Restore the shared-home backup
+          unarchive:
+            path: "{{ atl_backup_home_restore_canary_path }}"
+            dest: "{{ atl_product_home_shared }}"
+            owner: "{{ atl_product_user }}"
+            group: "{{ atl_product_user }}"
+
+        - name: Create restore-canary if necessary
+          copy:
+            dest: "{{ atl_backup_home_restore_canary_path }}"
+            content: "{{ atl_backup_id }}"
+
+      when: not restore_canary.stat.exists
 
 
   when: atl_backup_manifest_url is defined and atl_backup_manifest_url != ''
