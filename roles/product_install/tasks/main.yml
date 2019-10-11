@@ -220,43 +220,43 @@
       - ( downloaded_lock.stat.isdir is not defined or downloaded_lock.stat.isdir == False )
       - ( moving_lock.stat.isdir is not defined or moving_lock.stat.isdir == False ) 
 
-    - name: Create moving_lock to ensure other nodes skip
-      file:
-        path: "{{ atl_product_home_shared_moving_lock }}"
-        state: directory
-      when: move_binary
-      register: moving_lock_created
+  - name: Create moving_lock to ensure other nodes skip
+    file:
+      path: "{{ atl_product_home_shared_moving_lock }}"
+      state: directory
+    when: move_binary
+    register: moving_lock_created
 
-    - name: Copy temp installer to home_shared
-      copy:
-        src: "{{ atl_product_temp_download }}"
-        dest: "{{ atl_product_home_shared_download }}"
-        remote_src: true
-      when: moving_lock_created is succeeded
-      register: copied
+  - name: Copy temp installer to home_shared
+    copy:
+      src: "{{ atl_product_temp_download }}"
+      dest: "{{ atl_product_home_shared_download }}"
+      remote_src: true
+    when: moving_lock_created is succeeded
+    register: copied
 
-    - name: Create downloaded_lock once product installer downloaded and copied
-      file:
-        path: "{{ atl_product_home_shared_downloaded_lock }}"
-        state: directory
-      when: copied is succeeded
-      register: downloaded_lock_created
+  - name: Create downloaded_lock once product installer downloaded and copied
+    file:
+      path: "{{ atl_product_home_shared_downloaded_lock }}"
+      state: directory
+    when: copied is succeeded
+    register: downloaded_lock_created
 
-    - name: Remove moving_lock to show that binary is completed
-      file:
-        path: "{{ atl_product_home_shared_moving_lock }}"
-        state: absent
-      when:
-        - downloaded_lock_created is succeeded
-        - copied is succeeded
-      register: moving_lock_removed
+  - name: Remove moving_lock to show that binary is completed
+    file:
+      path: "{{ atl_product_home_shared_moving_lock }}"
+      state: absent
+    when:
+      - downloaded_lock_created is succeeded
+      - copied is succeeded
+    register: moving_lock_removed
 
-    - name: Delete old temp installer
-      file:
-        path: "{{ atl_product_temp_download }}"
-        state: absent
-      when: moving_lock_removed is succeeded
-      register: temp_deleted
+  - name: Delete old temp installer
+    file:
+      path: "{{ atl_product_temp_download }}"
+      state: absent
+    when: moving_lock_removed is succeeded
+    register: temp_deleted
 
   when: move_binary
 
