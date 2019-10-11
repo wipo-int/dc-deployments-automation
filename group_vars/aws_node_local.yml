@@ -45,6 +45,10 @@ atl_product_log_locations:
     - "{{ atl_product_home }}/log"
   crowd: []
 
+atl_provisioner_log_locations:
+  - "/var/log/ansible-bootstrap.log"
+  - "/var/log/cfn-*.log"
+
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper

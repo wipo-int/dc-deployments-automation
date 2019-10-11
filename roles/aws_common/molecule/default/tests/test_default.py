@@ -20,6 +20,7 @@ def test_package_exes(host, exe):
 def test_service_file(host):
     f = host.file('/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json')
     assert f.contains('"log_group_name": "jira-software-MY_STACK"')
+    assert f.contains('"log_group_name": "jira-software-MY_STACK-provisioning"')
     assert f.user == 'root'
     assert f.group == 'root'
     assert f.mode == 0o0644
