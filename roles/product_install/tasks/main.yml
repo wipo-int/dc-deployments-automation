@@ -189,10 +189,12 @@
     state: link
     force: true
 
-# Product is installed. If the following are true, move to home_shared
+# Temp product was downloaded and installed.
+# If the following conditions are true, move to home_shared
 # 1. This node just downloaded binary.
 # 2. Another node is not already moving into place.
-- name: "Move product installer"
+# 3. The binary is downloaded and lockdir in place.
+- name: "Check move product installer"
   block:
 
   - name: Check again for moving lock directory
@@ -214,11 +216,15 @@
   - name: Check lock directory and binary exists on shared_home
     set_fact:
       move_binary: true
-      atl_product_download: "{{ atl_product_home_shared_download }}"
     when:
-      - home_shared_download.stat.exists == False
-      - ( downloaded_lock.stat.isdir is not defined or downloaded_lock.stat.isdir == False )
-      - ( moving_lock.stat.isdir is not defined or moving_lock.stat.isdir == False ) 
+      - ( home_shared_download.stat.exists == False or
+          downloaded_lock.stat.isdir is not defined or downloaded_lock.stat.isdir == False )
+      - ( moving_lock.stat.isdir is not defined or moving_lock.stat.isdir == False )
+
+  when: download_binary
+
+- name: "Move product installer if required"
+  block:
 
   - name: Create moving_lock to ensure other nodes skip
     file:
