@@ -159,41 +159,45 @@
     - completed_lock.stat.isdir is defined
     - completed_lock.stat.isdir
 
-# If the binary was never installed, download it to temp location
-- name: Installer not on home_shared. Fetch it.
-  get_url:
-    url: "{{ atl_product_download_url }}"
-    dest: "{{ atl_product_temp_download }}"
-    mode: 0755
-    force: false
-  register: atl_product_completed
+# Fetch binary if required
+- name: download_binary is true so fetch and do all the things
+  block:
+
+  - name: Fetch binary
+    get_url:
+      url: "{{ atl_product_download_url }}"
+      dest: "{{ atl_product_temp_download }}"
+      mode: 0755
+      force: false
+    register: atl_product_completed
+
+  # If product installer was fetched make the moving directory
+  - name: Create moving_lock.
+    file:
+      path: "{{ atl_product_home_shared_moving_lock }}"
+      state: directory
+    when: 
+    - atl_product_completed is succeeded
+    register: moving_lock_created
+
+  # Directory lock was created by this run
+  # - Move binary
+  - name: Move binary Scenario - lock created by this run
+    set_fact:
+      move_binary: true
+    when: 
+    - moving_lock_created is succeeded
+    - moving_lock_created.changed == True
+
+  # Directory lock was either already created or could not be
+  # - Continue and install from temp
+  - name: Continue Scenario - lock cannot be created or created by previous run
+    debug:
+      msg: lock not created
+    when: moving_lock_created is not succeeded or
+          ( moving_lock_created is succeeded and moving_lock_created.changed == False )
+
   when: download_binary
-
-# If product installer was fetched make the moving directory
-- name: Create moving_lock.
-  file:
-    path: "{{ atl_product_home_shared_moving_lock }}"
-    state: directory
-  when: 
-  - atl_product_completed is succeeded
-  register: moving_lock_created
-
-# Directory lock was created by this run
-# - Move binary
-- name: Move binary Scenario - lock created by this run
-  set_fact:
-    move_binary: true
-  when: 
-  - moving_lock_created is succeeded
-  - moving_lock_created.changed == True
-
-# Directory lock was either already created or could not be
-# - Continue and install from temp
-- name: Continue Scenario - lock cannot be created or created by previous run
-  debug:
-    msg: lock not created
-  when: moving_lock_created is not succeeded or
-        ( moving_lock_created is succeeded and moving_lock_created.changed == False )
 
 
 # Move binary block
