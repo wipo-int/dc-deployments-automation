@@ -163,6 +163,10 @@
 - name: download_binary is true so fetch and do all the things
   block:
 
+  - name: debug
+    msg:
+      - Download the binary
+
   - name: Fetch binary
     get_url:
       url: "{{ atl_product_download_url }}"
