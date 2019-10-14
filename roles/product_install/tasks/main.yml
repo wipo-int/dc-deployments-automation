@@ -199,7 +199,6 @@
 
   when: download_binary
 
-
 # Move binary block
 - name: Move product installer to home_shared
   block:
@@ -239,69 +238,15 @@
 
   when: move_binary
 
+# At this point the binary is in place and can be used to install
+# The location is determined by {{ atl_product_download }} variable
+# set above
+- name: Unpack the downloaded application depending on format
+  include_tasks: "unpack_{{ atl_download_format }}.yml"
 
-
-
-
-
-
-# # If product installer was pre-downloaded on shared_home, install from there
-# # This is determined by {{ atl_product_download }} variable
-# - name: Unpack the downloaded application depending on format
-#   include_tasks: "unpack_{{ atl_download_format }}.yml"
-
-# - name: Symlink the installed version to current
-#   file:
-#     src: "{{ atl_product_installation_versioned }}"
-#     dest: "{{ atl_product_installation_current }}"
-#     state: link
-#     force: true
-
-# # Temp product was downloaded and installed.
-# # If the following conditions are true, move to home_shared
-# # 1. This node just downloaded binary.
-# # 2. Another node is not already moving into place.
-# # 3. The binary is downloaded and lockdir in place.
-# - name: "Check move product installer"
-#   block:
-
-#   - name: Check again for moving lock directory
-#     stat:
-#       path: "{{ atl_product_home_shared_moving_lock }}"
-#     register: moving_lock_2
-  
-#   - name: Check again for completed lock directory
-#     stat:
-#       path: "{{ atl_product_home_shared_completed_lock }}"
-#     register: completed_lock_2
-  
-#   - name: Check again for product installer in home_shared
-#     stat:
-#       path: "{{ atl_product_home_shared_download }}"
-#     register: home_shared_download_2
-
-#   # If binary exists and lockdir exists use this binary instead
-#   - name: Check lock directory and binary exists on shared_home
-#     set_fact:
-#       move_binary: true
-#     when:
-#       - ( home_shared_download.stat.exists == False or
-#           completed_lock.stat.isdir is not defined or completed_lock.stat.isdir == False )
-#       - ( moving_lock.stat.isdir is not defined or moving_lock.stat.isdir == False )
-
-#   when: download_binary
-
-# - name: "Move product installer if required"
-#   block:
-
-#   - name: Create moving_lock to ensure other nodes skip
-#     file:
-#       path: "{{ atl_product_home_shared_moving_lock }}"
-#       state: directory
-#     when: move_binary
-#     register: moving_lock_created
-
-
-
-
-
+- name: Symlink the installed version to current
+  file:
+    src: "{{ atl_product_installation_versioned }}"
+    dest: "{{ atl_product_installation_current }}"
+    state: link
+    force: true
