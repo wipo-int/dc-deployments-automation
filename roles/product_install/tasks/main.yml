@@ -181,8 +181,6 @@
 # Directory lock was created by this run
 # - Move binary
 - name: Move binary Scenario - lock created by this run
-  debug:
-    msg: lock created
   set_fact:
     move_binary: true
   when: 
