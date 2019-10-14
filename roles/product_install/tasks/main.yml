@@ -169,25 +169,33 @@
   register: atl_product_completed
   when: download_binary
 
-# If product installer was fetched
-# Make the moving directory
-# - failure, continue and install from temp
-# - success, move binary and install from shared_home
-
+# If product installer was fetched make the moving directory
 - name: Create moving_lock.
   file:
     path: "{{ atl_product_home_shared_moving_lock }}"
     state: directory
-  when: download_binary is succeeded
+  when: 
+  - atl_product_completed is succeeded
   register: moving_lock_created
 
-- name: Debug Scenario A - lock created
-  debug: lock created
-  when: moving_lock_created is succeeded
+# Directory lock was created by this run
+# - Move binary
+- name: Move binary Scenario - lock created by this run
+  debug:
+    msg: lock created
+  set_fact:
+    move_binary: true
+  when: 
+  - moving_lock_created is succeeded
+  - moving_lock_created.changed == True
 
-- name: Debug Scenario B - lock cannot created
-  debug: lock not created
-  when: moving_lock_created is failed
+# Directory lock was either already created or could not be
+# - Continue and install from temp
+- name: Continue Scenario - lock cannot be created or created by previous run
+  debug:
+    msg: lock not created
+  when: moving_lock_created is not succeeded or
+        ( moving_lock_created is succeeded and moving_lock_created.changed == False )
 
 
 
