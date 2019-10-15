@@ -240,6 +240,11 @@
     when: moving_lock_removed is succeeded
     register: temp_deleted
 
+  - name: Set install to home_shared location
+    set_fact:
+      atl_product_download: "{{ atl_product_home_shared_download }}"
+    when: temp_deleted is succeeded
+
   when: move_binary
 
 - name: debug
