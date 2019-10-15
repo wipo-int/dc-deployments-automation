@@ -164,8 +164,8 @@
   block:
 
   - name: debug
-    msg:
-      - Download the binary
+    debug:
+      msg: Download the binary
 
   - name: Fetch binary
     get_url:
@@ -241,6 +241,10 @@
     register: temp_deleted
 
   when: move_binary
+
+- name: debug
+  debug:
+    msg: Install from {{ atl_product_download }}
 
 # At this point the binary is in place and can be used to install
 # The location is determined by {{ atl_product_download }} variable
