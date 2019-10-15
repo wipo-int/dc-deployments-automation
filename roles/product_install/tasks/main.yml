@@ -163,10 +163,7 @@
 - name: download_binary is true so fetch and do all the things
   block:
 
-  - name: debug
-    debug:
-      msg: Download the binary
-
+  # Fetch binary and copy to temp
   - name: Fetch binary
     get_url:
       url: "{{ atl_product_download_url }}"
@@ -175,7 +172,7 @@
       force: false
     register: atl_product_completed
 
-  # If product installer was fetched make the moving directory
+  # If product installer was fetched make the lock directory
   - name: Create moving_lock.
     file:
       path: "{{ atl_product_home_shared_moving_lock }}"
@@ -184,26 +181,20 @@
     - atl_product_completed is succeeded
     register: moving_lock_created
 
-  # Directory lock was created by this run
-  # - Move binary
+  # Directory lock was created by this run?
+  # If so, then set a fact intending to move binary
   - name: Move binary Scenario - lock created by this run
     set_fact:
       move_binary: true
     when: 
     - moving_lock_created is succeeded
     - moving_lock_created.changed == True
-
-  # Directory lock was either already created or could not be
-  # - Continue and install from temp
-  - name: Continue Scenario - lock cannot be created or created by previous run
-    debug:
-      msg: lock not created
-    when: moving_lock_created is not succeeded or
-          ( moving_lock_created is succeeded and moving_lock_created.changed == False )
+  # Otherwise directory lock was either already created or
+  # could not be created. Fall back is to continue and install from temp
 
   when: download_binary
 
-# Move binary block
+# If the intention is to move binary to home_shared
 - name: Move product installer to home_shared
   block:
 
@@ -247,13 +238,8 @@
 
   when: move_binary
 
-- name: debug
-  debug:
-    msg: Install from {{ atl_product_download }}
-
-# At this point the binary is in place and can be used to install
-# The location is determined by {{ atl_product_download }} variable
-# set above
+# At this point the binary is in {{ atl_product_download }}
+# (which is either on home_shared or temp)
 - name: Unpack the downloaded application depending on format
   include_tasks: "unpack_{{ atl_download_format }}.yml"
 
