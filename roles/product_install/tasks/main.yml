@@ -163,34 +163,34 @@
 - name: download_binary is true so fetch and do all the things
   block:
 
-  # Fetch binary and copy to temp
-  - name: Fetch binary
-    get_url:
-      url: "{{ atl_product_download_url }}"
-      dest: "{{ atl_product_temp_download }}"
-      mode: 0755
-      force: false
-    register: atl_product_completed
+    # Fetch binary and copy to temp
+    - name: Fetch binary
+      get_url:
+        url: "{{ atl_product_download_url }}"
+        dest: "{{ atl_product_temp_download }}"
+        mode: 0755
+        force: false
+      register: atl_product_completed
 
-  # If product installer was fetched make the lock directory
-  - name: Create moving_lock.
-    file:
-      path: "{{ atl_product_home_shared_moving_lock }}"
-      state: directory
-    when: 
-    - atl_product_completed is succeeded
-    register: moving_lock_created
+    # If product installer was fetched make the lock directory
+    - name: Create moving_lock.
+      file:
+        path: "{{ atl_product_home_shared_moving_lock }}"
+        state: directory
+      when:
+        - atl_product_completed is succeeded
+      register: moving_lock_created
 
-  # Directory lock was created by this run?
-  # If so, then set a fact intending to move binary
-  - name: Move binary Scenario - lock created by this run
-    set_fact:
-      move_binary: true
-    when: 
-    - moving_lock_created is succeeded
-    - moving_lock_created.changed == True
-  # Otherwise directory lock was either already created or
-  # could not be created. Fall back is to continue and install from temp
+    # Directory lock was created by this run?
+    # If so, then set a fact intending to move binary
+    - name: Move binary Scenario - lock created by this run
+      set_fact:
+        move_binary: true
+      when:
+        - moving_lock_created is succeeded
+        - moving_lock_created.changed == True
+        # Otherwise directory lock was either already created or
+        # could not be created. Fall back is to continue and install from temp
 
   when: download_binary
 
@@ -198,43 +198,43 @@
 - name: Move product installer to home_shared
   block:
 
-  - name: Copy temp installer to home_shared
-    copy:
-      src: "{{ atl_product_temp_download }}"
-      dest: "{{ atl_product_home_shared_download }}"
-      remote_src: true
-    when: 
-    - moving_lock_created is succeeded
-    - moving_lock_created.changed == True
-    register: copied
+    - name: Copy temp installer to home_shared
+      copy:
+        src: "{{ atl_product_temp_download }}"
+        dest: "{{ atl_product_home_shared_download }}"
+        remote_src: true
+      when:
+        - moving_lock_created is succeeded
+        - moving_lock_created.changed == True
+      register: copied
 
-  - name: Create completed_lock once product installer downloaded and copied
-    file:
-      path: "{{ atl_product_home_shared_completed_lock }}"
-      state: directory
-    when: copied is succeeded
-    register: completed_lock_created
+    - name: Create completed_lock once product installer downloaded and copied
+      file:
+        path: "{{ atl_product_home_shared_completed_lock }}"
+        state: directory
+      when: copied is succeeded
+      register: completed_lock_created
 
-  - name: Remove moving_lock to show that binary is completed
-    file:
-      path: "{{ atl_product_home_shared_moving_lock }}"
-      state: absent
-    when:
-      - completed_lock_created is succeeded
-      - copied is succeeded
-    register: moving_lock_removed
+    - name: Remove moving_lock to show that binary is completed
+      file:
+        path: "{{ atl_product_home_shared_moving_lock }}"
+        state: absent
+      when:
+        - completed_lock_created is succeeded
+        - copied is succeeded
+      register: moving_lock_removed
 
-  - name: Delete old temp installer
-    file:
-      path: "{{ atl_product_temp_download }}"
-      state: absent
-    when: moving_lock_removed is succeeded
-    register: temp_deleted
+    - name: Delete old temp installer
+      file:
+        path: "{{ atl_product_temp_download }}"
+        state: absent
+      when: moving_lock_removed is succeeded
+      register: temp_deleted
 
-  - name: Set install to home_shared location
-    set_fact:
-      atl_product_download: "{{ atl_product_home_shared_download }}"
-    when: temp_deleted is succeeded
+    - name: Set install to home_shared location
+      set_fact:
+        atl_product_download: "{{ atl_product_home_shared_download }}"
+      when: temp_deleted is succeeded
 
   when: move_binary
 
