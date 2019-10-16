@@ -188,7 +188,7 @@
         move_binary: true
       when:
         - moving_lock_created is succeeded
-        - moving_lock_created.changed == True
+        - moving_lock_created.changed
         # Otherwise directory lock was either already created or
         # could not be created. Fall back is to continue and install from temp
 
@@ -205,7 +205,7 @@
         remote_src: true
       when:
         - moving_lock_created is succeeded
-        - moving_lock_created.changed == True
+        - moving_lock_created.changed
       register: copied
 
     - name: Create completed_lock once product installer downloaded and copied
