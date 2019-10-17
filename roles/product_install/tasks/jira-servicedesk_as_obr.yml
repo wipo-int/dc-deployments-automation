@@ -1,0 +1,30 @@
+---
+
+- name: Get the installer product version info
+  uri:
+    url="https://marketplace.atlassian.com/rest/2/products/key/jira-software/versions/name/{{ atl_product_version }}"
+    return_content=yes
+  register: atl_product_version_info
+
+- name: lets grab the build number
+  debug:
+    msg="buildNumber={{ atl_product_version_info.json.buildNumber }}"
+
+- name: Get the JSD build version info
+  uri:
+    url="https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest?application=jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
+    return_content=yes
+  register: atl_jsd_build_info
+
+- name: lets grab the obr binary href
+  debug:
+    msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
+
+- name: grab the jsd obr
+  get_url:
+    url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
+    dest: "{{ atl_installer_temp }}"
+
+- name: override the atl_product_edition to jira-software
+  set_fact:
+    atl_product_edition: "jira-software"
