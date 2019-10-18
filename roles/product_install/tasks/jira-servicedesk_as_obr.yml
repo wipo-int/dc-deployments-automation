@@ -53,5 +53,13 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
-    extra_opts:
-      - "-j"
+    # Ansible unarchive task validation does not work with the -j flag so we need to achieve the same result in 2 steps
+    # extra_opts:
+    #   - "-j"
+
+- name: Copy JSD dependency jars into the installed-plugins dir
+  copy:
+    src: "{{ item }}"
+    dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    remote_src: true
+  with_fileglob: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/dependencies/*.jar"
