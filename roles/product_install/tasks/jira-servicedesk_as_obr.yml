@@ -37,6 +37,14 @@
     dest: "{{ atl_product_version_cache_dir }}"
     remote_src: true
 
+- name: Ensure instaled-plugins dir exists
+  file:
+    path: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    state: directory
+    mode: 0750
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+
 - name: Unpack the obr into the installed-plugins dir
   unarchive:
     remote_src: true
