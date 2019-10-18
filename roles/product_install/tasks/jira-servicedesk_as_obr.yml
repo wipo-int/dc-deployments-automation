@@ -2,8 +2,8 @@
 
 - name: Get the installer product version info
   uri:
-    url="https://marketplace.atlassian.com/rest/2/products/key/jira-software/versions/name/{{ atl_product_version }}"
-    return_content=yes
+    url: "https://marketplace.atlassian.com/rest/2/products/key/jira-software/versions/name/{{ atl_product_version }}"
+    return_content: yes
   register: atl_product_version_info
 
 - name: Show the returned build number
@@ -12,8 +12,9 @@
 
 - name: Get the JSD build version info
   uri:
-    url="https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest?application=jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
-    return_content=yes
+    url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest?application=\
+    jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
+    return_content: yes
   register: atl_jsd_build_info
 
 - name: Show the returned obr binary href
