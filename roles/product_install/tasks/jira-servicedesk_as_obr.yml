@@ -6,7 +6,7 @@
     return_content=yes
   register: atl_product_version_info
 
-- name: lets grab the build number
+- name: Show the returned build number
   debug:
     msg="buildNumber={{ atl_product_version_info.json.buildNumber }}"
 
@@ -16,15 +16,33 @@
     return_content=yes
   register: atl_jsd_build_info
 
-- name: lets grab the obr binary href
+- name: Show the returned obr binary href
   debug:
     msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
-- name: grab the jsd obr
+- name: Fetch the jsd obr
   get_url:
     url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
     dest: "{{ atl_installer_temp }}"
+  register: jsdobr
 
-- name: override the atl_product_edition to jira-software
-  set_fact:
-    atl_product_edition: "jira-software"
+- name: check the name of the downloaded file
+  debug:
+    msg="{{ jsdobr.dest }}"
+
+- name: Copy the obr to shared_home
+  copy:
+    src: "{{ jsdobr.dest }}"
+    dest: "{{ atl_product_version_cache_dir }}"
+    remote_src: true
+
+- name: Unpack the obr into the installed-plugins dir
+  unarchive:
+    remote_src: true
+    src: "{{ jsdobr.dest }}"
+    dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0750
+    extra_opts:
+      - "-j"
