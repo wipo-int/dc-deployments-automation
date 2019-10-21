@@ -60,7 +60,7 @@
         # following usages will need to be updated once it settles..
         atl_backup_id: "{{ atl_backup_manifest.name }}"
         atl_backup_db_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.db.location.value | basename }}"
-        atl_backup_home_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.shared_home.location.value | basename }}"
+        atl_backup_home_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.sharedHome.location.value | basename }}"
 
     # FIXME: Here we fetch the backups. However we may wish to stream
     # these directly from S3 to the target DB/FS to avoid requiring
@@ -77,8 +77,8 @@
       aws_s3:
         mode: get
         overwrite: different
-        bucket: "{{ atl_backup_manifest.artifacts.shared_home.location.value | urlsplit('hostname') }}"
-        object: "{{ atl_backup_manifest.artifacts.shared_home.location.value | urlsplit('path') }}"
+        bucket: "{{ atl_backup_manifest.artifacts.sharedHome.location.value | urlsplit('hostname') }}"
+        object: "{{ atl_backup_manifest.artifacts.sharedHome.location.value | urlsplit('path') }}"
         dest: "{{ atl_backup_home_dest }}"
 
     - name: Install distro-specific restore support packages
