@@ -2,7 +2,7 @@
 
 - name: Get the installer product version info
   uri:
-    url: "https://marketplace.atlassian.com/rest/2/products/key/jira-software/versions/name/{{ atl_product_version }}"
+    url: "{{ atl_mpac_products }}/key/jira-software/versions/name/{{ atl_product_version }}"
     return_content: yes
   register: atl_product_version_info
 
@@ -12,7 +12,7 @@
 
 - name: Get the JSD build version info
   uri:
-    url: "https://marketplace.atlassian.com/rest/2/products/key/jira-servicedesk/versions/latest?application=\
+    url: "{{ atl_mpac_products }}/key/jira-servicedesk/versions/latest?application=\
     jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
     return_content: yes
   register: atl_jsd_build_info
@@ -53,9 +53,6 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
-    # Ansible unarchive task validation does not work with the -j flag so we need to achieve the same result in 2 steps
-    # extra_opts:
-    #   - "-j"
 
 - name: Copy JSD dependency jars into the installed-plugins dir
   copy:
