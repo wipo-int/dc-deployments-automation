@@ -3,7 +3,7 @@
 - name: Install the startup wrapper script
   copy:
     src: start-synchrony
-    dest: "{{ atl_installation_base }}/bin/start-synchrony"
+    dest: "{{ atl_product_installation_current }}/bin/start-synchrony"
     group: "{{ atl_product_user }}"
     mode: "0750"
 
