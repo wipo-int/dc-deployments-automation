@@ -8,15 +8,15 @@
 - name: Set the minimum heap size (Xms)
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    regexp: '^(.*)Xmx(\\d+\\w)(\\s.*)$'
-    line: '\1Xms${atl_jvm_heap}\3'
+    regexp: '^(.*)Xms(\d+\w)(\s.*)$'
+    line: '\1Xms{{ atl_jvm_heap }}\3'
     backrefs: yes
 
 - name: Set the maxmimum heap size (Xmx)
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    regexp: '^(.*)Xmx(\\d+\\w)(\\s.*)$'
-    line: '\1Xmx${atl_jvm_heap}\3'
+    regexp: '^(.*)Xmx(\d+\w)(\s.*)$'
+    line: '\1Xmx{{ atl_jvm_heap }}\3'
     backrefs: yes
 
 - name: Set Crowd home directory in crowd-init.properties file
