@@ -11,13 +11,15 @@
     regexp: '^(.*)Xmx(\\d+\\w)(\\s.*)$'
     line: '\1Xms${atl_jvm_heap}\3'
     backrefs: yes
+    verbosity: 4
 
 - name: Set the maxmimum heap size (Xmx)
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
     regexp: '^(.*)Xmx(\\d+\\w)(\\s.*)$'
-    line: '\1Xmx${xms}m\3'
+    line: '\1Xmx${atl_jvm_heap}\3'
     backrefs: yes
+    verbosity: 4
 
 - name: Set Crowd home directory in crowd-init.properties file
   lineinfile:
