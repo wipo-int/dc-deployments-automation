@@ -1,8 +1,8 @@
 ---
 
 # This role will attempt to fetch and load the backup manifest from a
-# remote HTTP or S3 URL. On successful completion the contents of JSON
-# or YAML document will be in the var `atl_backup_manifest`.
+# remote S3 URL. On successful completion the contents of JSON or YAML
+# document will be in the var `atl_backup_manifest`.
 #
 # PREREQUISITES:
 #  * `atl_backup_manifest_url` points at the manifest.
@@ -12,6 +12,9 @@
 #
 # NOTE: The actual DB/FS restore operations could potentially be split
 # out into discrete roles, but currently that is not required.
+#
+# TODO: Support HTTPS with authentication. Deferred until after the
+# initial testing release.
 
 - block:
 
@@ -42,12 +45,6 @@
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
       when: atl_backup_manifest_url.scheme == 's3'
-
-    - name: Fetch the manifest from remote host
-      get_url:
-        url: "{{ atl_backup_manifest_url }}"
-        dest: "{{ atl_backup_manifest_dest }}"
-      when: atl_backup_manifest_url.scheme != 's3'
 
     - name: Load parameters from manifest
       include_vars:
