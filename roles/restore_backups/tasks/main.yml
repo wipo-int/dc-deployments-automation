@@ -133,4 +133,4 @@
       when: not restore_canary.stat.exists
 
 
-  when: atl_backup_manifest_url is defined and atl_backup_manifest_url != ''
+  when: atl_restore_required
