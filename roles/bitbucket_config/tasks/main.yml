@@ -24,7 +24,7 @@
     recurse: true
   changed_when: false  # For Molecule idempotence check
 
-  - name: Copy Bitbucket dataset from s3
-    get_url:
-      url: "{{ atl_bitbucket_dataset_url }}"
-      dest: /media/atl/bitbucket/shared/data/migration/import/
+- name: Copy Bitbucket dataset from s3
+  get_url:
+    url: "{{ atl_bitbucket_dataset_url }}"
+    dest: /media/atl/bitbucket/shared/data/migration/import/
