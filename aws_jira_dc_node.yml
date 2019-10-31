@@ -24,5 +24,6 @@
     - role: product_common
     - role: product_install
     - role: database_init
+    - role: restore_backups
     - role: jira_config
     - role: product_startup
