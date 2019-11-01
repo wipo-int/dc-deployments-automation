@@ -5,16 +5,19 @@
     src: server.xml.j2
     dest: "{{ atl_product_installation_versioned }}/apache-tomcat/conf/server.xml"
 
-- name: Override JVM memory settings.
-  # Ugly but necessary as the product installs this file so we need to make the change here.
+- name: Set the minimum heap size (Xms)
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    backrefs: true
-    regexp: "^{{ item }}="
-    line: "{{ item }}=\"{{ atl_jvm_heap }}\""
-  with_items:
-    - 'JVM_MINIMUM_MEMORY'
-    - 'JVM_MAXIMUM_MEMORY'
+    regexp: '^(.*)Xms(\d+\w)(\s.*)$'
+    line: '\1Xms{{ atl_jvm_heap }}\3'
+    backrefs: yes
+
+- name: Set the maxmimum heap size (Xmx)
+  lineinfile:
+    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
+    regexp: '^(.*)Xmx(\d+\w)(\s.*)$'
+    line: '\1Xmx{{ atl_jvm_heap }}\3'
+    backrefs: yes
 
 - name: Set Crowd home directory in crowd-init.properties file
   lineinfile:
