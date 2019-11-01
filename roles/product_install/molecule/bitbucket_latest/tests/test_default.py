@@ -39,4 +39,8 @@ def test_latest_is_downloaded(host):
 
     installer = host.file('/media/atl/bitbucket/shared/downloads/bitbucket.' + upstream + '-x64.bin')
     assert installer.exists
-    assert installer.user == 'root' 
+    assert installer.user == 'root'
+
+def test_completed_lockfile(host):
+    verfile = host.file('/media/atl/bitbucket/shared/downloads/bitbucket.' + upstream + '-x64.bin_completed')
+    assert verfile.exists
