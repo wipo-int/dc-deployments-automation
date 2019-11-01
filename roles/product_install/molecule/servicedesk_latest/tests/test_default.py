@@ -23,7 +23,7 @@ def test_version_is_correct(host):
     assert verfile.content.decode("UTF-8").strip() == sd
 
 def test_is_downloaded(host):
-    installer = host.file('/opt/atlassian/tmp/servicedesk.'+sd+'-x64.bin')
+    installer = host.file('/media/atl/jira/shared/downloads/servicedesk.'+sd+'-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
