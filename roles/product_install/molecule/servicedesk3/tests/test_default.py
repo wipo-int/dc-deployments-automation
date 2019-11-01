@@ -18,6 +18,11 @@ def test_is_downloaded(host):
     assert installer.exists
     assert installer.user == 'root'
 
+def test_completed_lockfile(host):
+    lockfile = host.file('/media/atl/jira/shared/downloads/servicedesk.3.9.0-x64.bin_completed')
+    assert lockfile.exists
+    assert lockfile.user == 'root'
+
 def test_is_unpacked(host):
     installer = host.file('/opt/atlassian/jira-servicedesk/3.9.0')
     assert installer.exists

@@ -46,6 +46,7 @@ def test_completed_lockfile(host):
         "https://marketplace.atlassian.com/rest/2/applications/bitbucket/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
-        
-    verfile = host.file('/media/atl/bitbucket/shared/downloads/bitbucket.' + upstream + '-x64.bin_completed')
-    assert verfile.exists
+
+    lockfile = host.file('/media/atl/bitbucket/shared/downloads/bitbucket.' + upstream + '-x64.bin_completed')
+    assert lockfile.exists
+    assert lockfile.user == 'root'
