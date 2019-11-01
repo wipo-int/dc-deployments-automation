@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    atl_product_family: "crowd"
+    atl_product_edition: "crowd"
+    atl_product_user: "crowd"
+  roles:
+    - role: linux_common
+    - role: product_common
+    - role: product_install
