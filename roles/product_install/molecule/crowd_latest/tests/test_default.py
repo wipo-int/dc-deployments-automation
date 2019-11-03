@@ -17,33 +17,36 @@ def test_symlink_created(host):
     assert target.is_symlink
 
 def test_unpacked(host):
-    verfile = host.file('/opt/atlassian/crowd/current/bin/catalina.sh')
+    verfile = host.file('/opt/atlassian/crowd/current/bin/start-crowd.sh')
     assert verfile.exists
 
 def test_version_file_is_latest(host):
     verfile = host.file('/media/atl/crowd/shared/crowd.version')
     assert verfile.exists
 
-    upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
+    upstream_fd = urllib.request.urlopen(
+        "https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
     assert verfile.content.decode("UTF-8").strip() == upstream.strip()
 
 def test_latest_is_downloaded(host):
-    upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
+    upstream_fd = urllib.request.urlopen(
+        "https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    installer = host.file('/media/atl/crowd/shared/downloads/crowd.'+upstream+'-x64.bin')
+    installer = host.file('/media/atl/crowd/shared/downloads/crowd.' + upstream + '-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    upstream_fd = urllib.request.urlopen("https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
+    upstream_fd = urllib.request.urlopen(
+        "https://marketplace.atlassian.com/rest/2/applications/crowd/versions/latest")
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    lockfile = host.file('/media/atl/crowd/shared/downloads/crowd.'+upstream+'-x64.bin_completed')
+    lockfile = host.file('/media/atl/crowd/shared/downloads/crowd.' + upstream + '-x64.bin_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
