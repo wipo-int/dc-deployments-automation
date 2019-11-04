@@ -17,7 +17,7 @@ def test_symlink_created(host):
     assert target.is_symlink
 
 def test_unpacked(host):
-    verfile = host.file('/opt/atlassian/crowd/current/bin/start-crowd.sh')
+    verfile = host.file('/opt/atlassian/crowd/current/start_crowd.sh')
     assert verfile.exists
 
 def test_version_file_is_latest(host):
