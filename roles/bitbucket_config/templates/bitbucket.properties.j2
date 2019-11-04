@@ -18,9 +18,6 @@ plugin.search.elasticsearch.baseurl={{ atl_elasticsearch_endpoint }}
 server.proxy-name={{ atl_proxy_name }}
 server.secure={{ atl_ssl_proxy }}
 server.require-ssl={{ atl_ssl_proxy }}
-setup.license={{ atl_bitbucket_license_key }}
-setup.sysadmin.username=admin
-setup.sysadmin.password={{ atl_bitbucket_admin_password }}
 {% if atl_ssl_proxy == 'true' %}
 server.scheme=https
 server.proxy-port=443
@@ -29,3 +26,6 @@ server.additional-connector.1.port=7991
 server.scheme=http
 server.proxy-port=80
 {% endif %}
+setup.license={{ atl_bitbucket_license_key }}
+setup.sysadmin.username=admin
+setup.sysadmin.password={{ atl_bitbucket_admin_password }}

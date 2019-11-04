@@ -15,11 +15,6 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
 
-- name: Copy Bitbucket dataset from s3
-  get_url:
-    url: "{{ atl_bitbucket_dataset_url }}"
-    dest: /media/atl/bitbucket/shared/data/migration/import/
-
 - name: Remove write permissions from installation directory
   file:
     path: "{{ atl_product_installation_versioned }}"
