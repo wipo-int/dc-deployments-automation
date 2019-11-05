@@ -14,6 +14,9 @@ hazelcast.group.name={{ atl_aws_stack_name }}
 hazelcast.group.password={{ atl_aws_stack_name }}
 plugin.search.elasticsearch.aws.region={{ atl_aws_region }}
 plugin.search.elasticsearch.baseurl={{ atl_elasticsearch_endpoint }}
+setup.license={{ atl_bitbucket_license_key }}
+setup.sysadmin.username=admin
+setup.sysadmin.password={{ atl_bitbucket_admin_password }}
 
 server.proxy-name={{ atl_proxy_name }}
 server.secure={{ atl_ssl_proxy }}
@@ -26,6 +29,4 @@ server.additional-connector.1.port=7991
 server.scheme=http
 server.proxy-port=80
 {% endif %}
-setup.license={{ atl_bitbucket_license_key }}
-setup.sysadmin.username=admin
-setup.sysadmin.password={{ atl_bitbucket_admin_password }}
+
