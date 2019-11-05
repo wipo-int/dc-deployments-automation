@@ -6,7 +6,7 @@
     dest: /media/atl/bitbucket/shared/data/migration/import/
 
 - name: Create netrc file
-    content: "machine localhost username admin password {{ atl_bitbucket_admin_password }}"
+    content: 'machine localhost username admin password "{{ atl_bitbucket_admin_password }}"'
     dest: "/root/.netrc"
     owner: root
     group: root
