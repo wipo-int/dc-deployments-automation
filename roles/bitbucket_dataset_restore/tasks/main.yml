@@ -4,3 +4,5 @@
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
     dest: /media/atl/bitbucket/shared/data/migration/import/
+  wait_for:
+    path: /media/atl/bitbucket/shared/data/migration/import/
