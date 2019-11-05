@@ -4,10 +4,3 @@
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
     dest: /media/atl/bitbucket/shared/data/migration/import/
-
-- name: Create netrc file
-    content: 'machine localhost username admin password "{{ atl_bitbucket_admin_password }}"'
-    dest: "/root/.netrc"
-    owner: root
-    group: root
-    mode: 644
