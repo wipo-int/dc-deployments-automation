@@ -1,8 +1,11 @@
 ---
 
+- name: wait for bitbucket service to start
+  wait_for:
+    port: 7990
+    delay: 10
+
 - name: Copy Bitbucket dataset from s3
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
     dest: /media/atl/bitbucket/shared/data/migration/import/
-  wait_for:
-    path: /media/atl/bitbucket/shared/data/migration/import/
