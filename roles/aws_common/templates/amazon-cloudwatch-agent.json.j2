@@ -19,7 +19,14 @@
                 "log_stream_name": "{instance_id}"
               }
             {% endfor %}
-
+            {% for path in atl_provisioner_log_locations %}
+              {{ comma() }}
+              {
+                "file_path": "{{ path }}",
+                "log_group_name": "{{ atl_aws_provisioning_log_group }}",
+                "log_stream_name": "{instance_id}"
+              }
+            {% endfor %}
           ]
         }
       }

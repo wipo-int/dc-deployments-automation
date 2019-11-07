@@ -46,14 +46,13 @@ class Step:
 
 
 class ScriptCommand:
-    INSTALL_PACKAGES_COMMAND = "apt-get update && apt-get install -y virtualenv python-dev"
-    INSTALL_ANSIBLE_COMMAND = "./bin/install-ansible"
+    PACKAGE_INSTALL_COMMAND = "apt-get update && ./bin/install-ansible --dev"
 
     def __init__(self, test_command):
         self.test_command = test_command
 
     def all_commands(self):
-        return [self.INSTALL_PACKAGES_COMMAND, self.INSTALL_ANSIBLE_COMMAND, self.test_command]
+        return [self.PACKAGE_INSTALL_COMMAND, self.test_command]
 
 
 def main():

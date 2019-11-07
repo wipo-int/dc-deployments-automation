@@ -19,8 +19,13 @@ atl_product_base_url: "{{ atl_release_base_url }}/{{ atl_product_family }}/downl
 atl_product_download_url: "{{ atl_product_base_url }}/atlassian-{{ atl_download_edition | default(atl_product_edition) }}-{{ atl_product_version }}{{ atl_download_suffix }}"
 
 atl_product_download_filename: "{{ atl_download_edition | default(atl_product_edition) }}.{{ atl_product_version }}{{ atl_download_suffix }}"
-atl_product_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
+atl_product_temp_download: "{{ atl_installer_temp }}/{{ atl_product_download_filename }}"
 atl_product_varfile: "{{ atl_installer_temp }}/{{ atl_product_family }}.varfile"
+
+atl_product_home_shared_download_dir: "{{ atl_product_home_shared }}/downloads"
+atl_product_home_shared_download: "{{ atl_product_home_shared_download_dir }}/{{ atl_product_download_filename }}"
+atl_product_home_shared_moving_lock: "{{ atl_product_home_shared_download }}_moving"
+atl_product_home_shared_completed_lock: "{{ atl_product_home_shared_download }}_completed"
 
 atl_marketplace_base: "https://marketplace.atlassian.com"
 atl_mpac_products: "https://marketplace.atlassian.com/rest/2/products"

@@ -4,14 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ansible = "==2.7.11"
+ansible = "==2.8.5"
+boto3 = "==1.9.242"
+botocore = "==1.12.242"
 
 [dev-packages]
-molecule = "==2.20.1"
-docker = "==4.0.1"
+molecule = "==2.20.2"
+docker = "==4.1.0"
 six = "*"
 taskcat = "*"
 Jinja2 = "*"
 
 [requires]
-python_version = "2.7"
+python_version = "3.7"
