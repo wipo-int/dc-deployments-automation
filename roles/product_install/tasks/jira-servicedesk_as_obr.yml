@@ -40,10 +40,10 @@
     move_obr: false
     atl_obr_download_href: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
     atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
-    atl_obr_temp_download: "{{ atl_installer_temp }}/{{ atl_obr_filename }}"
-    atl_obr_shared_download: "{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}"
-    atl_obr_moving_lock: "{{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}_moving"
-    atl_obr_completed_lock: "{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}_completed"
+    atl_obr_download: "{{ atl_installer_temp }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+    atl_obr_shared_download: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+    atl_obr_moving_lock: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr_moving"
+    atl_obr_completed_lock: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr_completed"
 
 # Check for pre-downloaded obr on shared_home and completed lock dir.
 - name: Check for completed lock directory
@@ -74,7 +74,7 @@
     - name: Fetch obr
       get_url:
         url: "{{ atl_obr_download_href }}"
-        dest: "{{ atl_obr_temp_download }}"
+        dest: "{{ atl_obr_download }}"
         mode: 0755
         force: false
       register: atl_obr_completed
@@ -107,7 +107,7 @@
 
     - name: Copy temp installer to home_shared
       copy:
-        src: "{{ atl_obr_temp_download }}"
+        src: "{{ atl_obr_download }}"
         dest: "{{ atl_obr_shared_download }}"
         remote_src: true
       when:
@@ -117,14 +117,14 @@
 
     - name: Create completed_lock once obr downloaded and copied
       file:
-        path: "{{ atl_obr_shared_completed_lock }}"
+        path: "{{ atl_obr_completed_lock }}"
         state: directory
       when: copied is succeeded
       register: completed_lock_created
 
     - name: Remove moving_lock to show that obr is completed
       file:
-        path: "{{ atl_obr_shared_moving_lock }}"
+        path: "{{ atl_obr_moving_lock }}"
         state: absent
       when:
         - completed_lock_created is succeeded
@@ -133,7 +133,7 @@
 
     - name: Delete old temp installer
       file:
-        path: "{{ atl_obr_temp_download }}"
+        path: "{{ atl_obr_download }}"
         state: absent
       when: moving_lock_removed is succeeded
       register: temp_deleted
