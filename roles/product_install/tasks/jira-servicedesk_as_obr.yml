@@ -140,7 +140,7 @@
 
     - name: Set install to home_shared location
       set_fact:
-        atl_obr_download: "{{ atl_obr_home_shared_download }}"
+        atl_obr_download: "{{ atl_obr_shared_download }}"
       when: temp_deleted is succeeded
 
   when: move_obr
