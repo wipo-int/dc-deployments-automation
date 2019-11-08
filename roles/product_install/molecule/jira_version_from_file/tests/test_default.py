@@ -11,15 +11,15 @@ def test_version_is_correct(host):
     verfile = host.file('/media/atl/jira/shared/jira-core.version')
     assert verfile.exists
 
-    assert verfile.content.decode("UTF-8").strip() == "7.9.0"
+    assert verfile.content.decode("UTF-8").strip() == "7.13.1"
 
 def test_is_downloaded(host):
-    installer = host.file('/media/atl/jira/shared/downloads/jira-core.7.9.0-x64.bin')
+    installer = host.file('/media/atl/jira/shared/downloads/jira-core.7.13.1-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    lockfile = host.file('/media/atl/jira/shared/downloads/jira-core.7.9.0-x64.bin_completed')
+    lockfile = host.file('/media/atl/jira/shared/downloads/jira-core.7.13.1-x64.bin_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
