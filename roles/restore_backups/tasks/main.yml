@@ -56,8 +56,8 @@
         # FIXME: The manifest format is still undecided so the
         # following usages will need to be updated once it settles..
         atl_backup_id: "{{ atl_backup_manifest.name }}"
-        atl_backup_db_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.db.location.value | basename }}"
-        atl_backup_home_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.sharedHome.location.value | basename }}"
+        atl_backup_db_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.db.location.location | basename }}"
+        atl_backup_home_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.sharedHome.location.location | basename }}"
 
     # FIXME: Here we fetch the backups. However we may wish to stream
     # these directly from S3 to the target DB/FS to avoid requiring
@@ -66,16 +66,16 @@
       aws_s3:
         mode: get
         overwrite: different
-        bucket: "{{ atl_backup_manifest.artifacts.db.location.value | urlsplit('hostname') }}"
-        object: "{{ atl_backup_manifest.artifacts.db.location.value | urlsplit('path') }}"
+        bucket: "{{ atl_backup_manifest.artifacts.db.location.location | urlsplit('hostname') }}"
+        object: "{{ atl_backup_manifest.artifacts.db.location.location | urlsplit('path') }}"
         dest: "{{ atl_backup_db_dest }}"
 
     - name: Fetch Home backup from S3
       aws_s3:
         mode: get
         overwrite: different
-        bucket: "{{ atl_backup_manifest.artifacts.sharedHome.location.value | urlsplit('hostname') }}"
-        object: "{{ atl_backup_manifest.artifacts.sharedHome.location.value | urlsplit('path') }}"
+        bucket: "{{ atl_backup_manifest.artifacts.sharedHome.location.location | urlsplit('hostname') }}"
+        object: "{{ atl_backup_manifest.artifacts.sharedHome.location.location | urlsplit('path') }}"
         dest: "{{ atl_backup_home_dest }}"
 
     - name: Install distro-specific restore support packages
