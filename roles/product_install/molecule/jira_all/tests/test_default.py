@@ -32,7 +32,6 @@ def test_is_unpacked(host):
     assert installer.mode == 0o0755
 
 def test_obr_is_downloaded(host):
-
     installer = host.file('/media/atl/downloads/jira-servicedesk-application-3.16.1.obr')
     assert installer.exists
     assert installer.user == 'root'

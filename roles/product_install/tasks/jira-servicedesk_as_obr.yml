@@ -156,18 +156,17 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
 
+# Note as ansible unarchive cant handle "-j junk paths" we need to ignore errors to bypass the path verify
 - name: Unpack the obr into the installed-plugins dir
   unarchive:
     remote_src: true
     src: "{{ atl_obr_download }}"
     dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.jar"
+    extra_opts:
+      - -j
+      - -n
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
-
-- name: Copy JSD dependency jars into the installed-plugins dir
-  copy:
-    src: "{{ item }}"
-    dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
-    remote_src: true
-  with_fileglob: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/dependencies/*.jar"
+  ignore_errors: yes
