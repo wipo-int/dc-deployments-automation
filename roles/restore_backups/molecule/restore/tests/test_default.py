@@ -14,3 +14,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ])
 def test_postgresql_amazon_linux_extras_exes(host, exe):
     assert host.file(exe).exists
+
+def test_postgresql_version(host):
+    pg_dump_version_output = host.check_output('pg_dump --version')
+    assert '(PostgreSQL) 9.6' in pg_dump_version_output
