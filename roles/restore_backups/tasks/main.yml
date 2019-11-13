@@ -98,6 +98,7 @@
         state: restore
         target: "{{ atl_backup_db_dest }}"
       register: result
+      # managed DBs in cloud providers are not allowing full root access to the DB engine, we can safely ignore the COMMENT ON EXTENSION error
       failed_when:
         - result.rc != 0
         - '"COMMENT ON EXTENSION" not in result.msg'
