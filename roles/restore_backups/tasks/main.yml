@@ -124,8 +124,7 @@
           unarchive:
             src: "{{ atl_backup_home_dest }}"
             dest: "{{ atl_product_home_shared }}"
-            owner: "{{ atl_product_user }}"
-            group: "{{ atl_product_user }}"
+          become: "{{ atl_product_user }}"
 
         - name: Create restore-canary if necessary
           copy:

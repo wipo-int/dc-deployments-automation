@@ -6,6 +6,5 @@
     atl_product_user: 'jira'
     atl_backup_home_restore_canary_path: '/tmp/canary.tmp'
 
-  tasks:
-    - name: Install distro-specific restore support packages
-      include_tasks: "../../tasks/{{ ansible_distribution|lower }}.yml"
+  roles:
+    - restore_backups
