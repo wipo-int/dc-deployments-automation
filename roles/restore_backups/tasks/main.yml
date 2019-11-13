@@ -100,7 +100,7 @@
       register: result
       failed_when:
         - result.rc != 0
-        - "COMMENT ON EXTENSION" not in result.msg
+        - '"COMMENT ON EXTENSION" not in result.msg'
       when: db_created.changed and atl_backup_db_dest is defined
 
 
