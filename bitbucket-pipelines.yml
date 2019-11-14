@@ -14,7 +14,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 31 batches"
+          - echo "Running tests in 32 batches"
     - step:
         name: Check if number of batches match actual number of scenarios
         script:
@@ -274,4 +274,13 @@ pipelines:
            script:
            - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 31
+
+       - step:
+           name: Molecule Test Batch - 32
+           services:
+             - docker
+           script:
+           - apt-get update && ./bin/install-ansible --dev
+           - ./bin/run-tests-in-batches --batch 32
+
 
