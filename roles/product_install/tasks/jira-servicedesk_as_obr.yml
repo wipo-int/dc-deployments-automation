@@ -175,4 +175,3 @@
   shell:
     cmd: "mv {{ atl_product_version_cache_dir }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_version_cache_dir }}/plugins/installed-plugins"
     creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-REL-0022.jar"
-
