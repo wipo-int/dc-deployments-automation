@@ -25,8 +25,6 @@ provisioner:
       group_vars: ../../../../group_vars/
 verifier:
   name: testinfra
-  additional_files_or_dirs:
-    - ../../resources/tests/test_*.py
   lint:
     name: flake8
     enabled: false

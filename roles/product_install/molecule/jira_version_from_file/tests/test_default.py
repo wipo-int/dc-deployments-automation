@@ -11,7 +11,7 @@ def test_version_is_correct(host):
     verfile = host.file('/media/atl/jira/shared/jira-core.version')
     assert verfile.exists
 
-    assert verfile.content.decode("UTF-8").strip() == "7.13.1"
+    assert verfile.content.decode("UTF-8").strip() == "7.9.0"
 
 def test_is_downloaded(host):
     installer = host.file('/media/atl/downloads/jira-core.7.9.0-x64.bin')
