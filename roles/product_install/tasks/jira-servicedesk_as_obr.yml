@@ -163,10 +163,16 @@
     src: "{{ atl_obr_download }}"
     dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
     creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.jar"
-    extra_opts:
-      - -j
-      - -n
+    list_files: no
+    exclude:
+      - M*
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
   ignore_errors: yes
+
+- name: Move JSD dependency jars into the installed-plugins dir
+  shell:
+    cmd: "mv {{ atl_product_version_cache_dir }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-REL-0022.jar"
+
