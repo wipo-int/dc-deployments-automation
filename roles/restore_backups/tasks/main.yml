@@ -68,7 +68,9 @@
         overwrite: different
         bucket: "{{ atl_backup_manifest.artifacts.db.location.location | urlsplit('hostname') }}"
         object: "{{ atl_backup_manifest.artifacts.db.location.location | urlsplit('path') }}"
-        dest: "{{ atl_backup_db_dest }}"
+        # We save the backup as a .tar file so that the postgresql_db module uses pg_restore instead of psql to do restore
+        # This can be removed when ansible 2.10 is released
+        dest: "{{ atl_backup_db_dest }}.tar"
 
     - name: Fetch Home backup from S3
       aws_s3:
@@ -76,9 +78,7 @@
         overwrite: different
         bucket: "{{ atl_backup_manifest.artifacts.sharedHome.location.location | urlsplit('hostname') }}"
         object: "{{ atl_backup_manifest.artifacts.sharedHome.location.location | urlsplit('path') }}"
-        # We save the backup as a .tar file so that the postgresql_db module uses pg_restore instead of psql to do restore
-        # This can be removed when ansible 2.10 is released
-        dest: "{{ atl_backup_home_dest }}.tar"
+        dest: "{{ atl_backup_home_dest }}"
 
     - name: Install distro-specific restore support packages
       include_tasks: "{{ ansible_distribution|lower }}.yml"
