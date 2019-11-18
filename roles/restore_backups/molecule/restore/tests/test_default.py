@@ -28,3 +28,8 @@ def test_shared_home_owner(host, file):
     assert host.file(file).exists
     assert host.file(file).user == 'jira'
     assert host.file(file).group == 'jira'
+
+def test_version_file_owned_by_root(host):
+    assert host.file('/media/atl/jira/shared/jira-software.version').exists
+    assert host.file('/media/atl/jira/shared/jira-software.version').user == 'root'
+    assert host.file('/media/atl/jira/shared/jira-software.version').group == 'root'
