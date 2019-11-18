@@ -2,21 +2,22 @@
 - name: Converge
   hosts: all
   vars:
-    atl_backup_manifest_url: 's3://dcd-slingshot-test/dummy_manifest.json'
-    atl_product_user: 'jira'
-    atl_product_edition: 'jira-software'
-    atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
-    atl_product_user_uid: '2001'
-    atl_backup_home_restore_canary_path: '/tmp/canary.tmp'
-    atl_product_home_shared: '/media/atl/jira/shared'
-    atl_backup_id: 'test-backup'
     atl_backup_home_dest: "{{ test_archive }}"
+    atl_backup_home_restore_canary_path: '/tmp/canary.tmp'
+    atl_backup_id: 'test-backup'
+    atl_backup_manifest_url: 'fake_manifest'
 
-    test_archive_source: '/tmp/hello'
-    test_archive_file: 'hello.txt'
-    test_product_version_file: "/tmp/{{ atl_product_edition }}.version"
+    atl_product_edition: 'jira-software'
+    atl_product_home_shared: '/media/atl/jira/shared'
+    atl_product_user: 'jira'
+    atl_product_user_uid: '2001'
+    atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
+
     test_archive: '/tmp/hello.tar.gz'
+    test_archive_file: 'hello.txt'
+    test_archive_source: '/tmp/hello'
     test_pre_step_prefix: '[PRE-TEST]'
+    test_product_version_file: "/tmp/{{ atl_product_edition }}.version"
 
   pre_tasks:
     - name: "{{ test_pre_step_prefix }} Install tar"
