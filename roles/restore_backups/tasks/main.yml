@@ -109,7 +109,7 @@
 
 
     - name: Restore shared home
-      include_tasks: "{{ home_restore.yml }}"
+      include_tasks: "home_restore.yml"
 
 
   when: atl_restore_required
