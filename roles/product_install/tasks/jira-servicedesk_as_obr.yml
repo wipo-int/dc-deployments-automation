@@ -110,9 +110,6 @@
         src: "{{ atl_obr_download }}"
         dest: "{{ atl_obr_shared_download }}"
         remote_src: true
-      when:
-        - moving_lock_created is succeeded
-        - moving_lock_created.changed
       register: copied
 
     - name: Create completed_lock once obr downloaded and copied
@@ -150,7 +147,7 @@
 
 - name: Ensure instaled-plugins dir exists
   file:
-    path: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
+    path: "{{ atl_product_home_shared }}/plugins/installed-plugins"
     state: directory
     mode: 0750
     owner: "{{ atl_product_user }}"
@@ -161,8 +158,8 @@
   unarchive:
     remote_src: true
     src: "{{ atl_obr_download }}"
-    dest: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins"
-    creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.jar"
+    dest: "{{ atl_product_home_shared }}/plugins/installed-plugins"
+    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.jar"
     list_files: no
     exclude:
       - M*
@@ -173,5 +170,5 @@
 
 - name: Move JSD dependency jars into the installed-plugins dir
   shell:
-    cmd: "mv {{ atl_product_version_cache_dir }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_version_cache_dir }}/plugins/installed-plugins"
-    creates: "{{ atl_product_version_cache_dir }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-REL-0022.jar"
+    cmd: "mv {{ atl_product_home_shared }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_home_shared }}/plugins/installed-plugins"
+    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-*.jar"
