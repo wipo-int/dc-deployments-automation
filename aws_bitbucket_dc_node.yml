@@ -33,5 +33,5 @@
     - role: database_init
     - role: bitbucket_config
     - role: product_startup
-    - role: bitbucket_dataset_restore
+  
 
