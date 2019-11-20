@@ -2,8 +2,8 @@
 
 - name: Check if import directory exists
   stat:
-      path: /tmp/import
-      register: import_dir
+    path: /tmp/import
+  register: import_dir
 
 - name: create directory structure if it note exists
   file:
