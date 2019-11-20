@@ -31,7 +31,7 @@
     password: "{{ atl_bitbucket_admin_password }}"
     method: POST
     force_basic_auth: yes
-    body: {{ "archivePath": "/tmp/import/{{ atl_bitbucket_dataset_url | basename}}" }}
+    body: '{{ "archivePath": "/tmp/import/{{ atl_bitbucket_dataset_url | basename}}" }}'
     body_format: json
     return_content: yes
   register: response
