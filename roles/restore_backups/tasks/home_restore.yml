@@ -18,7 +18,6 @@
         src: "{{ atl_backup_home_dest }}"
         remote_src: yes
         dest: "{{ atl_product_home_shared }}"
-        mode: preserve
 
     - name: Set shared home owner and group to application user
       file:

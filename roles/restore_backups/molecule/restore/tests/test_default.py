@@ -1,5 +1,6 @@
 import os
 import pytest
+from stat import *
 
 import testinfra.utils.ansible_runner
 
@@ -28,6 +29,10 @@ def test_shared_home_owner(host, file):
     assert host.file(file).exists
     assert host.file(file).user == 'jira'
     assert host.file(file).group == 'jira'
+
+def test_file_modes(host):
+    assert host.file('/media/atl/jira/shared/hello').mode == 0o755
+    assert host.file('/media/atl/jira/shared/hello/hello.txt').mode == 0o640
 
 def test_version_file_owned_by_root(host):
     assert host.file('/media/atl/jira/shared/jira-software.version').exists

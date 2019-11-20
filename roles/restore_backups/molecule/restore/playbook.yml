@@ -46,16 +46,19 @@
           file:
             path: "{{ test_archive_source }}"
             state: directory
+            mode: 0755
         - name: "{{ test_pre_step_prefix }} Create a file in the shared home"
           lineinfile:
             create: yes
             line: 'Hello, world!'
             path: "{{ test_archive_source }}/{{ test_archive_file }}"
+            mode: 0640
         - name: "{{ test_pre_step_prefix }} Create the version file in the shared home"
           lineinfile:
             create: yes
             line: '8.5'
             path: "{{ test_product_version_file }}"
+            mode: 0640
         - name: "{{ test_pre_step_prefix }} Archive the shared home"
           archive:
             path:
