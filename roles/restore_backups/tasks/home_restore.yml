@@ -18,7 +18,7 @@
         src: "{{ atl_backup_home_dest }}"
         remote_src: yes
         dest: "{{ atl_product_home_shared }}"
-        mode: 0640
+        mode: preserve
 
     - name: Set shared home owner and group to application user
       file:
@@ -27,7 +27,6 @@
         group: "{{ atl_product_user }}"
         owner: "{{ atl_product_user }}"
         state: directory
-        mode: 0640
 
     - name: Set version file owner and group to root
       file:
