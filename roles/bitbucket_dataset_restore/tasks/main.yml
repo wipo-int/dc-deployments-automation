@@ -19,4 +19,24 @@
     url: "{{ atl_bitbucket_dataset_url }}"
     dest: /tmp/import
 
+- name: wait for port 7990 to be up
+  wait_for:
+    port: 7990
+    delay: 10
+
+- name: Invoke Import API
+  uri: 
+    url: http://localhost:7990/rest/api/1.0/migration/imports
+    user: admin
+    password: "{{ atl_bitbucket_admin_password }}"
+    method: POST
+    force_basic_auth: yes
+    body: {{ "archivePath": "/tmp/import/{{ atl_bitbucket_dataset_url | basename}}" }}
+    body_format: json
+    return_content: yes
+  register: response
+  failed_when: "'INITIALISING' not in response.content"
+
+
+
 
