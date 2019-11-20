@@ -23,7 +23,7 @@ def test_latest_is_downloaded(host):
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    installer = host.file('/media/atl/jira/shared/downloads/jira-core.'+upstream+'.tar.gz')
+    installer = host.file('/media/atl/downloads/jira-core.'+upstream+'.tar.gz')
     assert installer.exists
     assert installer.user == 'root'
 
@@ -32,6 +32,6 @@ def test_completed_lockfile(host):
     upstream_json = json.load(upstream_fd)
     upstream = upstream_json['version']
 
-    lockfile = host.file('/media/atl/jira/shared/downloads/jira-core.'+upstream+'.tar.gz_completed')
+    lockfile = host.file('/media/atl/downloads/jira-core.'+upstream+'.tar.gz_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'

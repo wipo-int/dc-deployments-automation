@@ -14,12 +14,12 @@ def test_version_is_correct(host):
     assert verfile.content.decode("UTF-8").strip() == "4.1.0"
 
 def test_is_downloaded(host):
-    installer = host.file('/media/atl/jira/shared/downloads/servicedesk.4.1.0-x64.bin')
+    installer = host.file('/media/atl/downloads/servicedesk.4.1.0-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    lockfile = host.file('/media/atl/jira/shared/downloads/servicedesk.4.1.0-x64.bin_completed')
+    lockfile = host.file('/media/atl/downloads/servicedesk.4.1.0-x64.bin_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
