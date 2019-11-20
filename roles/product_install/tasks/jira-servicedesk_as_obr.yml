@@ -169,7 +169,7 @@
   register: obr_unpack
   ignore_errors: yes
 
-- name: Move JSD dependency jars into the installed-plugins dir
+- name: Move JSD dependency jars into the installed-plugins dir # noqa 503
   shell:
     cmd: "mv {{ atl_product_home_shared }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_home_shared }}/plugins/installed-plugins"
     creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-*.jar"
