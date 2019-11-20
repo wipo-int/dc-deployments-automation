@@ -12,7 +12,7 @@
     mode: 0644
     group: root
     owner: root
-    when: import_dir.stat.exists == false
+  when: import_dir.stat.exists == false
 
 - name: Copy Bitbucket dataset from s3
   get_url:
