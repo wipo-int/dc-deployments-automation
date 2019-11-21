@@ -21,7 +21,7 @@
     method: POST
     force_basic_auth: yes
     follow_redirects: yes
-    creates: "{{ atl_product_home_shared }}"/data/migration/import/lock.file
+    creates: "{{ atl_product_home_shared }}/data/migration/import/lock.file"
     body: "{ \"archivePath\": \"{{ atl_bitbucket_dataset_url | basename }}\" }"
     body_format: json
     return_content: yes
