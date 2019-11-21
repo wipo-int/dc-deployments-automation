@@ -1,16 +1,16 @@
 ---
 
-- block:
+- name: Create application DB user
+  postgresql_user:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
+    port: "{{ atl_db_port }}"
+    name: "{{ atl_jdbc_user }}"
+    password: "{{ atl_jdbc_password }}"
+    expires: 'infinity'
 
-    - name: Create application DB user
-      postgresql_user:
-        login_host: "{{ atl_db_host }}"
-        login_user: "{{ atl_db_root_user }}"
-        login_password: "{{ atl_db_root_password }}"
-        port: "{{ atl_db_port }}"
-        name: "{{ atl_jdbc_user }}"
-        password: "{{ atl_jdbc_password }}"
-        expires: 'infinity'
+- block:
 
     - name: Update root privs for new user
       postgresql_privs:
