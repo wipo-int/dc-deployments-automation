@@ -108,34 +108,8 @@
       when: db_created.changed and atl_backup_db_dest is defined
 
 
-    - name: Check for the restore canary file
-      stat:
-        path: "{{ atl_backup_home_restore_canary_path }}"
-      register: restore_canary
-
-    - block:
-
-        - name: Create shared home if necessary
-          file:
-            path: "{{ atl_product_home_shared }}"
-            state: directory
-            mode: 0750
-            owner: "{{ atl_product_user }}"
-            group: "{{ atl_product_user }}"
-
-        - name: Restore the shared-home backup
-          unarchive:
-            src: "{{ atl_backup_home_dest }}"
-            dest: "{{ atl_product_home_shared }}"
-            owner: "{{ atl_product_user }}"
-            group: "{{ atl_product_user }}"
-
-        - name: Create restore-canary if necessary
-          copy:
-            dest: "{{ atl_backup_home_restore_canary_path }}"
-            content: "{{ atl_backup_id }}"
-
-      when: not restore_canary.stat.exists
+    - name: Restore shared home
+      include_tasks: "home_restore.yml"
 
 
   when: atl_restore_required
