@@ -27,12 +27,11 @@ sourced as environment variables to be retrieved at runtime . See the
 helper-script `bin/ansible-with-atl-env` and the corresponding
 `groups_vars/aws_node_local.yml` var-file.
 
-#### Overriding parameters
+### Customizing your deployment
 
-If you want to customise the playbook behaviour the simplest method is to fork
-this repository and add your own. However, for some one-off tasks you can also
-override the default and calculated settings with special values. To do this, provide
-command-line overrides to
+To customise playbook behaviour, you can fork this repository and edit it as
+needed. However, for one-off tasks you can also override the default and 
+calculated settings with special values. To do this, provide command-line overrides to
 [ansible-playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html).
 
 The most likely use-case for this is to download a custom product distribution
@@ -61,6 +60,14 @@ them in the `Custom command-line parameters for Ansible` field:
 
     -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
+#### Parameters you can override
+
+The following files contain many of the most common system configuration parameters
+you can override for your deployment:
+
+- `[/roles/product_install/defaults/main.yml](roles/product_install/defaults/main.yml)`
+- `[/group_vars/aws_node_local.yml](group_vars/aws_node_local.yml)`
+
 ## Reporting issues
 
 If you find any bugs in this repository, or have feature requests or use cases
@@ -79,11 +86,14 @@ Where possible the roles are also product-agnostic (e.g. downloads), with more
 specific functionality added in later product-specific roles.
 
 Roles should be reasonably self-contained, with sensible defaults configured in
-`<role>/defaults/main.yml` and overridden by the playbook at runtime. Roles may
+`/roles/<role>/defaults/main.yml`. Like all playbook parameters, you can override
+them at runtime (see 
+
+and overridden by the playbook at runtime. Roles may
 implicitly depend on variables being defined elsewhere where they cannot define
-them natively (e.g. the `jira_config` role depends on the `atl_cluster_node_id`
+them natively. For example, the `jira_config` role depends on the `atl_cluster_node_id`
 var being defined; on AWS this is provided by the `aws_common` role, which
-should be run first).
+should be run first.
 
 ### Development and testing
 
