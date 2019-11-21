@@ -1,24 +1,4 @@
 ---
-
-- name: Check if import directory exists
-  stat:
-    path: /tmp/import
-  register: import_dir
-
-- name: create directory structure if it note exists
-  file:
-    path: /tmp/import
-    state: directory
-    mode: 0644
-    group: root
-    owner: root
-  when: import_dir.stat.exists == false
-
-- name: Copy Bitbucket dataset from s3
-  get_url:
-    url: "{{ atl_bitbucket_dataset_url }}"
-    dest: /tmp/import
-
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
   meta: flush_handlers
 
@@ -27,6 +7,11 @@
     port: 7990
     delay: 10
     timeout: 60
+
+- name: Copy Bitbucket dataset from s3
+  get_url:
+    url: "{{ atl_bitbucket_dataset_url }}"
+    dest: "{{ atl_product_home_shared }}"/data/migration/import
 
 - name: Invoke Import API
   uri: 
