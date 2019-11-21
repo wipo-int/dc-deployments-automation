@@ -138,6 +138,6 @@ atl_restore_required: "{{ atl_backup_manifest_url is defined and atl_backup_mani
 
 atl_bitbucket_license_key: "{{ lookup('env', 'ATL_BB_LICENSEKEY') }}"
 atl_bitbucket_admin_password: "{{ lookup('env', 'ATL_BB_ADMIN_PASSWORD') }}"
+
 atl_bitbucket_dataset_url: "{{ lookup('env', 'ATL_DATASET_URL') }}"
 atl_bitbucket_baseurl: "{{ lookup('env', 'ATL_BB_BASEURL') }}"
-
