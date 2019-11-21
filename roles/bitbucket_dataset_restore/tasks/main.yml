@@ -11,7 +11,7 @@
 - name: Copy Bitbucket dataset from s3
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
-    dest: /media/atl/shared/bitbucket/data/migration/import
+    dest: "{{ atl_product_home_shared }}/data/migration/import"
 
 - name: Invoke Import API
   uri: 
