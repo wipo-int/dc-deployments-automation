@@ -9,7 +9,7 @@ cloud environments.
 
 ## Usage
 
-### Cloud DC-node deployment playbooks
+### Configuring Data Center nodes on cloud deployments
 
 The usual scenario for usage as part of a cloud deployment is to invoke the
 script as part of post-creation actions invoked while a new product node is
@@ -60,38 +60,34 @@ them in the `Custom command-line parameters for Ansible` field:
 
     -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
-#### Parameters you can override
+#### Other customizable parameters
 
-The following files contain many of the most common system configuration parameters
-you can override for your deployment:
+Consult the following files for clues on other parameters you can customize for your deployment:
 
 - `[/roles/product_install/defaults/main.yml](roles/product_install/defaults/main.yml)`
 - `[/group_vars/aws_node_local.yml](group_vars/aws_node_local.yml)`
 
-## Reporting issues
+More customizable parameters are defined in specific roles -- specifically, in the 
+role's `defaults/main.yml` file. Most of these parameters use the `atl_` prefix. You can
+use the following [Bitbucket code search query](https://confluence.atlassian.com/bitbucket/search-873876782.html) to find them:
 
-If you find any bugs in this repository, or have feature requests or use cases
-for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
+    repo:dc-deployments-automation repo:dc-deployments-automation path:*/defaults/main.yml atl
 
 ## Development
 
 ### Development philosophy
 
 The suite is intended to consist of a number of small, composable roles that can
-be combined together into playbooks. Wherever possible the roles should be
-platform-agnostic as possible, with platform-specific functionality broken out
-into more specific roles.
-
-Where possible the roles are also product-agnostic (e.g. downloads), with more
-specific functionality added in later product-specific roles.
+be combined together into playbooks. Wherever possible, roles should be product-agnostic
+(e.g. downloads) and platform-agnostic. Functions that are product-specific or
+platform-specific are split off into separate roles. 
 
 Roles should be reasonably self-contained, with sensible defaults configured in
 `/roles/<role>/defaults/main.yml`. Like all playbook parameters, you can override
-them at runtime (see 
+them at runtime.
 
-and overridden by the playbook at runtime. Roles may
-implicitly depend on variables being defined elsewhere where they cannot define
-them natively. For example, the `jira_config` role depends on the `atl_cluster_node_id`
+Some roles implicitly depend on other variables beind defined elsewhere.
+For example, the `jira_config` role depends on the `atl_cluster_node_id`
 var being defined; on AWS this is provided by the `aws_common` role, which
 should be run first.
 
@@ -107,15 +103,18 @@ environment and running tests.
   information.
 * Inventory files are under `inv/`. For AWS `cfn-init` the inventory
   `inv/aws_node_local` inventory is probably what you want.
- * Note that this expects the environment to be setup with infrastructure
-   information; see _Usage_ above.
+    * Note that this expects the environment to be setup with infrastructure information (refer to the _Usage_ section above).
 * Global group vars loaded automatically from `group_vars/<group>.yml`. In
   particular note `group_vars/aws_node_local.yml` which loads infrastructure
   information from the environment.
 * Roles are under `roles/`
- * Platform specific roles start with `<platform-shortname>_...`,
-   e.g. `roles/aws_common/`.
- * Similarly, product-specific roles should start with `<product>_...`.
+    * Platform specific roles start with `<platform-shortname>_...`, e.g. `roles/aws_common/`.
+    * Similarly, product-specific roles should start with `<product>_...`.
+
+## Reporting issues
+
+If you find any bugs in this repository, or have feature requests or use cases
+for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
 
 ## License
 
