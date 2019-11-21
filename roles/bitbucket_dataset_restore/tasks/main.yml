@@ -30,7 +30,7 @@
 
 - name: Invoke Import API
   uri: 
-    url: http://localhost:7990/rest/api/1.0/migration/imports
+    url: "{{ atl_bitbucket_baseurl }}/rest/api/1.0/migration/imports"
     user: admin
     password: "{{ atl_bitbucket_admin_password }}"
     method: POST
