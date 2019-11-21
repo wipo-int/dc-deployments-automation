@@ -1,6 +1,8 @@
 
 # Atlassian Data-Center Installation Automation
 
+[TOC]
+
 ## Introduction
 
 This repository is a suite of Ansible roles, playbooks and support scripts to
@@ -62,22 +64,27 @@ them in the `Custom command-line parameters for Ansible` field:
 
 #### Other customizable parameters
 
-Consult the following files for clues on other parameters you can customize for your deployment:
+For more deployment customization options, consult the following files for parameters you can 
+override:
 
-- `[/roles/product_install/defaults/main.yml](roles/product_install/defaults/main.yml)`
-- `[/group_vars/aws_node_local.yml](group_vars/aws_node_local.yml)`
+- [`/roles/product_install/defaults/main.yml`](roles/product_install/defaults/main.yml)
+- [`/group_vars/aws_node_local.yml`](group_vars/aws_node_local.yml)
 
 More customizable parameters are defined in specific roles -- specifically, in the 
 role's `defaults/main.yml` file. Most of these parameters use the `atl_` prefix. You can
-use the following [Bitbucket code search query](https://confluence.atlassian.com/bitbucket/search-873876782.html) to find them:
+use the following [Bitbucket code search query](https://confluence.atlassian.com/bitbucket/search-873876782.html) 
+to find them:
 
     repo:dc-deployments-automation repo:dc-deployments-automation path:*/defaults/main.yml atl
 
-## Development
+### Development and testing
 
-### Development philosophy
+See [Development](DEVELOPMENT.md) for details on setting up a development
+environment and running tests.
 
-The suite is intended to consist of a number of small, composable roles that can
+## Roles philosophy
+
+This suite is intended to consist of many small, composable roles that can
 be combined together into playbooks. Wherever possible, roles should be product-agnostic
 (e.g. downloads) and platform-agnostic. Functions that are product-specific or
 platform-specific are split off into separate roles. 
@@ -91,23 +98,19 @@ For example, the `jira_config` role depends on the `atl_cluster_node_id`
 var being defined; on AWS this is provided by the `aws_common` role, which
 should be run first.
 
-### Development and testing
-
-See [Development](DEVELOPMENT.md) for details on setting up a development
-environment and running tests.
 
 ## Ansible layout
 
 * Helper scripts are in `bin/`. In particular the `bin/ansible-with-atl-env`
-  wrapper is of use during AWS node initialisation. See _Usage_ above for more
-  information.
+  wrapper is of use during AWS node initialisation. Refer to the [Usage](#markdown-header-usage) section for
+  more information.
 * Inventory files are under `inv/`. For AWS `cfn-init` the inventory
   `inv/aws_node_local` inventory is probably what you want.
     * Note that this expects the environment to be setup with infrastructure information (refer to the _Usage_ section above).
 * Global group vars loaded automatically from `group_vars/<group>.yml`. In
   particular note `group_vars/aws_node_local.yml` which loads infrastructure
   information from the environment.
-* Roles are under `roles/`
+* Roles are defined in `roles/`
     * Platform specific roles start with `<platform-shortname>_...`, e.g. `roles/aws_common/`.
     * Similarly, product-specific roles should start with `<product>_...`.
 
