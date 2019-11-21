@@ -1,17 +1,16 @@
-
-# Atlassian Data-Center Installation Automation
-
-[TOC]
-
-## Introduction
+# Atlassian Data Center Installation Automation
 
 This repository is a suite of Ansible roles, playbooks and support scripts to
 automate the installation and maintenance of Atlassian Data Center products in
 cloud environments.
 
-## Usage
+On this page:
 
-### Configuring Data Center nodes on cloud deployments
+[TOC]
+
+# Usage
+
+## Configuring Data Center nodes on cloud deployments
 
 The usual scenario for usage as part of a cloud deployment is to invoke the
 script as part of post-creation actions invoked while a new product node is
@@ -25,11 +24,11 @@ In practice, the Ansible roles require some information about the infrastructure
 that was deployed (e.g. RDS endpoint/password). The way this is currently
 achieved (on AWS) is that have the CloudFormation template dump this information
 into the file `/etc/atl` as `RESOURCE_VAR=<resource>` lines. This can be then
-sourced as environment variables to be retrieved at runtime . See the
+sourced as environment variables to be retrieved at runtime. See the
 helper-script `bin/ansible-with-atl-env` and the corresponding
 `groups_vars/aws_node_local.yml` var-file.
 
-### Customizing your deployment
+## Customizing your deployment
 
 To customise playbook behaviour, you can fork this repository and edit it as
 needed. However, for one-off tasks you can also override the default and 
@@ -62,7 +61,7 @@ them in the `Custom command-line parameters for Ansible` field:
 
     -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
-#### Other customizable parameters
+### Other customizable parameters
 
 For more deployment customization options, consult the following files for parameters you can 
 override:
@@ -77,12 +76,12 @@ to find them:
 
     repo:dc-deployments-automation repo:dc-deployments-automation path:*/defaults/main.yml atl
 
-### Development and testing
+# Development and testing
 
 See [Development](DEVELOPMENT.md) for details on setting up a development
 environment and running tests.
 
-## Roles philosophy
+# Roles philosophy
 
 This suite is intended to consist of many small, composable roles that can
 be combined together into playbooks. Wherever possible, roles should be product-agnostic
@@ -99,14 +98,15 @@ var being defined; on AWS this is provided by the `aws_common` role, which
 should be run first.
 
 
-## Ansible layout
+# Ansible layout
 
 * Helper scripts are in `bin/`. In particular the `bin/ansible-with-atl-env`
   wrapper is of use during AWS node initialisation. Refer to the [Usage](#markdown-header-usage) section for
   more information.
 * Inventory files are under `inv/`. For AWS `cfn-init` the inventory
   `inv/aws_node_local` inventory is probably what you want.
-    * Note that this expects the environment to be setup with infrastructure information (refer to the _Usage_ section above).
+    * Note that this expects the environment to be setup with infrastructure information. 
+      Refer to the [Usage](#markdown-header-usage) section for more information.
 * Global group vars loaded automatically from `group_vars/<group>.yml`. In
   particular note `group_vars/aws_node_local.yml` which loads infrastructure
   information from the environment.
@@ -114,12 +114,12 @@ should be run first.
     * Platform specific roles start with `<platform-shortname>_...`, e.g. `roles/aws_common/`.
     * Similarly, product-specific roles should start with `<product>_...`.
 
-## Reporting issues
+# Reporting issues
 
 If you find any bugs in this repository, or have feature requests or use cases
 for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
 
-## License
+# License
 
 Copyright © 2019 Atlassian Corporation Pty Ltd.
 Licensed under the Apache License, Version 2.0.
