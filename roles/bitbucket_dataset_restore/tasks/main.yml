@@ -11,16 +11,18 @@
 - name: Copy Bitbucket dataset from s3
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
-    dest: "{{ atl_product_home_shared }}"/data/migration/import
+    dest: /media/atl/shared/bitbucket/data/migration/import
 
 - name: Invoke Import API
   uri: 
-    url: "{{ atl_bitbucket_baseurl }}/rest/api/1.0/migration/imports"
+    url: http://localhost:7990/rest/api/1.0/migration/imports
     user: admin
     password: "{{ atl_bitbucket_admin_password }}"
     method: POST
     force_basic_auth: yes
-    body: "{ \"archivePath\": \"/tmp/import/{{ atl_bitbucket_dataset_url | basename}}\" }"
+    follow_redirects: yes
+    creates: "{{ atl_product_home_shared }}"/data/migration/import/lock.file
+    body: "{ \"archivePath\": \"{{ atl_bitbucket_dataset_url | basename }}\" }"
     body_format: json
     return_content: yes
   register: response
