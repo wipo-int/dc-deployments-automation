@@ -15,4 +15,4 @@ ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ 
 Restart=on-failure
 
 [Install]
-WantedBy=multi-target.target
+WantedBy={{ atl_systemd_service_target }}

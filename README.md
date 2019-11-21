@@ -61,6 +61,10 @@ them in the `Custom command-line parameters for Ansible` field:
 
     -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
+## Reporting issues
+
+If you find any bugs in this repository, or have feature requests or use cases
+for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
 
 ## Development
 
