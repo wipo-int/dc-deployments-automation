@@ -1,15 +1,16 @@
-
-# Atlassian Data-Center Installation Automation
-
-## Introduction
+# Atlassian Data Center Installation Automation
 
 This repository is a suite of Ansible roles, playbooks and support scripts to
 automate the installation and maintenance of Atlassian Data Center products in
 cloud environments.
 
-## Usage
+On this page:
 
-### Cloud DC-node deployment playbooks
+[TOC]
+
+# Usage
+
+## Configuring Data Center nodes on cloud deployments
 
 The usual scenario for usage as part of a cloud deployment is to invoke the
 script as part of post-creation actions invoked while a new product node is
@@ -23,16 +24,15 @@ In practice, the Ansible roles require some information about the infrastructure
 that was deployed (e.g. RDS endpoint/password). The way this is currently
 achieved (on AWS) is that have the CloudFormation template dump this information
 into the file `/etc/atl` as `RESOURCE_VAR=<resource>` lines. This can be then
-sourced as environment variables to be retrieved at runtime . See the
+sourced as environment variables to be retrieved at runtime. See the
 helper-script `bin/ansible-with-atl-env` and the corresponding
 `groups_vars/aws_node_local.yml` var-file.
 
-#### Overriding parameters
+## Customizing your deployment
 
-If you want to customise the playbook behaviour the simplest method is to fork
-this repository and add your own. However, for some one-off tasks you can also
-override the default and calculated settings with special values. To do this, provide
-command-line overrides to
+To customise playbook behaviour, you can fork this repository and edit it as
+needed. However, for one-off tasks you can also override the default and 
+calculated settings with special values. To do this, provide command-line overrides to
 [ansible-playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html).
 
 The most likely use-case for this is to download a custom product distribution
@@ -61,53 +61,65 @@ them in the `Custom command-line parameters for Ansible` field:
 
     -e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball
 
-## Reporting issues
+### Other customizable parameters
 
-If you find any bugs in this repository, or have feature requests or use cases
-for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
+For more deployment customization options, consult the following files for parameters you can 
+override:
 
-## Development
+- [`/roles/product_install/defaults/main.yml`](roles/product_install/defaults/main.yml)
+- [`/group_vars/aws_node_local.yml`](group_vars/aws_node_local.yml)
 
-### Development philosophy
+More customizable parameters are defined in specific roles -- specifically, in the 
+role's `defaults/main.yml` file. Most of these parameters use the `atl_` prefix. You can
+use the following [Bitbucket code search query](https://confluence.atlassian.com/bitbucket/search-873876782.html) 
+to find them:
 
-The suite is intended to consist of a number of small, composable roles that can
-be combined together into playbooks. Wherever possible the roles should be
-platform-agnostic as possible, with platform-specific functionality broken out
-into more specific roles.
+    repo:dc-deployments-automation repo:dc-deployments-automation path:*/defaults/main.yml atl
 
-Where possible the roles are also product-agnostic (e.g. downloads), with more
-specific functionality added in later product-specific roles.
-
-Roles should be reasonably self-contained, with sensible defaults configured in
-`<role>/defaults/main.yml` and overridden by the playbook at runtime. Roles may
-implicitly depend on variables being defined elsewhere where they cannot define
-them natively (e.g. the `jira_config` role depends on the `atl_cluster_node_id`
-var being defined; on AWS this is provided by the `aws_common` role, which
-should be run first).
-
-### Development and testing
+# Development and testing
 
 See [Development](DEVELOPMENT.md) for details on setting up a development
 environment and running tests.
 
-## Ansible layout
+# Roles philosophy
+
+This suite is intended to consist of many small, composable roles that can
+be combined together into playbooks. Wherever possible, roles should be product-agnostic
+(e.g. downloads) and platform-agnostic. Functions that are product-specific or
+platform-specific are split off into separate roles. 
+
+Roles should be reasonably self-contained, with sensible defaults configured in
+`/roles/<role>/defaults/main.yml`. Like all playbook parameters, you can override
+them at runtime.
+
+Some roles implicitly depend on other variables beind defined elsewhere.
+For example, the `jira_config` role depends on the `atl_cluster_node_id`
+var being defined; on AWS this is provided by the `aws_common` role, which
+should be run first.
+
+
+# Ansible layout
 
 * Helper scripts are in `bin/`. In particular the `bin/ansible-with-atl-env`
-  wrapper is of use during AWS node initialisation. See _Usage_ above for more
-  information.
+  wrapper is of use during AWS node initialisation. Refer to the [Usage](#markdown-header-usage) section for
+  more information.
 * Inventory files are under `inv/`. For AWS `cfn-init` the inventory
   `inv/aws_node_local` inventory is probably what you want.
- * Note that this expects the environment to be setup with infrastructure
-   information; see _Usage_ above.
+    * Note that this expects the environment to be setup with infrastructure information. 
+      Refer to the [Usage](#markdown-header-usage) section for more information.
 * Global group vars loaded automatically from `group_vars/<group>.yml`. In
   particular note `group_vars/aws_node_local.yml` which loads infrastructure
   information from the environment.
-* Roles are under `roles/`
- * Platform specific roles start with `<platform-shortname>_...`,
-   e.g. `roles/aws_common/`.
- * Similarly, product-specific roles should start with `<product>_...`.
+* Roles are defined in `roles/`
+    * Platform specific roles start with `<platform-shortname>_...`, e.g. `roles/aws_common/`.
+    * Similarly, product-specific roles should start with `<product>_...`.
 
-## License
+# Reporting issues
+
+If you find any bugs in this repository, or have feature requests or use cases
+for us, please raise them in our [public Jira project](https://jira.atlassian.com/projects/SCALE/summary).
+
+# License
 
 Copyright © 2019 Atlassian Corporation Pty Ltd.
 Licensed under the Apache License, Version 2.0.
