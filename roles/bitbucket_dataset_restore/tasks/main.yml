@@ -7,6 +7,11 @@
     port: 7990
     delay: 60
 
+- name: wait for path to become available
+  wait_for:
+    path: "{{ atl_product_home_shared }}/data/migration/import"
+    delay: 60
+
 - name: Copy Bitbucket dataset from s3
   get_url:
     url: "{{ atl_bitbucket_dataset_url }}"
