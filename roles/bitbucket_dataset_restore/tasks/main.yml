@@ -14,9 +14,12 @@
 
 - name: Invoke Import API
   uri: 
-    url: http://admin:{{ atl_bitbucket_admin_password }}@localhost:7990/rest/api/1.0/migration/imports
+    url: http://localhost:7990/rest/api/1.0/migration/imports
+    user: admin
+    password: "{{ atl_bitbucket_admin_password }}"
     method: POST
     follow_redirects: yes
+    force_basic_auth: yes
     creates: "{{ atl_product_home_shared }}/data/migration/import/lock.file"
     body: "{ \"archivePath\": \"{{ atl_bitbucket_dataset_url | basename }}\" }"
     body_format: json
@@ -24,5 +27,5 @@
   register: response
   until: response.status == 200
   retries: 6
-  delay: 10
+  delay: 15
   failed_when: "'INITIALISING' not in response.content"
