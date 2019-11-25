@@ -19,9 +19,7 @@ ATL_SYNCHRONY_JVM_PROPERTIES="{{ atl_synchrony_stack_space }} {{ atl_synchrony_m
  -Dsynchrony.cluster.bind={{ atl_local_ipv4 }} \
  -Dcluster.interfaces={{ atl_local_ipv4 }} \
  -Dsynchrony.cluster.base.port=25500 \
- {% if atl_synchrony_service_url|length %}
  -Dsynchrony.service.url={{ atl_synchrony_service_url }} \
- {% endif %}
  -Dsynchrony.context.path=/synchrony \
  -Dsynchrony.port=8091 \
  -Dcluster.name=Synchrony-Cluster \
