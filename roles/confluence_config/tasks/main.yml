@@ -30,17 +30,6 @@
        "{{ atl_product_home }}/shared-home/"]
     - ["{{ atl_product_home_shared }}/attachments/",
        "{{ atl_product_home }}/attachments/"]
-    
-- name: Symlink local attachments to shared storage
-  file:
-    src: "{{ atl_product_home_shared }}/attachments/"
-    dest: "{{ atl_product_home }}/attachments/"
-    force: false
-    state: link
-    mode: 0750
-    owner: "{{ atl_product_user }}"
-    group: "{{ atl_product_user }}"
-    
 
 - name: Create Tomcat server config
   template:
