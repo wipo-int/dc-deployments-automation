@@ -13,6 +13,18 @@
     - "{{ atl_product_shared_plugins }}"
   changed_when: false  # For Molecule idempotence check
 
+- name: Symlink local attachments to shared storage
+  # Create symlink to force single (unclustered) Confluence to store
+  # attachment in the shared drive.
+  file:
+    path: "{{ atl_product_home_shared }}/attachments/"
+    dest: "{{ atl_product_home }}/attachments/"
+    force: false
+    state: link
+    mode: 0750
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    
 
 - name: Create Tomcat server config
   template:
