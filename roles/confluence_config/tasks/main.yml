@@ -18,18 +18,18 @@
 # shared-data and attachments in the shared drive.
 - name: Symlink local attachments to shared storage
   file:
-    src: "{{ item[0] }}"
-    dest: "{{ item[1] }}"
+    src: "{{ item.from }}"
+    dest: "{{ item.to }}"
     force: false
     state: link
     mode: 0750
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
   with_items:
-    - ["{{ atl_product_home_shared }}/",
-       "{{ atl_product_home }}/shared-home/"]
-    - ["{{ atl_product_home_shared }}/attachments/",
-       "{{ atl_product_home }}/attachments/"]
+    - {from:: "{{ atl_product_home_shared }}/",
+       to: "{{ atl_product_home }}/shared-home/"}
+    - {from: "{{ atl_product_home_shared }}/attachments/",
+       to: "{{ atl_product_home }}/attachments/"}
 
 - name: Create Tomcat server config
   template:
