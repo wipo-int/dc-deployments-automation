@@ -44,7 +44,7 @@
         bucket: "{{ atl_backup_manifest_bucket }}"
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
-      when: atl_backup_manifest_url.scheme == 's3'
+      when: atl_backup_manifest_dict.scheme == 's3'
 
     - name: Load parameters from manifest
       include_vars:
