@@ -35,5 +35,5 @@
   delay: 15
   failed_when: "'INITIALISING' not in response.content"
 
-  - name: get status of import
-    debug: var=response
+- name: get status of import
+  debug: var=response
