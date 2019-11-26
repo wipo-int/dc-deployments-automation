@@ -19,7 +19,7 @@
 
 - name: Invoke Import API
   uri: 
-    url: http://localhost:7990/rest/api/1.0/migration/imports
+    url: "{{ atl_bitbucket_dataset_url }}/rest/api/1.0/migration/imports"
     user: admin
     password: "{{ atl_bitbucket_admin_password }}"
     method: POST
@@ -33,7 +33,11 @@
   until: response.status == 200
   retries: 6
   delay: 15
-  failed_when: "'INITIALISING' not in response.content"
+  failed_when: response['state'] != 'INITIALISING'
 
 - name: get status of import
   debug: var=response
+
+- name: get job id
+  debug: var=response['id']
+
