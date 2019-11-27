@@ -18,6 +18,7 @@
     - role: product_common
     - role: product_install
     - role: database_init
+    - role: restore_backups
     - role: confluence_common
     - role: confluence_config
     - role: product_startup
