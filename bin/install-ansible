@@ -21,7 +21,7 @@ export PATH=/usr/local/bin:$PATH
 
 pip3 install pipenv
 echo "Installing ansible and dependencies..."
-PIPENV_HIDE_EMOJIS=1 pipenv sync 2>1 >/dev/null
+PIPENV_HIDE_EMOJIS=1 pipenv sync >/dev/null
 
 if [[ $1 == "--dev" ]]; then
     pipenv sync --dev
