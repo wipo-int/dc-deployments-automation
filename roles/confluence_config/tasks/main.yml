@@ -90,3 +90,4 @@
       - bandanavalue
       - <baseUrl>.*</baseUrl>
       - "<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}</baseUrl>"
+  ignore_errors: yes  # For Molecule as it has no db test framework included
