@@ -14,6 +14,7 @@
       - unzip
       - fontconfig
       - python-psycopg2
+      - dejavu-sans-fonts
 
 - name: Create product group
   group:
