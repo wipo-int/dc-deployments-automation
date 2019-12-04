@@ -29,13 +29,13 @@
 
     - name: Parse the manifest URL
       set_fact:
-        atl_backup_manifest_dict: "{{ atl_backup_manifest_url | urlsplit }}"
+        atl_backup_manifest_url: "{{ atl_backup_manifest_url | urlsplit }}"
 
     - name: Extract manifest file information
       set_fact:
-        atl_backup_manifest_bucket: "{{ atl_backup_manifest_dict.hostname }}"
-        atl_backup_manifest_path: "{{ atl_backup_manifest_dict.path }}"
-        atl_backup_manifest_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest_dict.path | basename }}"
+        atl_backup_manifest_bucket: "{{ atl_backup_manifest_url.hostname }}"
+        atl_backup_manifest_path: "{{ atl_backup_manifest_url.path }}"
+        atl_backup_manifest_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest_url.path | basename }}"
 
     - name: Fetch the manifest from S3
       aws_s3:
@@ -44,7 +44,7 @@
         bucket: "{{ atl_backup_manifest_bucket }}"
         object: "{{ atl_backup_manifest_path }}"
         dest: "{{ atl_backup_manifest_dest }}"
-      when: atl_backup_manifest_dict.scheme == 's3'
+      when: atl_backup_manifest_url.scheme == 's3'
 
     - name: Load parameters from manifest
       include_vars:
