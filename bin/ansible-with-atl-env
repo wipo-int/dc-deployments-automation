@@ -10,9 +10,6 @@ ENV_FILE=${4:-"/etc/atl"}
 
 export PATH=/usr/local/bin:$PATH
 
-# get /etc/atl into usable vars which can be included in ansible playbooks
-grep -v PASSWORD /etc/atl | sed -r -e 's/(^.+)(=)(.*$)/\L\1\E:\ \3/g' > /etc/atl_vars.yml
-
 # Set the environment with default exports
 set -a
 source $ENV_FILE

@@ -10,9 +10,6 @@
     atl_jdbc_encoding: 'UTF-8'
     atl_jdbc_collation: 'en_US.UTF-8'
 
-  vars_files:
-    - /etc/atl_vars.yml
-
   roles:
     - role: linux_common
     - role: aws_common
