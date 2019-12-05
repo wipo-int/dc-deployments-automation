@@ -33,14 +33,14 @@
   until: response.status == 200
   retries: 6
   delay: 15
-  failed_when: response['json']['state'] != 'INITIALISING'
+  failed_when: response.json.state != 'INITIALISING'
 
 - name: get status of import
   debug: var=response
 
 - name: get job id
-  debug: var=response['json']['state']
+  debug: var=response.json.state
 
 - name: get job id
-  debug: var=response['json']['id']
+  debug: var=response.json.id
 
