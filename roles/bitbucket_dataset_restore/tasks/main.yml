@@ -34,16 +34,7 @@
   retries: 6
   delay: 15
   failed_when: response.response.json.state != 'INITIALISING'
-
-- name: get status of import
   debug: var=response
-  ignore_errors: True
-
-- name: get job id
   debug: var=response.response.json.state
-  ignore_errors: True
-
-- name: get job id
   debug: var=response.json.id
-  ignore_errors: True
 
