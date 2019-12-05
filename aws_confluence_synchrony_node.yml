@@ -14,7 +14,7 @@
       - "EnvironmentFile=/etc/atl.synchrony"
       - "WorkingDirectory={{ atl_product_installation_current }}/logs/"
     atl_startup_exec_options: []
-    atl_startup_exec_path: "{{ atl_installation_base }}/bin/start-synchrony"
+    atl_startup_exec_path: "{{ atl_product_installation_current }}/bin/start-synchrony"
     atl_systemd_service_name: "synchrony.service"
 
   roles:
