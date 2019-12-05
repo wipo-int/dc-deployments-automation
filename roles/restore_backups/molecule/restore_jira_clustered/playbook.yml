@@ -6,6 +6,7 @@
     atl_backup_home_restore_canary_path: '/tmp/canary.tmp'
     atl_backup_id: 'test-backup'
     atl_backup_manifest_url: 'fake_manifest'
+    atl_backup_home_is_server: 'false'
 
     atl_product_edition: 'jira-software'
     atl_product_home_shared: '/media/atl/jira/shared'
