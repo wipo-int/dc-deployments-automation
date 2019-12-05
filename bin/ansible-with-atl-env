@@ -10,6 +10,7 @@ ENV_FILE=${4:-"/etc/atl"}
 
 export PATH=/usr/local/bin:$PATH
 
+
 # Set the environment with default exports
 set -a
 source $ENV_FILE
