@@ -38,8 +38,6 @@ def test_server_file(host):
     assert f.contains('acceptCount="10"')
     assert f.contains('secure="false"')
     assert f.contains('scheme="http"')
-    assert not f.contains('proxyName=')
-    assert not f.contains('proxyPort=')
 
 def test_install_permissions(host):
     assert host.file('/opt/atlassian/confluence/current/conf/server.xml').user == 'root'
