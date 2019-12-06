@@ -34,7 +34,7 @@
   retries: 6
   delay: 15
   #failed_when: output.json.state != 'INITIALISING'
-  failed_when: failed_when: "'INITIALISING' not in output.content"
+  failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
   debug: var=output
