@@ -41,9 +41,12 @@
 
 - name: get job id
   debug: var=response[item].json.state
+  with_dict: "{{ response }}"
 
 
 - name: get job id
   debug: var=response[item].json.id
+  with_dict: "{{ response }}"
+
 
 
