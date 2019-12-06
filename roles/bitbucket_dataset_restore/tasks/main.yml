@@ -29,24 +29,15 @@
     body: "{ \"archivePath\": \"{{ atl_bitbucket_dataset_url | basename }}\" }"
     body_format: json
     return_content: yes
-  register: response
-  until: response.status == 200
+  register: output
+  until: output.status == 200
   retries: 6
   delay: 15
-  failed_when: response.json.state != 'INITIALISING'
+  #failed_when: output.json.state != 'INITIALISING'
+  failed_when: failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
-  debug: var=response
-
-
-- name: get job id
-  debug: var=response.json.state
-  with_items: "{{ response }}"
-
-
-- name: get job id
-  debug: var=response.json.id
-  with_items: "{{ response }}"
+  debug: var=output
 
 
 
