@@ -37,7 +37,7 @@
   failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
-  debug: var=output.json
+  debug: var=output.json['state']
 
 
 
