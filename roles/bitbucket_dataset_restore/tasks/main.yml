@@ -33,11 +33,21 @@
   until: output.status == 200
   retries: 6
   delay: 15
-  failed_when: output.state != 'INITIALISING'
-  #failed_when: "'INITIALISING' not in output.content"
+  failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
   debug: var=output.json.state
 
+- name: get status of import
+  debug: var=output.json.id
 
-
+- name: get import status
+  uri: 
+    url: "{{ atl_bitbucket_baseurl }}/rest/api/1.0/migration/imports/{{ output.json.id }}"
+    user: admin
+    password: "{{ atl_bitbucket_admin_password }}"
+    method: get
+    force_basic_auth: yes
+    body_format: json
+    return_content: yes
+  register: import_status
