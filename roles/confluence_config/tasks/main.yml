@@ -88,8 +88,8 @@
     query: update bandana set bandanavalue=regexp_replace(%s, %s, %s) where bandanacontext = '_GLOBAL' and bandanakey = 'atlassian.confluence.settings';
     positional_args:
       - bandanavalue
-      - <baseUrl>.*</baseUrl>
-      - "<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}</baseUrl>"
+      - "'<baseUrl>.*</baseUrl>'"
+      - "'<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}</baseUrl>'"
   when:
     - atl_proxy_name is defined
     - atl_tomcat_scheme is defined
