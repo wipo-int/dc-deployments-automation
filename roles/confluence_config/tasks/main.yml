@@ -85,7 +85,9 @@
     login_user: "{{ atl_jdbc_user }}"
     login_password: "{{ atl_jdbc_password }}"
     db: "{{ atl_jdbc_db_name }}"
-    query: update bandana set bandanavalue=regexp_replace(bandanavalue, %s, %s) where bandanacontext = '_GLOBAL' and bandanakey = 'atlassian.confluence.settings';
+    query: >
+      update bandana set bandanavalue=regexp_replace(bandanavalue, %s, %s)
+      where bandanacontext = '_GLOBAL' and bandanakey = 'atlassian.confluence.settings';
     positional_args:
       - "<baseUrl>.*</baseUrl>"
       - "<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}</baseUrl>"
