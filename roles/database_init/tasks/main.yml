@@ -10,30 +10,6 @@
     password: "{{ atl_jdbc_password }}"
     expires: 'infinity'
 
-- name: Assert ownership of public schema
-  postgresql_query:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    db: "{{ atl_db_root_db_name }}"
-    query: "ALTER SCHEMA public OWNER to {{ atl_db_root_user }};"
-
-- name: Grant privs to root user on public schema
-  postgresql_query:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    db: "{{ atl_db_root_db_name }}"
-    query: "GRANT ALL ON SCHEMA public TO {{ atl_db_root_user }};"
-
-- name: Grant privs to application user on public schema
-  postgresql_query:
-    login_host: "{{ atl_db_host }}"
-    login_user: "{{ atl_db_root_user }}"
-    login_password: "{{ atl_db_root_password }}"
-    db: "{{ atl_db_root_db_name }}"
-    query: "GRANT ALL ON SCHEMA public TO {{ atl_jdbc_user }};"
-
 - block:
 
     - name: Update root privs for new user
@@ -62,3 +38,28 @@
 
   tags:
     - new_only
+
+- name: Assert ownership of public schema
+  postgresql_query:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
+    db: "{{ atl_jdbc_db_name }}"
+    query: "ALTER SCHEMA public OWNER to {{ atl_db_root_user }};"
+
+- name: Grant privs to root user on public schema
+  postgresql_query:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
+    db: "{{ atl_jdbc_db_name }}"
+    query: "GRANT ALL ON SCHEMA public TO {{ atl_db_root_user }};"
+
+- name: Grant privs to application user on public schema
+  postgresql_query:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_db_root_user }}"
+    login_password: "{{ atl_db_root_password }}"
+    db: "{{ atl_jdbc_db_name }}"
+    query: "GRANT ALL ON SCHEMA public TO {{ atl_jdbc_user }};"
+
