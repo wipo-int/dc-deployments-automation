@@ -51,3 +51,12 @@
     body_format: json
     return_content: yes
   register: import_status
+  until: "'COMPLETED' in import_status.content"
+  retries: 30
+  delay: 10
+
+- name: create lock file
+  file: 
+    path: "{{ atl_product_home_shared }}/data/migration/import/lock.file"
+    state: touch
+    when: import_status.state = 'COMPLETED'
