@@ -31,6 +31,7 @@
         objs: "{{ atl_jdbc_user }}"
         type: group
 
+# RDS does not allow changing the collation on an existing DB, it only allows collation change on creation of db. If the db already exists, we need the “create new application database” task to be skipped, idempotence can not be relied upon as we cant be certain the collation of the existing db
     - name: Create new application database
       postgresql_db:
         login_host: "{{ atl_db_host }}"
