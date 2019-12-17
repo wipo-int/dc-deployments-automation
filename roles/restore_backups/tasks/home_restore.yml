@@ -13,28 +13,41 @@
         owner: "{{ atl_product_user }}"
         group: "{{ atl_product_user }}"
 
+    # We also need to use `tar` here as `unarchive` runs `tar` three times doing
+    # idempotence checks, which we can skip.
     - name: Restore the shared-home backup
-      unarchive:
-        src: "{{ atl_backup_home_dest }}"
-        remote_src: yes
-        dest: "{{ atl_product_home_shared }}"
+      command:
+        argv:
+          - "tar"
+          - "--extract"
+          - "--file"
+          - "{{ atl_backup_home_dest }}"
+          - "--directory"
+          - "{{ atl_product_home_shared }}"
+        warn: false
       when: atl_backup_home_is_server is not defined or not atl_backup_home_is_server|bool
 
+    # Use tar transform to convert the Confluence Server (unclustered)
+    # layout to shared-home version. What occurs is:
+    #
+    #  * --transform runs first, moving attachments into the shared home.
+    #  * --strip-components removes the top-level directory
+    #
+    # NOTE: Also see the `confluence_config` role, which uses
+    # symlinks to support server and clustered layouts
+    # concurrently.
     - name: Restore a Confluence server home to share-home layout
-      unarchive:
-        src: "{{ atl_backup_home_dest }}"
-        remote_src: yes
-        dest: "{{ atl_product_home_shared }}"
-        # Use tar transform to convert the Confluence Server
-        # (unclustered) layout to shared-home version. What occurs is:
-        #  * --transform runs first, moving attachments into the shared home.
-        #  * --strip-components removes the top-level directory
-        # NOTE: Also see the `confluence_config` role, which uses
-        # symlinks to support server and clustered layouts
-        # concurrently.
-        extra_opts:
+      command:
+        argv:
+          - "tar"
+          - "--extract"
           - "--transform=s,^attachments,shared-home/attachments,"
           - "--strip-components=1"
+          - "--file"
+          - "{{ atl_backup_home_dest }}"
+          - "--directory"
+          - "{{ atl_product_home_shared }}"
+        warn: false
       when: atl_backup_home_is_server is defined and atl_backup_home_is_server|bool
 
     - name: Set shared home owner and group to application user
