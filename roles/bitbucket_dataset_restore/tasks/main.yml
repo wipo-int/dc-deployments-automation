@@ -61,4 +61,4 @@
   file: 
     path: "{{ atl_product_home_shared }}/data/migration/import/lock.file"
     state: touch
-  when: import_status.state == 'COMPLETED'
+  when: import_status.json.state == 'COMPLETED'
