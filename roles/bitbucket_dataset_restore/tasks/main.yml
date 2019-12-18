@@ -33,7 +33,7 @@
   until: output.status == 200
   retries: 6
   delay: 15
-  failed_when: output is defined and output.json is defined and output.json.state == 'INITIALISING'
+  failed_when: output is defined and output.json is defined and output.json.state != 'INITIALISING'
   #failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
