@@ -30,17 +30,10 @@
     body_format: json
     return_content: yes
   register: output
-  until: output.status == 200
+  until: output is defined and output.status == 200 and output.json is defined and output.json.state != 'INITIALISING'
   retries: 6
   delay: 15
-  failed_when: output is defined and output.json is defined and output.json.state != 'INITIALISING'
   #failed_when: "'INITIALISING' not in output.content"
-
-- name: get status of import
-  debug: var=output.json.state
-
-- name: get status of import
-  debug: var=output.json.id
 
 - name: get import status
   uri: 
