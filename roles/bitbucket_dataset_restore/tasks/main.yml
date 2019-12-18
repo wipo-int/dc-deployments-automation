@@ -33,7 +33,8 @@
   until: output.status == 200
   retries: 6
   delay: 15
-  failed_when: "'INITIALISING' not in output.content"
+  failed_when: output is defined and output.json.state != 'INITIALISING'
+  #failed_when: "'INITIALISING' not in output.content"
 
 - name: get status of import
   debug: var=output.json.state
@@ -51,7 +52,8 @@
     body_format: json
     return_content: yes
   register: import_status
-  until: "'COMPLETED' in import_status.content"
+  until: import_status is defined and import_status.content == 'COMPLETED'
+  #until: "'COMPLETED' in import_status.content"
   retries: 30
   delay: 10
 
@@ -59,4 +61,4 @@
   file: 
     path: "{{ atl_product_home_shared }}/data/migration/import/lock.file"
     state: touch
-    when: import_status.state == 'COMPLETED'
+  when: import_status.state == 'COMPLETED'
