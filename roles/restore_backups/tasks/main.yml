@@ -58,7 +58,7 @@
         atl_backup_id: "{{ atl_backup_manifest.name }}"
         atl_backup_db_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.db.location.location | basename }}"
         atl_backup_home_dest: "{{ atl_installer_temp }}/{{ atl_backup_manifest.artifacts.sharedHome.location.location | basename }}"
-        atl_backup_home_is_server: "{{ atl_backup_manifest.artifacts.sharedHome.serverHome }}"
+        atl_backup_home_is_server: "{{ atl_backup_manifest.artifacts.sharedHome.serverHome | default(false) }}"
 
     # FIXME: Here we fetch the backups. However we may wish to stream
     # these directly from S3 to the target DB/FS to avoid requiring
