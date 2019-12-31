@@ -6,3 +6,4 @@
       - python3-psycopg2
       - libxml2-utils
       - git
+      - fontconfig

@@ -1,4 +1,8 @@
 ---
+# This file was generated; to regnerated `cd` to `pipeline_generator`
+# and run:
+#
+#    make > ../bitbucket-pipelines.yml
 
 image: debian:buster
 options:
@@ -14,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 32 batches"
+          - echo "Running tests in 33 batches"
     - step:
         name: Check if number of batches match actual number of scenarios
         script:
@@ -283,4 +287,10 @@ pipelines:
            - apt-get update && ./bin/install-ansible --dev
            - ./bin/run-tests-in-batches --batch 32
 
-
+       - step:
+           name: Molecule Test Batch - 33
+           services:
+             - docker
+           script:
+           - apt-get update && ./bin/install-ansible --dev
+           - ./bin/run-tests-in-batches --batch 33

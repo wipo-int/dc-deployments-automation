@@ -16,6 +16,16 @@ def test_conf_init_file(host):
     assert f.exists
     assert f.contains('confluence.home = /var/atlassian/application-data/confluence')
 
+def test_conf_attachment_symlinks(host):
+    assert host.file('/var/atlassian/application-data/confluence').is_directory
+    assert host.file('/media/atl/confluence/shared-home/attachments/').is_directory
+
+    f = host.file('/var/atlassian/application-data/confluence/attachments')
+    assert f.is_symlink and f.linked_to == '/media/atl/confluence/shared-home/attachments'
+
+    f = host.file('/var/atlassian/application-data/confluence/shared-home')
+    assert f.is_symlink and f.linked_to == '/media/atl/confluence/shared-home'
+
 def test_setenv_file(host):
     f = host.file('/opt/atlassian/confluence/current/bin/setenv.sh')
     assert f.exists
@@ -38,8 +48,8 @@ def test_server_file(host):
     assert f.contains('acceptCount="10"')
     assert f.contains('secure="false"')
     assert f.contains('scheme="http"')
-    assert not f.contains('proxyName=')
-    assert not f.contains('proxyPort=')
+    assert f.contains('proxyName=')
+    assert f.contains('proxyPort=')
 
 def test_install_permissions(host):
     assert host.file('/opt/atlassian/confluence/current/conf/server.xml').user == 'root'
