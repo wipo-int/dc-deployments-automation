@@ -85,6 +85,8 @@
       include_tasks: "{{ ansible_distribution|lower }}.yml"
 
 
+    # Restores the application database. If a var with name `atl_force_db_restore` is set to true, the database will be restored even when the database has not been created in the same playbook run.
+    # This is done to accommodate running the restore role independent of the database_init role.
     - name: Restore application database
       postgresql_db:
         login_host: "{{ atl_db_host }}"
@@ -106,8 +108,8 @@
       failed_when:
         - result.rc != 0
         - '"COMMENT ON EXTENSION" not in result.msg'
-      when: db_created.changed and atl_backup_db_dest is defined
-
+      # default('false', true) filter makes the default filter return the specified default value for python False-y values (like an empty string)
+      when: atl_backup_db_dest is defined and (db_created.changed or (atl_force_db_restore | default('false', true) | bool))
 
     - name: Restore shared home
       include_tasks: "home_restore.yml"

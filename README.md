@@ -47,11 +47,11 @@ directly, the command for this would look like the following:
         -i inv/aws_node_local aws_jira_dc_node.yml
 
 You can also do this on a CloudFormation template where the stack details are in `/etc/atl`.
-On such templates, the variable `ATL_ANSIBLE_EXTRA_PARAMS` is added to the
+On such templates, the variable `ATL_DEPLOYMENT_REPOSITORY_CUSTOM_PARAMS` is added to the
 `ansible-playbook` parameters in `bin/ansible-with-alt-env`. In this case you
 need to set it to:
+    ATL_DEPLOYMENT_REPOSITORY_CUSTOM_PARAMS="-e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball"
 
-    ATL_ANSIBLE_EXTRA_PARAMS="-e atl_product_download_url=http://s3.amazon.com/atlassian/jira-9.0.0-PRE-TEST.tar.gz -e atl_use_system_jdk=true -e atl_download_format=tarball"
 
 To set the same parameters in the AWS Quick Starts for
 [Jira Data Center](https://aws.amazon.com/quickstart/architecture/jira/),
