@@ -166,9 +166,11 @@
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
+  register: obr_unpack
   ignore_errors: yes
 
-- name: Move JSD dependency jars into the installed-plugins dir
+- name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
   shell:
     cmd: "mv {{ atl_product_home_shared }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_home_shared }}/plugins/installed-plugins"
     creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-*.jar"
+  when: obr_unpack.changed
