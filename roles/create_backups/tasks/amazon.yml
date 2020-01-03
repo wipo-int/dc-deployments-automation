@@ -6,7 +6,7 @@
     file: atlassian-slingshot
     state: present
     description: Atlassian Slingshot
-    baseurl: https://packages.atlassian.com/atlassian-slingshot-rpm
+    baseurl: "{{ atl_slingshot_yum_repo_url }}"
     gpgcheck: no
 
 - name: Install atlassian-slingshot

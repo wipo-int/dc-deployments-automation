@@ -1,0 +1,6 @@
+---
+atl_slingshot_yum_repo_url: 'https://packages.atlassian.com/atlassian-slingshot-rpm'
+
+atl_slingshot_deb_pubkey_url: 'https://packages.atlassian.com/api/gpg/key/public'
+atl_slingshot_deb_repo_url: 'https://packages.atlassian.com/atlassian-slingshot-deb'
+atl_slingshot_deb_repo_components: 'stable main'
