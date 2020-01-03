@@ -1,7 +1,7 @@
 ---
 
 - name: Install distro-specific backup support packages
-  include_tasks: "../../tasks/{{ ansible_distribution|lower }}.yml"
+  include_tasks: "{{ ansible_distribution|lower }}.yml"
 
 - name: Stop the {{ atl_product_edition }} service
   service:
