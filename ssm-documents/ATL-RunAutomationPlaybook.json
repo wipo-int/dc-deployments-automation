@@ -1,0 +1,30 @@
+{
+    "schemaVersion": "2.2",
+    "description": "Use this document to run Ansible Playbooks from the atlassian deployment automation repo",
+    "parameters": {
+      "Playbook": {
+        "type": "String",
+        "description": "The Playbook file to run, relative to the repository root."
+      },
+      "InvocationVariables": {
+        "type": "String",
+        "description": "Variables to apply to the playbook. See playbook documentation for details on required parameters.",
+        "displayType": "textarea",
+        "allowedPattern": "^$|^\\w+\\=[^\\s|:();&]+(\\s\\w+\\=[^\\s|:();&]+)*$"
+      }
+    },
+    "mainSteps": [
+      {
+        "action": "aws:runShellScript",
+        "name": "runShellScript",
+        "inputs": {
+          "runCommand": [
+            "#!/bin/bash",
+            "cd /opt/atlassian/dc-deployments-automation",
+            "export PLAYBOOK_INVOCATION_EXTRA_PARAMS='{{InvocationVariables}}'",
+            "./bin/ansible-with-atl-env ./inv/aws_node_local aws_slingshot_backup.yml /var/log/ansible-slingshot.log"
+          ]
+        }
+      }
+    ]
+}
