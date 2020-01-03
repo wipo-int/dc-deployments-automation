@@ -12,3 +12,8 @@
 - name: Install atlassian-slingshot
   yum:
     name: atlassian-slingshot
+
+- name: Enable Postgresql from 'extras'
+  command: amazon-linux-extras install -y "postgresql{{ atl_amazon_extras_postgresql_version }}"
+  args:
+    creates: /usr/bin/psql

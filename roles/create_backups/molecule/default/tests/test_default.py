@@ -8,3 +8,4 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_slingshot_installed(host):
     assert host.file('/usr/bin/atlassian-slingshot').exists
+    assert host.file('/usr/bin/psql').exists

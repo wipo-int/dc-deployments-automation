@@ -20,3 +20,8 @@
     name: atlassian-slingshot
     update_cache: yes
     state: present
+
+- name: Install postgresql
+  apt:
+    name: postgresql
+    state: present
