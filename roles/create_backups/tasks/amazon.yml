@@ -1,0 +1,14 @@
+---
+
+- name: Add atlassian-slingshot yum repository
+  yum_repository:
+    name: AtlassianSlingshot
+    file: atlassian-slingshot
+    state: present
+    description: Atlassian Slingshot
+    baseurl: https://packages.atlassian.com/atlassian-slingshot-rpm
+    gpgcheck: no
+
+- name: Install atlassian-slingshot
+  yum:
+    name: atlassian-slingshot
