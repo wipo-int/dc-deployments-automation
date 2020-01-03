@@ -1,0 +1,3 @@
+- hosts: aws_node_local
+  roles:
+    - role: create_backups
