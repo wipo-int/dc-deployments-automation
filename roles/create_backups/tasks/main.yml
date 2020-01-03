@@ -12,6 +12,7 @@
   command:
     argv:
       - "atlassian-slingshot"
+      - "backup"
       - "--backupDir {{ atl_slingshot_backup_dir }}"
       - "--dbHost {{ atl_db_host }}"
       - "--dbPort {{ atl_db_port }}"
