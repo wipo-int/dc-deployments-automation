@@ -17,3 +17,5 @@
   command: amazon-linux-extras install -y "postgresql{{ atl_amazon_extras_postgresql_version }}"
   args:
     creates: /usr/bin/psql
+  environment:
+    PYTHON: /bin/python
