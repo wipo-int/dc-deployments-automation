@@ -112,4 +112,5 @@
   when:
     - atl_proxy_name is defined
     - atl_tomcat_scheme is defined
+    - not db_created.changed
   ignore_errors: yes  # For Molecule as it has no db test framework included
