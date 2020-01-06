@@ -108,7 +108,7 @@
       where bandanacontext = '_GLOBAL' and bandanakey = 'atlassian.confluence.settings';
     positional_args:
       - "<baseUrl>.*</baseUrl>"
-      - "<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}</baseUrl>"
+      - "<baseUrl>{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}{{ atl_tomcat_contextpath }}</baseUrl>"
   when:
     - atl_proxy_name is defined
     - atl_tomcat_scheme is defined
