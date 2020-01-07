@@ -87,3 +87,20 @@
     - "{{ atl_product_installation_versioned }}/temp"
     - "{{ atl_product_installation_versioned }}/work"
   changed_when: false  # For Molecule idempotence check
+
+- name: Assert baseurl to same as atl_proxy_name
+  postgresql_query:
+    login_host: "{{ atl_db_host }}"
+    login_user: "{{ atl_jdbc_user }}"
+    login_password: "{{ atl_jdbc_password }}"
+    db: "{{ atl_jdbc_db_name }}"
+    query: >
+      update propertystring set propertyvalue=%s
+      where id=(select id from propertyentry where property_key = 'jira.baseurl')
+    positional_args:
+      - "{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}{{ atl_tomcat_contextpath }}"
+  when:
+    - atl_proxy_name is defined
+    - atl_tomcat_scheme is defined
+    - not db_created.changed
+  ignore_errors: yes  # For Molecule as it has no db test framework included
