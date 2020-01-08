@@ -11,6 +11,12 @@
         "description": "Variables to apply to the playbook. See playbook documentation for details on required parameters.",
         "displayType": "textarea",
         "allowedPattern": "^$|^\\w+\\=[^\\s|:();&]+(\\s\\w+\\=[^\\s|:();&]+)*$"
+      },
+      "executionTimeout": {
+        "type": "String",
+        "default": "14400",
+        "description": "(Optional) The time in seconds for a command to complete before it is considered to have failed. Default is 3600 (1 hour). Maximum is 172800 (48 hours).",
+        "allowedPattern": "([1-9][0-9]{0,4})|(1[0-6][0-9]{4})|(17[0-1][0-9]{3})|(172[0-7][0-9]{2})|(172800)"
       }
     },
     "mainSteps": [
@@ -23,7 +29,9 @@
             "cd /opt/atlassian/dc-deployments-automation",
             "export PLAYBOOK_INVOCATION_EXTRA_PARAMS='{{InvocationVariables}}'",
             "./bin/ansible-with-atl-env ./inv/aws_node_local aws_slingshot_backup.yml /var/log/ansible-slingshot.log"
-          ]
+          ],
+          "workingDirectory": "{{ /opt/atlassian/dc-deployments-automation }}",
+          "timeoutSeconds": "{{ executionTimeout }}"
         }
       }
     ]
