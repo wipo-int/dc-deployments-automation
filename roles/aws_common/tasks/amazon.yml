@@ -3,6 +3,7 @@
 - name: Install AWS support packages
   yum:
     name:
+      - aswcli
       - ec2-utils
       - amazon-ssm-agent
       - amazon-efs-utils
