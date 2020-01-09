@@ -23,6 +23,3 @@
     mode: "u=rwX,g=rX,o=rX"
     recurse: true
   changed_when: false  # For Molecule idempotence check
-
-
-
