@@ -55,7 +55,6 @@
     - "{{ atl_product_shared_plugins }}"
   changed_when: false  # For Molecule idempotence check
 
-
 - name: Limit permissions on the installation directory
   file:
     path: "{{ atl_product_installation_versioned }}"
@@ -108,3 +107,22 @@
     - atl_tomcat_scheme is defined
     - not db_created.changed
   ignore_errors: yes  # For Molecule as it has no db test framework included
+
+- name: Check that crowd.cfg.xml exists
+  stat:
+    path: "{{ atl_product_home_shared }}/crowd.cfg.xml"
+  register: crowd_cfg_stat_result
+
+- name: Assert JDBC password to same as atl_jdbc_password
+  xml:
+    path: "{{ atl_product_home_shared }}/crowd.cfg.xml"
+    xpath: "/application-configuration/properties/property[@name='hibernate.connection.password']"
+    value: "{{ atl_jdbc_password }}"
+  when: crowd_cfg_stat_result.stat.exists
+
+- name: Assert JDBC url to same as atl_jdbc_url
+  xml:
+    path: "{{ atl_product_home_shared }}/crowd.cfg.xml"
+    xpath: "/application-configuration/properties/property[@name='hibernate.connection.url']"
+    value: "{{ atl_jdbc_url }}?reWriteBatchedInserts=true"
+  when: crowd_cfg_stat_result.stat.exists
