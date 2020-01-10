@@ -23,3 +23,6 @@
   when: atl_aws_enable_cloudwatch is defined and atl_aws_enable_cloudwatch
   notify:
     - Restart CloudWatch Agent
+
+- name: Initiate the startup of any new AWS services now
+  meta: flush_handlers
