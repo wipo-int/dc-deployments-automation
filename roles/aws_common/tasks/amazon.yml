@@ -3,10 +3,11 @@
 - name: Install AWS support packages
   yum:
     name:
-      - aswcli
-      - ec2-utils
-      - amazon-ssm-agent
       - amazon-efs-utils
+      - amazon-ssm-agent
+      - awscli
+      - git
+      - ec2-utils
 
 - name: Install CloudWatch Agent
   yum:

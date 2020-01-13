@@ -15,14 +15,47 @@
     ec2_autoscaling_group: "{{ ec2_tags.tags['aws:autoscaling:groupName']|default('') }}"
 
 - block:
-
+    # We're in an ASG, lookup the tags...
     - name: Get AutoscalingGroup tags
-      command: "aws autoscaling describe-tags --filters Name=auto-scaling-group,Values='{{ ec2_autoscaling_group }}'"
+      command: "aws autoscaling
+                    describe-tags
+                    --region {{ ansible_ec2_placement_region }}
+                    --filters Name=auto-scaling-group,Values='{{ ec2_autoscaling_group }}'"
       register: asg_tags_out
 
     - name: Parse and transform the AWS tags into a lookup table
       set_fact:
         asg_tags: "{{ (asg_tags_out.stdout | from_json).Tags | items2dict(key_name='Key', value_name='Value') }}"
 
-  when: ec2_autoscaling_group != ''
+    - block:
+        # No existing timestamp, so this is a first run. Persist some metadata into the ASG.
+        - name: Fetch the git revision for this repo
+          command:
+            cmd: git rev-parse HEAD
+          register: git_out
 
+        - name: Setup the new ASG tags
+          set_fact:
+            deployment_firstrun_meta:
+              - ResourceType: "auto-scaling-group"
+                ResourceId: "{{ ec2_autoscaling_group }}"
+                PropagateAtLaunch: true
+                Key: "atl:deployment:commit"
+                Value: "{{ git_out.stdout }}"
+
+              - ResourceType: "auto-scaling-group"
+                ResourceId: "{{ ec2_autoscaling_group }}"
+                PropagateAtLaunch: true
+                Key: "atl:deployment:first-run"
+                Value: "{{ ansible_date_time.iso8601 }}"
+
+        - name: Set the first-run tags on the ASG
+          command: "aws autoscaling
+                        create-or-update-tags
+                        --region {{ ansible_ec2_placement_region }}
+                        --tags '{{ deployment_firstrun_meta | to_json }}'"
+
+      when: asg_tags['atl:deployment:first-run'] is not defined
+
+  when: ec2_autoscaling_group != ''
+  ignore_errors: true
