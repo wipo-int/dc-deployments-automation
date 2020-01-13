@@ -1,0 +1,28 @@
+---
+
+- name: Fetch local EC2 metadata
+  ec2_metadata_facts:
+
+- name: Retrieve all available EC2 tags
+  ec2_tag:
+    region: "{{ ansible_ec2_placement_region }}"
+    resource: "{{ ansible_ec2_instance_id }}"
+    state: list
+  register: ec2_instance_tags
+
+- name: Retrieve autoscaling group
+  set_fact:
+    ec2_autoscaling_group: "{{ ec2_tags.tags['aws:autoscaling:groupName']|default('') }}"
+
+- block:
+
+    - name: Get AutoscalingGroup tags
+      command: "aws autoscaling describe-tags --filters Name=auto-scaling-group,Values='{{ ec2_autoscaling_group }}'"
+      register: asg_tags_out
+
+    - name: Parse and transform the AWS tags into a lookup table
+      set_fact:
+        asg_tags: "{{ (asg_tags_out.stdout | from_json).Tags | items2dict(key_name='Key', value_name='Value') }}"
+
+  when: ec2_autoscaling_group != ''
+
