@@ -29,6 +29,7 @@
       - "{{ atl_s3_backup_region }}"
       - "--sharedHomeLocation"
       - "{{ atl_product_home_shared }}"
+      - "--isAutomation"
   environment:
     ATL_DB_PASSWORD: "{{ atl_jdbc_password }}"
 
