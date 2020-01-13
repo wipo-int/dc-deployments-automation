@@ -1,8 +1,5 @@
 ---
 
-- name: Fetch local EC2 metadata
-  ec2_metadata_facts:
-
 - name: Retrieve all available EC2 tags
   ec2_tag:
     region: "{{ ansible_ec2_placement_region }}"
