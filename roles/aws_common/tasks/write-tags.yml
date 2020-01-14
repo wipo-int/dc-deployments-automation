@@ -6,6 +6,8 @@
     resource: "{{ ansible_ec2_instance_id }}"
     state: list
   register: ec2_instance_tags
+  tags:
+    - notest
 
 - name: Retrieve autoscaling group
   set_fact:
@@ -48,8 +50,8 @@
         region: "{{ ansible_ec2_placement_region }}"
         resource: "{{ ansible_ec2_instance_id }}"
         tags:
-            "atl:deployment:commit": "{{ git_out.stdout }}"
-            "atl:deployment:first-run": "{{ ansible_date_time.iso8601 }}"
+          "atl:deployment:commit": "{{ git_out.stdout }}"
+          "atl:deployment:first-run": "{{ ansible_date_time.iso8601 }}"
       ignore_errors: true
 
   when:
