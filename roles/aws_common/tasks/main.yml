@@ -24,5 +24,8 @@
   notify:
     - Restart CloudWatch Agent
 
+- name: Store some metadata about this run
+  include_tasks: "write-tags.yml"
+
 - name: Initiate the startup of any new AWS services now
   meta: flush_handlers
