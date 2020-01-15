@@ -6,6 +6,7 @@
     resource: "{{ ansible_ec2_instance_id }}"
     state: list
   register: ec2_instance_tags
+  ignore_errors: true
   tags:
     - notest
 
