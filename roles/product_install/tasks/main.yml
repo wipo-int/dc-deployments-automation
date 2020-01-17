@@ -73,12 +73,12 @@
 - name: "Case: Version is not latest"
   block:
 
-    - name: "Case: No cached version, or but supplied is higher; use supplied"
+    - name: "Case: No cached version, or but supplied is higher or forced; use supplied"
       set_fact:
         atl_download_version: "{{ atl_product_version }}"
       when: (not cached.stat.exists) or
             atl_product_version is version(atl_cached_version, '>') or
-            force_version_update is defined
+            force_version_update is defined and force_version_update | bool
 
     - name: "Case: Cached version is higher, ignore supplied"
       set_fact:
