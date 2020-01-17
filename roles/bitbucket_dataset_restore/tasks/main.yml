@@ -34,7 +34,6 @@
   retries: 6
   delay: 15
   failed_when: output is defined and output.json is defined and output.json.state != 'INITIALISING'
-  #failed_when: "'INITIALISING' not in output.content"
 
 - name: get import status
   uri: 
@@ -47,7 +46,6 @@
     return_content: yes
   register: import_status
   until: import_status is defined and import_status.json is defined and import_status.json.state == 'COMPLETED'
-  #until: "'COMPLETED' in import_status.content"
   retries: 30
   delay: 10
 
