@@ -34,5 +34,6 @@
     - role: restore_backups
     - role: bitbucket_config
     - role: product_startup
+    - role: bitbucket_dataset_restore
   
 
