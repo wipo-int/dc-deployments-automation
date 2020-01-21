@@ -36,6 +36,13 @@
             Key: "atl:deployment:first-run"
             Value: "{{ ansible_date_time.iso8601 }}"
 
+          - ResourceType: "auto-scaling-group"
+            ResourceId: "{{ ec2_autoscaling_group }}"
+            PropagateAtLaunch: true
+            Key: "atl:deployment:restored"
+            Value: "{{ atl_restore_required }}"
+
+
     # Set the tags on the ASG and the local instance. We need to
     # ignore errors as it's possible we don't have the permissions,
     # and we can't check up-front.
@@ -53,6 +60,7 @@
         tags:
           "atl:deployment:commit": "{{ git_out.stdout }}"
           "atl:deployment:first-run": "{{ ansible_date_time.iso8601 }}"
+          "atl:deployment:restored": "{{ atl_restore_required }}"
       ignore_errors: true
 
   when:
