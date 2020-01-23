@@ -12,7 +12,7 @@
 
 - name: Retrieve autoscaling group
   set_fact:
-    ec2_autoscaling_group: "{{ ec2_tags.tags['aws:autoscaling:groupName'] | default('') }}"
+    ec2_autoscaling_group: "{{ ec2_instance_tags.tags['aws:autoscaling:groupName'] | default('') }}"
 
 # Because Ansible - https://github.com/ansible/ansible/issues/11905#issuecomment-130496173
 - name: Set fact to store boolean 'atl_restore_required' value as as array of one string
