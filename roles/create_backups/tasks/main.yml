@@ -3,7 +3,7 @@
 - name: Install distro-specific backup support packages
   include_tasks: "{{ ansible_distribution|lower }}.yml"
 
-- name: Stop the {{ atl_product_edition }} service
+- name: Stop the {{ atl_product_family }} service
   service:
     name: "{{ atl_systemd_service_name }}"
     state: stopped
@@ -33,7 +33,7 @@
   environment:
     ATL_DB_PASSWORD: "{{ atl_jdbc_password }}"
 
-- name: Restart the {{ atl_product_edition }} service
+- name: Restart the {{ atl_product_family }} service
   service:
     name: "{{ atl_systemd_service_name }}"
     state: restarted
