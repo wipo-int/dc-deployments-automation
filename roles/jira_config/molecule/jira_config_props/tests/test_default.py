@@ -50,7 +50,8 @@ def test_cluster_file(host):
 
 def test_jira_config_prop(host):
     f = host.file('/var/atlassian/application-data/jira/jira-config.properties')
-    assert not f.exists
+    assert f.exists
+    assert f.contains('jira.projectkey.warning = testwarning')
 
 
 def test_server_file(host):

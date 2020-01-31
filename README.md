@@ -76,6 +76,14 @@ to find them:
 
     repo:dc-deployments-automation repo:dc-deployments-automation path:*/defaults/main.yml atl
 
+### Custom files
+
+* `jira-config.properties`: If this file exists in the shared home (default:
+  `/media/atl/jira/shared/`) then it will be copied to the Jira local home
+  directory (default: `/var/atlassian/application-data/jira/`). Note that this
+  only happens on node creation; if you create or update the shared file it will
+  need to be copied manually.
+
 # Development and testing
 
 See [Development](DEVELOPMENT.md) for details on setting up a development

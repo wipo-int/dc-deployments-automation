@@ -18,6 +18,18 @@
     src: server.xml.j2
     dest: "{{ atl_product_installation_versioned }}/conf/server.xml"
 
+- name: Check for a jira-config.properties in the shared home
+  stat:
+    path: "{{ atl_product_home_shared }}/jira-config.properties"
+  register: jira_config_properties
+
+- name: Copy jira-config.properties if exists
+  copy:
+    remote_src: true
+    src: "{{ atl_product_home_shared }}/jira-config.properties"
+    dest: "{{ atl_product_home }}/jira-config.properties"
+  when: jira_config_properties.stat.exists
+
 - name: Override JVM memory settings.
   # Ugly but necessary as the product installs this file so we need to make the change here.
   lineinfile:
