@@ -11,19 +11,11 @@
           "collect_list": [
 
             {% set comma = joiner(',') %}
-            {% for path in atl_product_log_locations[atl_product_family] %}
+            {% for logspec in atl_product_logs[atl_product_family] %}
               {{ comma() }}
               {
-                "file_path": "{{ path }}/*",
-                "log_group_name": "{{ atl_aws_log_group }}",
-                "log_stream_name": "{instance_id}"
-              }
-            {% endfor %}
-            {% for path in atl_provisioner_log_locations %}
-              {{ comma() }}
-              {
-                "file_path": "{{ path }}",
-                "log_group_name": "{{ atl_aws_provisioning_log_group }}",
+                "file_path": "{{ logspec.path }}",
+                "log_group_name": "{{ atl_aws_log_groups[logspec.type] }}",
                 "log_stream_name": "{instance_id}"
               }
             {% endfor %}
