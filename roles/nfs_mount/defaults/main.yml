@@ -2,3 +2,4 @@
 
 atl_nfs_mountpoint: "{{ atl_shared_mountpoint }}"
 atl_nfs_target: "{{ atl_shared_mountpoint }}"
+atl_nfs_version: "4.1"
