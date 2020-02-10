@@ -15,3 +15,7 @@
     fstype: nfs
     opts: "rw,nfsvers={{ atl_nfs_version }},lookupcache=pos,noatime,intr,rsize=32768,wsize=32768,_netdev"
     state: mounted
+  register: mount_result
+  until: not mount.failed
+  retries: 60
+  delay: 5
