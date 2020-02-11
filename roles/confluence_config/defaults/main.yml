@@ -7,7 +7,7 @@ atl_autologin_cookie_age: "{{ lookup('env', 'ATL_AUTOLOGIN_COOKIE_AGE') }}"
 atl_db_timeout: "{{ lookup('env', 'ATL_DB_TIMEOUT') or '30' }}"
 atl_db_idletestperiod: "{{ lookup('env', 'ATL_DB_IDLETESTPERIOD') or '100' }}"
 atl_db_maxstatements: "{{ lookup('env', 'ATL_DB_MAXSTATEMENTS') or '0' }}"
-atl_db_validate: "{{ lookup('env', 'ATL_ATL_DB_VALIDATE') or 'false' }}"
+atl_db_validate: "{{ lookup('env', 'ATL_DB_VALIDATE') or 'false' }}"
 atl_db_acquireincrement: "{{ lookup('env', 'ATL_DB_ACQUIREINCREMENT') or '1' }}"
 
 atl_hazelcast_network_aws_tag_key: "Cluster"
