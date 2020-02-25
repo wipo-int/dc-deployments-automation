@@ -24,17 +24,28 @@
     path: "{{ atl_product_installation_versioned }}/crowd-webapp/WEB-INF/classes/crowd-init.properties"
     line: 'crowd.home={{ atl_product_home }}'
 
-- name: Set the Tomcat environment
+- name: Export CATALINA_OPTS in setenv.sh
   lineinfile:
-    path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    insertafter: "EOF"
-    line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
+    path: '{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh'
+    line: 'export CATALINA_OPTS'
 
-- name: Set the Crowd node name via CATALINA_OPTS
-  lineinfile:
+- name: CATALINA_OPTS to list
+  set_fact:
+    catalina_ops_list: "{{ catalina_ops_list|default([]) }} + {{ (item | trim | regex_replace('^-')).split(' -') }}"
+  loop:
+    - '{{ atl_catalina_opts }}'
+    - '{{ atl_catalina_opts_extra }}'
+
+- name: CATALINA_OPTS unique and sorted
+  set_fact:
+    catalina_opts: "{{ query('flattened', catalina_ops_list) | unique | sort }}"
+
+- name: Set CATALINA_OPTS in setenv.sh
+  blockinfile:
+    block: "{{ lookup('template', 'templates/catalina_opts.j2') }}"
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
-    insertafter: "EOF"
-    line: export CATALINA_OPTS="${CATALINA_OPTS} -Dcluster.node.name={{ ansible_ec2_instance_id }}-{{ ansible_ec2_local_ipv4 }}"
+    insertbefore: "^export CATALINA_OPTS$"
+    marker: "# {mark} ANSIBLE MANAGED CATALINA_OPTS"
 
 - name: Set JAVA_HOME
   lineinfile:
