@@ -106,6 +106,8 @@
     - atl_proxy_name is defined
     - atl_tomcat_scheme is defined
     - db_created is undefined or not db_created.changed
+  tags:
+    - skip_on_stack_update
   ignore_errors: yes  # For Molecule as it has no db test framework included
 
 - name: Check that crowd.cfg.xml exists
