@@ -38,7 +38,7 @@
 
 - name: CATALINA_OPTS unique and sorted
   set_fact:
-    catalina_opts: "{{ query('flattened', catalina_ops_list) | unique | sort }}"
+    catalina_opts: "{{ query('flattened', catalina_ops_list) | reject('equalto', '') | unique | sort }}"
 
 - name: Set CATALINA_OPTS in setenv.sh
   blockinfile:
