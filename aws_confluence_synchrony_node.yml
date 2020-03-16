@@ -23,6 +23,7 @@
     - role: aws_shared_fs_config
     - role: product_common
     - role: product_install
+      tags: [skip_on_stack_update]
     - role: confluence_common
     - role: synchrony_config
     - role: product_startup
