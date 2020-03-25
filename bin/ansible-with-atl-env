@@ -9,7 +9,7 @@ LOG_FILE=${3:-"/dev/null"}
 ENV_FILE=${4:-"/etc/atl"}
 
 export PATH=/usr/local/bin:$PATH
-
+export PIP_DEFAULT_TIMEOUT=60
 
 # Set the environment with default exports
 set -a
