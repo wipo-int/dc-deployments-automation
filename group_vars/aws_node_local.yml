@@ -58,7 +58,6 @@ atl_product_logs:
   crowd:
     *logs_default
 
-
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper
