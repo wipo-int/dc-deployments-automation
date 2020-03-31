@@ -55,8 +55,7 @@ atl_product_logs:
     *logs_default
   stash:
     *logs_default
-  crowd:
-    *logs_default
+  crowd: []
 
 
 #  The following are imports from the environment. These are generally
