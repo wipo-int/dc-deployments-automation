@@ -81,7 +81,7 @@
         download_binary: true
         move_binary: false
         atl_product_download: "{{ atl_product_temp_download }}"
-        atl_product_normalized_version: "{{atl_product_version ~ '-z'|replace('-m', '-am')}}"
+        atl_product_normalised_version: "{{atl_product_version ~ '-z'|replace('-m', '-am')}}"
 
 
     - name: "Case: No cached version, or supplied is higher; use supplied"
