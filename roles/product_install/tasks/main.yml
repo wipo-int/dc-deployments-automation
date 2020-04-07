@@ -78,9 +78,6 @@
   block:
     - name: "create atlassian ordered versioning for comparison"
       set_fact:
-        download_binary: true
-        move_binary: false
-        atl_product_download: "{{ atl_product_temp_download }}"
         atl_product_normalised_version: "{{atl_product_version ~ '-z'|replace('-m', '-am')}}"
 
 
