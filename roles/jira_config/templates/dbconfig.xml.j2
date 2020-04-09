@@ -8,7 +8,7 @@
   <jdbc-datasource>
     <url>{{ atl_jdbc_url }}</url>
     <username>{{ atl_jdbc_user }}</username>
-    <password>{{ atl_jdbc_password }}</password>
+    <password>{{ atl_jdbc_password | replace("&", "&amp;") }}</password>
     <driver-class>{{ atl_db_driver }}</driver-class>
 
     <pool-min-size>{{ atl_db_poolminsize }}</pool-min-size>

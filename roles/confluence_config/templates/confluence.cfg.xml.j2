@@ -17,6 +17,7 @@
     <property name="hibernate.connection.url">{{ atl_jdbc_url }}</property>
     <property name="hibernate.connection.username">{{ atl_jdbc_user }}</property>
     <property name="hibernate.connection.password">{{ atl_jdbc_password }}</property>
+    <property name="hibernate.connection.password">{{ atl_jdbc_password | replace("&", "&amp;") }}</property>
     <property name="hibernate.c3p0.min_size">{{ atl_db_poolminsize }}</property>
     <property name="hibernate.c3p0.max_size">{{ atl_db_poolmaxsize }}</property>
     <property name="hibernate.c3p0.timeout">{{ atl_db_timeout }}</property>
