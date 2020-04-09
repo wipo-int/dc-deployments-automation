@@ -10,7 +10,7 @@
     atl_db_host: "postgres-db.ap-southeast-2.rds.amazonaws.com"
     atl_jdbc_db_name: "confluence"
     atl_jdbc_user: 'confluence'
-    atl_jdbc_password: 'molecule_password'
+    atl_jdbc_password: 'passwords_with_ampersands_&_should_be_escaped'
     atl_jvm_heap: 'PLACEHOLDER'
     atl_cluster_node_id: 'FAKEID'
     atl_autologin_cookie_age: "COOKIEAGE"
