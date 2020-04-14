@@ -36,6 +36,6 @@
     - role: bitbucket_config
     - role: product_startup
     - role: bitbucket_dataset_restore
-      when: atl_bitbucket_dataset_url|length > 2
+      when: atl_bitbucket_dataset_url is search ("(http|https|ftp)://[user[:pass]]@host.domain[:port]/path")
   
 
