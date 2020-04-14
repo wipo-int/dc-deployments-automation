@@ -76,3 +76,4 @@ def test_confluence_config_file(host):
     assert f.contains('<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>')
     assert f.contains('<property name="confluence.cluster.aws.host.header">ec2.amazonaws.com</property>')
     assert f.contains('<property name="hibernate.connection.url">jdbc:postgresql://postgres-db.ap-southeast-2.rds.amazonaws.com:5432/confluence</property>')
+    assert f.contains('<property name="hibernate.connection.password">molecule_password</property>')
