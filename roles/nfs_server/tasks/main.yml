@@ -35,7 +35,7 @@
     src: "LABEL={{ atl_nfs_fs_label }}"
     fstype: "{{ atl_nfs_fs_type }}"
     opts: defaults,nofail
-    passno: 2
+    passno: "2"
     state: mounted
 
 
