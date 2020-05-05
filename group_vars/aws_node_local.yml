@@ -43,6 +43,8 @@ atl_product_logs_default: &logs_default
     type: product
   - path: "{{ atl_product_home }}/logs/audit/*"
     type: audit
+  - path: "{{ atl_product_home }}/log/audit/*"
+    type: audit
   - path: "/var/log/ansible-bootstrap.log"
     type: provisioning
   - path: "/var/log/cfn-*.log"
