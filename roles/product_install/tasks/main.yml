@@ -54,6 +54,10 @@
 #
 # If a version is set, then it is honoured _if_ it is higher than the
 # cached value (i.e. upgrade path).
+#
+# there is some test logic hack to allow atlassian specfic versioning
+# requirements to work as expected ie - (7.2.0 to upgrade over 7.2.0-rc1) and
+# (7.2.0-beta1 to upgrade over 7.2.0-m01) in "version is not latest"
 
 - name: "Case: Version is latest"
   block:
@@ -72,19 +76,28 @@
 
 - name: "Case: Version is not latest"
   block:
+    - name: "create atlassian z versioning for comparison"
+      set_fact:
+        atl_z_product_version: "{{ atl_product_version ~ '-z' }}"
+        atl_z_cached_version: "{{ atl_cached_version ~ '-z' }}"
+
+    - name: "create atlassian ordered versioning for comparison"
+      set_fact:
+        atl_product_normalised_version: "{{ atl_z_product_version | replace('-m', '-am') }}"
+        atl_cached_normalised_version: "{{ atl_z_cached_version | replace('-m', '-am') }}"
 
     - name: "Case: No cached version, or supplied is higher; use supplied"
       set_fact:
         atl_download_version: "{{ atl_product_version }}"
       when: force_version_update | bool or
             not cached.stat.exists or
-            atl_product_version is version(atl_cached_version, '>')
+            atl_product_normalised_version is version(atl_cached_normalised_version, '>')
 
     - name: "Case: Cached version is higher or forced, ignore supplied"
       set_fact:
         atl_download_version: "{{ atl_cached_version }}"
       when: cached.stat.exists and
-            atl_product_version is version(atl_cached_version, '<=') and
+            atl_product_normalised_version is version(atl_cached_normalised_version, '<=') and
             not force_version_update | bool
 
   when: not version_is_latest
