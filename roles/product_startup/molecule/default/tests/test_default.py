@@ -7,7 +7,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_service_file(host):
-    f = host.file('/etc/systemd/system/jira-software.service')
+    f = host.file('/usr/lib/systemd/system/jira-software.service')
     assert f.contains("^ExecStart=/opt/atlassian/jira-software/current/bin/start-jira.sh -fg$")
     assert f.user == 'root'
     assert f.group == 'root'
