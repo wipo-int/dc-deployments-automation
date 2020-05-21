@@ -29,7 +29,7 @@
   pre_tasks:
     - name: Create systemd dir if necessary
       file:
-        path: '/etc/systemd/system/'
+        path: '/usr/lib/systemd/system/'
         state: directory
 
   roles:
