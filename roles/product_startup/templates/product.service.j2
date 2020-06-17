@@ -14,5 +14,7 @@ ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ 
 
 Restart=on-failure
 
+LimitNOFILE=65536
+
 [Install]
 WantedBy={{ atl_systemd_service_target }}
