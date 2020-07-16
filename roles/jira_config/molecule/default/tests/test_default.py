@@ -73,6 +73,7 @@ def test_server_file(host):
 
 
 def test_install_permissions(host):
+    assert host.file('/opt/atlassian/jira-software/current/conf/server.xml').user == 'root'
     assert host.file('/opt/atlassian/jira-software/current/atlassian-jira/WEB-INF/web.xml').user == 'root'
 
     assert host.file('/opt/atlassian/jira-software/current/conf/Catalina').user == 'jira'
