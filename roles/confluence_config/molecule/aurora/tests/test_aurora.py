@@ -45,6 +45,7 @@ def test_install_permissions(host):
     assert host.file('/opt/atlassian/confluence/current/conf/server.xml').user == 'root'
     assert host.file('/opt/atlassian/confluence/current/confluence/WEB-INF/web.xml').user == 'root'
 
+    assert host.file('/opt/atlassian/confluence/current/conf/Catalina').user == 'confluence'
     assert host.file('/opt/atlassian/confluence/current/logs/').user == 'confluence'
     assert host.file('/opt/atlassian/confluence/current/work/').user == 'confluence'
     assert host.file('/opt/atlassian/confluence/current/temp/').user == 'confluence'

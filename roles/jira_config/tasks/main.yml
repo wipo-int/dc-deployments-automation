@@ -100,6 +100,15 @@
     - "{{ atl_product_installation_versioned }}/work"
   changed_when: false  # For Molecule idempotence check
 
+- name: Create conf/Catalina directory owned by product so catalina.out logging works
+  file:
+    path: "{{ atl_product_installation_versioned }}/conf/Catalina"
+    state: directory
+    mode: "u=rwX,g=rX,o-rwx"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+  changed_when: false  # For Molecule idempotence check
+
 - name: Assert baseurl to same as atl_proxy_name
   postgresql_query:
     login_host: "{{ atl_db_host }}"
