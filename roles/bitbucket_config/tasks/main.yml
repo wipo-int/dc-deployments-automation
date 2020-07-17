@@ -24,7 +24,7 @@
     recurse: true
   changed_when: false  # For Molecule idempotence check
 
-- name: Create conf/Catalina directory owned by product so catalina.out logging works
+- name: Create conf/Catalina directory so catalina.out logging works
   file:
     path: "{{ atl_product_installation_versioned }}/conf/Catalina"
     state: directory
