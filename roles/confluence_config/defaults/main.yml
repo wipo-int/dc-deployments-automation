@@ -9,6 +9,7 @@ atl_db_idletestperiod: "{{ lookup('env', 'ATL_DB_IDLETESTPERIOD') or '100' }}"
 atl_db_maxstatements: "{{ lookup('env', 'ATL_DB_MAXSTATEMENTS') or '0' }}"
 atl_db_validate: "{{ lookup('env', 'ATL_DB_VALIDATE') or 'false' }}"
 atl_db_acquireincrement: "{{ lookup('env', 'ATL_DB_ACQUIREINCREMENT') or '1' }}"
+atl_db_preferredtestquery: "{{ lookup('env', 'ATL_DB_PREFERREDTESTQUERY') or 'select version();' }}"
 
 atl_hazelcast_network_aws_tag_key: "Cluster"
 atl_hazelcast_network_aws_host_header: "ec2.amazonaws.com"

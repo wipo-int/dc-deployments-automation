@@ -24,7 +24,7 @@
     <property name="hibernate.c3p0.max_statements">{{ atl_db_maxstatements }}</property>
     <property name="hibernate.c3p0.validate">{{ atl_db_validate }}</property>
     <property name="hibernate.c3p0.acquire_increment">{{ atl_db_acquireincrement }}</property>
-    <property name="hibernate.c3p0.preferredTestQuery">select version();</property>
+    <property name="hibernate.c3p0.preferredTestQuery">{{ atl_db_preferredtestquery }}</property>
 
     <property name="shared-home">{{ atl_product_home_shared }}</property>
     <property name="confluence.cluster">true</property>
