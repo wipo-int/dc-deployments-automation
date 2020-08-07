@@ -3,8 +3,6 @@
 atl_jvm_heap: "2048m"
 atl_fonts_fallback_dirs:
     - "{{ atl_java_home }}/lib/fonts/fallback/"
-    - "{{ atl_jre_home }}/lib/fonts/fallback/"
-
 
 atl_autologin_cookie_age: "{{ lookup('env', 'ATL_AUTOLOGIN_COOKIE_AGE') }}"
 

@@ -39,8 +39,7 @@ atl_installer_temp: "{{ atl_installation_base }}/tmp"
 # See product_common/task/ubuntu.yml for an example of apropriate
 # linking using `alternatives`.
 atl_java_home: "{{ '/usr/lib/jvm/java' if atl_use_system_jdk else (atl_product_installation_current + '/jre') }}"
-atl_jre_home: "{{ '/usr/lib/jvm/jre' if atl_use_system_jdk else atl_java_home }}"
-atl_java_binary: "{{ atl_jre_home }}/bin/java"
+atl_java_binary: "{{ atl_java_home }}/bin/java"
 
 atl_product_logs_default: &logs_default
   - path: "{{ atl_product_installation_current }}/logs/*"
