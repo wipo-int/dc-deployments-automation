@@ -14,7 +14,9 @@ def test_user_created(host):
 
 @pytest.mark.parametrize('exe', [
     '/usr/bin/git',
-    '/usr/bin/javac'
+    '/usr/bin/javac',
+    '/usr/lib/jvm/java/bin/java',
+    '/usr/lib/jvm/java/jre/bin/java'
 ])
 def test_package_exes(host, exe):
     assert host.file(exe).exists
