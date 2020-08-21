@@ -8,11 +8,18 @@
         name:
           - openjdk-{{ java_major_version }}-jdk-headless
 
-    - name: Ensure common symlink exists
+    - name: Ensure common JDK symlink exists
       alternatives:
         link: "/usr/lib/jvm/java"
         name: "java_sdk"
         path: "/usr/lib/jvm/java-8-openjdk-amd64"
+        priority: 99
+
+    - name: Ensure common JRE symlink exists
+      alternatives:
+        link: "/usr/lib/jvm/jre"
+        name: "jre"
+        path: "/usr/lib/jvm/java-8-openjdk-amd64/jre"
         priority: 99
 
   when: atl_use_system_jdk
