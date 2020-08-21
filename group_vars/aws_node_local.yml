@@ -34,8 +34,10 @@ atl_product_installation_versioned: "{{ atl_product_installation_base }}/{{ atl_
 atl_product_installation_current: "{{ atl_product_installation_base }}/current"
 atl_installer_temp: "{{ atl_installation_base }}/tmp"
 
-atl_jre_home: "{{ 'java' if atl_use_system_jdk else (atl_product_installation_current + '/jre') }}"
-atl_java_binary: "{{ atl_jre_home }}/bin/java"
+# NOTE: If using the non-installer java we expect to have the full JDK
+# installed and linked to `/usr/lib/jvm/java`, usually via `alternatives`.
+atl_java_home: "{{ '/usr/lib/jvm/java' if atl_use_system_jdk else (atl_product_installation_current + '/jre') }}"
+atl_java_binary: "{{ atl_java_home }}/bin/java"
 
 atl_product_logs_default: &logs_default
   - path: "{{ atl_product_installation_current }}/logs/*"
