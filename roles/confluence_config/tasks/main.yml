@@ -125,3 +125,13 @@
   tags:
     - skip_on_stack_update
   ignore_errors: yes  # For Molecule as it has no db test framework included
+
+- name: Create JVM font fallback directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items: "{{ atl_fonts_fallback_dirs }}"
+
+- name: Install & configure distro language fonts
+  include_tasks: "{{ ansible_distribution|lower }}_fonts.yml"
