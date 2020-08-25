@@ -1,5 +1,4 @@
 ---
-java_version: "1.8.0"
 java_major_version: "8"
 postgres_version: "9.6"
 

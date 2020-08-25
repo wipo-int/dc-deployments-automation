@@ -51,7 +51,7 @@
   lineinfile:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/bin/setenv.sh"
     insertafter: "EOF"
-    line: 'export JAVA_HOME=/usr/lib/jvm/jre-{{ java_version }}-openjdk'
+    line: "export JAVA_HOME={{ atl_java_home }}"
 
 - name: Create application directories
   file:
