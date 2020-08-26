@@ -12,8 +12,7 @@ def test_seraph_file(host):
     assert f.contains('<param-value>COOKIEAGE</param-value>')
 
 @pytest.mark.parametrize('font', [
-    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf',
-    '/usr/lib/jvm/jre/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
+    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
 ])
 def test_fonts_installed_and_linked(host, font):
     f = host.file(font)

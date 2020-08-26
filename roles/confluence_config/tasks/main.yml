@@ -52,7 +52,6 @@
     insertafter: "EOF"
     line: 'export CATALINA_OPTS="${CATALINA_OPTS} {{ atl_catalina_opts }} {{ atl_catalina_opts_extra }}"'
 
-
 - name: Configure login properties
   template:
     src: seraph-config.xml.j2
