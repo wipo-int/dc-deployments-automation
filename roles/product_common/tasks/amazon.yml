@@ -18,6 +18,13 @@
         name: "adoptopenjdk-{{ java_major_version }}-hotspot"
         state: present
 
+    - name: Ensure common JDK symlink exists
+      alternatives:
+        link: "/usr/lib/jvm/java"
+        name: "java_sdk"
+        path: "/usr/lib/jvm/adoptopenjdk-{{ java_major_version }}-hotspot"
+        priority: 99
+
   when: atl_use_system_jdk
   tags:
     - runtime_pkg
