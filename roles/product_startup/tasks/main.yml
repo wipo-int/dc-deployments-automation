@@ -3,7 +3,7 @@
 - name: "Install systemd service file"
   template:
     src: "product.service.j2"
-    dest: "/usr/lib/systemd/system/{{ atl_systemd_service_name }}"
+    dest: "{{ atl_systemd_service_dir }}/{{ atl_systemd_service_name }}"
     owner: root
     group: root
     mode: 0640

@@ -12,8 +12,11 @@
   pre_tasks:
     - name: Create systemd dir if necessary
       file:
-        path: '/usr/lib/systemd/system/'
+        path: "{{ item }}"
         state: directory
+      with_items:
+        - '/usr/lib/systemd/system/'
+        - '/lib/systemd/system/'
 
   roles:
     - role: product_startup
