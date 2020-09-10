@@ -3,21 +3,6 @@
 - name: Add AdoptOpenJDK repo and install if necessary on Ubuntu
   block:
 
-    - name: Create translation matrix for ansible_architecture values to Ubuntu/Debian nomenclature
-      set_fact:
-        debian_architecture_translations:
-          x86_64: amd64
-          aarch64: arm64
-
-    - name: Set debian_architecture based on ansible_architecture
-      set_fact:
-        debian_architecture: >-
-          {%- if ansible_architecture in debian_architecture_translations -%}
-          {{ debian_architecture_translations[ansible_architecture] }}
-          {%- else -%}
-          {{ ansible_architecture }}
-          {%- endif %}
-
     - name: Install gnupg
       apt:
         name: gnupg
