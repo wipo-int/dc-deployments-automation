@@ -35,7 +35,7 @@ atl_product_installation_current: "{{ atl_product_installation_base }}/current"
 atl_installer_temp: "{{ atl_installation_base }}/tmp"
 
 # NOTE: If using the non-installer java we expect to have the full JDK
-# installed and linked to `/usr/lib/jvm/java` and # `/usr/lib/jvm/jre`.
+# installed and linked to `/usr/lib/jvm/java`.
 # See product_common/task/ubuntu.yml for an example of apropriate
 # linking using `alternatives`.
 atl_java_home: "{{ '/usr/lib/jvm/java' if atl_use_system_jdk else (atl_product_installation_current + '/jre') }}"
