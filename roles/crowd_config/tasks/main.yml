@@ -148,7 +148,7 @@
     xpath: "/application-configuration/properties/property[@name='hibernate.connection.url']"
     value: "{{ atl_jdbc_url }}?reWriteBatchedInserts=true"
   when: crowd_cfg_stat_result.stat.exists
-  
+
 - name: Remove crowd.xml to prevent duplicates from appearing in cluster reporting
   file:
     path: "{{ atl_product_installation_versioned }}/apache-tomcat/conf/Catalina/localhost/crowd.xml"

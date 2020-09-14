@@ -81,8 +81,7 @@ def test_confluence_config_file(host):
     assert f.contains('<property name="hibernate.c3p0.preferredTestQuery">select 1;</property>')
 
 @pytest.mark.parametrize('font', [
-#    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf',
-#    '/usr/lib/jvm/jre/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
+#    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
     '/opt/atlassian/confluence/current/jre/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
 ])
 def test_fonts_installed_and_linked(host, font):

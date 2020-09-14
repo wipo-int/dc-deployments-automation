@@ -5,8 +5,8 @@
     name:
       - "fonts-noto"
 
-- name: Link the language fonts into the JDK/JRE
-  # Not idiomatic, but cleaner that messing with nested lookups...
+- name: Link the language fonts into the JDK
+  # Not idiomatic, but cleaner than messing with nested lookups...
   shell:
     cmd: "ln -sf /usr/share/fonts/truetype/noto/* {{ item }}/"
     creates: "{{ item }}/NotoSansJavanese-Regular.ttf"

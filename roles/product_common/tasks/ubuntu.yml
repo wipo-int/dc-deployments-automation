@@ -1,25 +1,35 @@
 ---
 
-- name: Install JDK if necessary on Ubuntu
+- name: Add AdoptOpenJDK repo and install if necessary on Ubuntu
   block:
 
-    - name: Install JDK package
-      package:
-        name:
-          - openjdk-{{ java_major_version }}-jdk-headless
+    - name: Install gnupg
+      apt:
+        name: gnupg
+        state: present
+
+    - name: Add AdoptOpenJDK debian repo public key
+      apt_key:
+        url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+        state: present
+
+    - name: Add AdoptOpenJDK debian repository
+      apt_repository:
+        repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb {{ ansible_distribution_release }} main"
+        state: present
+        filename: adoptopenjdk
+
+    - name: Install AdoptOpenJDK
+      apt:
+        name: "adoptopenjdk-{{ java_major_version }}-hotspot"
+        update_cache: yes
+        state: present
 
     - name: Ensure common JDK symlink exists
       alternatives:
         link: "/usr/lib/jvm/java"
         name: "java_sdk"
-        path: "/usr/lib/jvm/java-8-openjdk-amd64"
-        priority: 99
-
-    - name: Ensure common JRE symlink exists
-      alternatives:
-        link: "/usr/lib/jvm/jre"
-        name: "jre"
-        path: "/usr/lib/jvm/java-8-openjdk-amd64/jre"
+        path: "/usr/lib/jvm/adoptopenjdk-{{ java_major_version }}-hotspot-{{ debian_architecture }}"
         priority: 99
 
   when: atl_use_system_jdk

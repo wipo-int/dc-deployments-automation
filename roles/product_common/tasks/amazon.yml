@@ -1,10 +1,33 @@
 ---
 
-- name: Install JDK if necessary on Amazon Linux
-  yum:
-    name:
-      - java-1.{{ java_major_version }}.0-openjdk-devel
+- name: Add AdoptOpenJDK repo and install if necessary on Amazon Linux
+  block:
+
+    - name: Add AdoptOpenJDK yum repository
+      yum_repository:
+        name: AdoptOpenJDK
+        file: adoptopenjdk
+        description: AdoptOpenJDK Repo
+        baseurl: "https://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/amazonlinux/{{ ansible_distribution_version }}/{{ ansible_architecture }}/"
+        gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+        gpgcheck: yes
+        state: present
+
+    - name: Install AdoptOpenJDK
+      yum:
+        name: "adoptopenjdk-{{ java_major_version }}-hotspot"
+        state: present
+
+    - name: Ensure common JDK symlink exists
+      alternatives:
+        link: "/usr/lib/jvm/java"
+        name: "java_sdk"
+        path: "/usr/lib/jvm/adoptopenjdk-{{ java_major_version }}-hotspot"
+        priority: 99
+
   when: atl_use_system_jdk
+  tags:
+    - runtime_pkg
 
 - name: Install other base packages on Amazon Linux
   yum:
