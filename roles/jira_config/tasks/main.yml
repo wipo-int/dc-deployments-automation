@@ -28,6 +28,9 @@
     remote_src: true
     src: "{{ atl_product_home_shared }}/jira-config.properties"
     dest: "{{ atl_product_home }}/jira-config.properties"
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+    mode: 0644
   when: jira_config_properties.stat.exists
 
 - name: Override JVM memory settings.
