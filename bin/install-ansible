@@ -10,6 +10,8 @@ if [[ $ID = "amzn" ]]; then
         python2-boto3 \
         python2-botocore \
         python-pip 
+       
+     python -m pip install lxml
 
 else
     # FIXME: Currently assumes Debian-based
@@ -23,7 +25,6 @@ export PATH=/usr/local/bin:$PATH
 export PIP_DEFAULT_TIMEOUT=60
 
 pip3 install pipenv
-python -m pip install lxml
 echo "Installing ansible and dependencies..."
 PIPENV_NOSPIN=1 PIPENV_HIDE_EMOJIS=1 pipenv sync 2>&1 | iconv -c -f utf-8 -t ascii
 
