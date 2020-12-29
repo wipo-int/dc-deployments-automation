@@ -5,12 +5,14 @@ After=network-online.target
 [Service]
 User={{ atl_product_user }}
 Group={{ atl_product_user }}
+StandardOutput=journal+console
+StandardError=journal+console
 
 {% for p in atl_startup_systemd_params -%}
   {{ p }}
 {% endfor %}
 
-ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %}
+ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %} >{{ atl_product_installation_current }}/logs/catalina.out 2>{{ atl_product_installation_current }}/logs/catalina.err
 
 Restart=on-failure
 
