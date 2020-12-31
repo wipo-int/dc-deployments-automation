@@ -132,7 +132,6 @@
     - "{{ atl_product_installation_versioned }}"
     - "{{ atl_product_version_cache_dir }}"
     - "{{ atl_product_home_shared_download_dir }}"
-    - "{{ atl_product_installation_versioned }}/logs"
   changed_when: false  # For Molecule idempotence check
 
 # At this point atl_product_version should be set, cache if necessary.
@@ -265,6 +264,15 @@
     dest: "{{ atl_product_installation_current }}"
     state: link
     force: true
+
+- name: "Ensure catalina.out log dir exists after product is installed"
+  file:
+    path: "{{ atl_product_installation_current }}/logs"
+    state: directory
+    mode: 0750
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+  changed_when: false  # For Molecule idempotence check
 
 - name: Include if jsd is requested to be installed from OBR
   include_tasks: "jira-servicedesk_as_obr.yml"
