@@ -132,7 +132,7 @@
     - "{{ atl_product_installation_versioned }}"
     - "{{ atl_product_version_cache_dir }}"
     - "{{ atl_product_home_shared_download_dir }}"
-    - "{{ atl_product_installation_current }}/logs"
+    - "{{ atl_product_installation_versioned }}/logs"
   changed_when: false  # For Molecule idempotence check
 
 # At this point atl_product_version should be set, cache if necessary.
