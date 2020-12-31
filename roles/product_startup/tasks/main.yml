@@ -1,13 +1,4 @@
 ---
-- name: "Ensure startup log dir exists"
-  file:
-    path: "{{ atl_product_installation_current }}/logs"
-    state: directory
-    mode: 0750
-    owner: "{{ atl_product_user }}"
-    group: "{{ atl_product_user }}"
-  changed_when: false  # For Molecule idempotence check
-
 - name: "Install systemd service file"
   template:
     src: "product.service.j2"
