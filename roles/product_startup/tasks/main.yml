@@ -1,4 +1,5 @@
 ---
+
 - name: "Install systemd service file"
   template:
     src: "product.service.j2"
