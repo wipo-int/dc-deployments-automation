@@ -12,7 +12,7 @@ StandardError=journal+console
   {{ p }}
 {% endfor %}
 
-ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %} >{{ atl_product_installation_current }}/logs/catalina.out 2>{{ atl_product_installation_current }}/logs/catalina.err
+ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %} >{{ atl_product_installation_current }}/logs/catalina.out 2>&1
 
 Restart=on-failure
 
