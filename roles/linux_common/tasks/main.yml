@@ -26,3 +26,19 @@
     uid: "{{ atl_product_user_uid }}"
     group: "{{ atl_product_user }}"
     comment: "Product runtime user"
+
+- name: Stop systemd-cleanup deleting the jvm socket file
+  copy:
+    src: java.conf
+    dest: "/usr/lib/tmpfiles.d/java.conf"
+    owner: root
+    group: root
+    mode: "644"
+  register: systemd_config_changed
+
+- name: Force systemd to reload daemon configuration
+  systemd:
+    daemon_reload: yes
+  when:
+    - systemd_config_changed is defined
+    - molecule_yml is not defined  # molecule cannot run systemctl commands and notest doesn't work for handlers
