@@ -1,0 +1,3 @@
+---
+
+atl_bitbucket_license_key: "{{ lookup('env', 'ATL_BB_LICENSEKEY') }}"
