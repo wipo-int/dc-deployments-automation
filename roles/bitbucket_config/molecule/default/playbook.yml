@@ -12,6 +12,8 @@
     atl_jdbc_user: 'bb_db_user'
     atl_jdbc_password: 'molecule_password'
 
+    atl_bitbucket_properties_raw: "key1=va1 key2=val2    key3=val3"
+
   roles:
     - role: linux_common
     - role: product_common
