@@ -15,7 +15,6 @@ def test_config_file(host):
     assert f.contains("jdbc.user=bb_db_user")
     assert f.contains("jdbc.password=molecule_password")
 
-    assert f.contains("key1=val1")
-    assert f.contains("key2=val2")
-    assert f.contains("key3=val3")
-
+    assert f.contains("^key1=val1$")
+    assert f.contains("^key2=val2$")
+    assert f.contains("^key3=val3$")
