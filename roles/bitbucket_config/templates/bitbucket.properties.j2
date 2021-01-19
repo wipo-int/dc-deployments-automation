@@ -1,4 +1,4 @@
-# Created by Ansible
+# Created by Ansible role `bitbucket_config`
 jdbc.driver={{ atl_db_driver }}
 jdbc.url={{ atl_jdbc_url }}
 jdbc.user={{ atl_jdbc_user }}
@@ -34,3 +34,6 @@ server.scheme=http
 server.proxy-port=80
 {% endif %}
 
+{% for prop in atl_bitbucket_properties %}
+{{ prop }}
+{% endfor %}
