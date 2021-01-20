@@ -15,8 +15,7 @@ class Pipeline:
         print(generated_output)
 
     def _build_steps(self):
-        return [Step(f"Molecule Test Batch - {scenario_name}",
-                     self._build_script_commands(index))
+        return [Step(scenario_name, self._build_script_commands(index))
                 for index, (scenario_rel_path, scenario_name) in
                 enumerate(self._find_all_scenarios(), 1)]
 
