@@ -19,8 +19,9 @@ pipelines:
         name: Pre Parallelization stage
         script:
           - echo "Running tests in 38 batches"
+
     - step:
-        name: Check if number of batches match actual number of scenarios
+        name: Check if the template is up-to-date
         script:
           - |
               actual_scenario_count=$(find ./roles -type f -name "molecule.yml" -exec dirname {} ';' | wc -l |  sed -e 's/^[[:space:]]*//')
@@ -30,309 +31,310 @@ pipelines:
                   echo "Mismatch between expected and actual number [${actual_scenario_count}] of scenarios. Please look at https://bitbucket.org/atlassian/dc-deployments-automation/src/master/DEVELOPMENT.md for instructions on how to fix this error."
                   exit $GREP_RETURN_CODE
               fi
+
     - parallel:
        - step:
            name: aws_common/cw-disabled
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 1
-           
+             - ./bin/install-ansible --dev
+             - cd roles/aws_common
+             - molecule test -s cw-disabled
        - step:
            name: aws_common/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 2
-           
+             - ./bin/install-ansible --dev
+             - cd roles/aws_common
+             - molecule test -s default
        - step:
            name: aws_common/logs-disabled
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 3
-           
+             - ./bin/install-ansible --dev
+             - cd roles/aws_common
+             - molecule test -s logs-disabled
        - step:
            name: bitbucket_config/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 4
-           
+             - ./bin/install-ansible --dev
+             - cd roles/bitbucket_config
+             - molecule test -s default
        - step:
            name: confluence_config/aurora
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 5
-           
+             - ./bin/install-ansible --dev
+             - cd roles/confluence_config
+             - molecule test -s aurora
        - step:
            name: confluence_config/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 6
-           
+             - ./bin/install-ansible --dev
+             - cd roles/confluence_config
+             - molecule test -s default
        - step:
            name: confluence_config/password_char_escaping
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 7
-           
+             - ./bin/install-ansible --dev
+             - cd roles/confluence_config
+             - molecule test -s password_char_escaping
        - step:
            name: confluence_config/system_jdk
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 8
-           
+             - ./bin/install-ansible --dev
+             - cd roles/confluence_config
+             - molecule test -s system_jdk
        - step:
            name: create_backups/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 9
-           
+             - ./bin/install-ansible --dev
+             - cd roles/create_backups
+             - molecule test -s default
        - step:
            name: diy_backup/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 10
-           
+             - ./bin/install-ansible --dev
+             - cd roles/diy_backup
+             - molecule test -s default
        - step:
            name: jira_config/aurora
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 11
-           
+             - ./bin/install-ansible --dev
+             - cd roles/jira_config
+             - molecule test -s aurora
        - step:
            name: jira_config/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 12
-           
+             - ./bin/install-ansible --dev
+             - cd roles/jira_config
+             - molecule test -s default
        - step:
            name: jira_config/jira_config_props
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 13
-           
+             - ./bin/install-ansible --dev
+             - cd roles/jira_config
+             - molecule test -s jira_config_props
        - step:
            name: jira_config/password_char_escaping
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 14
-           
+             - ./bin/install-ansible --dev
+             - cd roles/jira_config
+             - molecule test -s password_char_escaping
        - step:
            name: linux_common/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 15
-           
+             - ./bin/install-ansible --dev
+             - cd roles/linux_common
+             - molecule test -s default
        - step:
            name: product_common/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 16
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_common
+             - molecule test -s default
        - step:
            name: product_common/system_jdk
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 17
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_common
+             - molecule test -s system_jdk
        - step:
            name: product_install/bitbucket_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 18
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s bitbucket_latest
        - step:
            name: product_install/confluence_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 19
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s confluence_latest
        - step:
            name: product_install/crowd_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 20
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s crowd_latest
        - step:
            name: product_install/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 21
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s default
        - step:
            name: product_install/jira_all
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 22
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_all
        - step:
            name: product_install/jira_cached_with_downgrade
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 23
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_cached_with_downgrade
        - step:
            name: product_install/jira_cached_with_upgrade
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 24
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_cached_with_upgrade
        - step:
            name: product_install/jira_software_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 25
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_software_latest
        - step:
            name: product_install/jira_tarball
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 26
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_tarball
        - step:
            name: product_install/jira_version_from_file
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 27
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_version_from_file
        - step:
            name: product_install/jira_version_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 28
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_version_latest
        - step:
            name: product_install/jira_version_override
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 29
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s jira_version_override
        - step:
            name: product_install/servicedesk3
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 30
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s servicedesk3
        - step:
            name: product_install/servicedesk4
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 31
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s servicedesk4
        - step:
            name: product_install/servicedesk_latest
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 32
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - molecule test -s servicedesk_latest
        - step:
            name: product_startup/bitbucket
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 33
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_startup
+             - molecule test -s bitbucket
        - step:
            name: product_startup/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 34
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_startup
+             - molecule test -s default
        - step:
            name: product_startup/synchrony
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 35
-           
+             - ./bin/install-ansible --dev
+             - cd roles/product_startup
+             - molecule test -s synchrony
        - step:
            name: restore_backups/default
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 36
-           
+             - ./bin/install-ansible --dev
+             - cd roles/restore_backups
+             - molecule test -s default
        - step:
            name: restore_backups/restore_conf_server
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 37
-           
+             - ./bin/install-ansible --dev
+             - cd roles/restore_backups
+             - molecule test -s restore_conf_server
        - step:
            name: restore_backups/restore_jira_clustered
            services:
              - docker
            script:
-           - apt-get update && ./bin/install-ansible --dev
-           - ./bin/run-tests-in-batches --batch 38
-           
+             - ./bin/install-ansible --dev
+             - cd roles/restore_backups
+             - molecule test -s restore_jira_clustered
        
