@@ -41,5 +41,5 @@ pipelines:
            script:
              - ./bin/install-ansible --dev
              - cd roles/{{ spath.parts[2] }}
-             - molecule test -s {{ spath.parts[4] }}
+             - pipenv run molecule test -s {{ spath.parts[4] }}
        {% endfor %}
