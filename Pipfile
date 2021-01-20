@@ -13,6 +13,8 @@ molecule = "==3.2.2"
 molecule-docker = "==0.2.4"
 docker = "==4.4.1"
 taskcat = "*"
+pytest = "*"
+testinfra = "*"
 
 [requires]
 python_version = "3.7"
