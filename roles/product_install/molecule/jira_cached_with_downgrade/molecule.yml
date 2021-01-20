@@ -3,8 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
   - name: amazon_linux2
     image: amazonlinux:2
@@ -19,8 +17,6 @@ provisioner:
   options:
     vvv: true
     skip-tags: runtime_pkg
-  lint:
-    name: ansible-lint
   inventory:
     links:
       group_vars: ../../../../group_vars/
@@ -28,6 +24,3 @@ verifier:
   name: testinfra
   additional_files_or_dirs:
     - ../../resources/tests/test_*.py
-  lint:
-    name: flake8
-    enabled: false
