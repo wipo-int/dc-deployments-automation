@@ -15,9 +15,9 @@ class Pipeline:
         print(generated_output)
 
     def _build_steps(self):
-        return [Step(f"Molecule Test Batch - {index}",
+        return [Step(f"Molecule Test Batch - {scenario_name}",
                      self._build_script_commands(index))
-                for index, scenario_rel_path in
+                for index, (scenario_rel_path, scenario_name) in
                 enumerate(self._find_all_scenarios(), 1)]
 
     @staticmethod
@@ -29,7 +29,8 @@ class Pipeline:
         scenario_dirs = []
         for root, dirs, files in os.walk(Path(os.path.join(os.path.dirname(__file__), "..", ROLES_DIR))):
             [scenario_dirs.append(root) for f in files if f.endswith("molecule.yml")]
-        return scenario_dirs
+        scenarios = map(lambda d: (d, f"{Path(d).parts[2]}/{Path(d).parts[4]}"), scenario_dirs)
+        return scenarios
 
     @staticmethod
     def _load_template_as_string():
