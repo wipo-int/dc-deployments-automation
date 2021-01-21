@@ -269,4 +269,4 @@
   include_tasks: "jira-servicedesk_as_obr.yml"
   when:
     - atl_install_jsd_as_obr is defined
-    - atl_install_jsd_as_obr
+    - atl_install_jsd_as_obr | bool
