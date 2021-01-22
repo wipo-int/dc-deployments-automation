@@ -4,7 +4,7 @@
   service:
     name: "{{ atl_systemd_service_name }}"
     state: restarted
-  when: atl_startup_restart | bool
+  when: atl_startup_restart
   no_log: true
 
 - name: Enable Product
