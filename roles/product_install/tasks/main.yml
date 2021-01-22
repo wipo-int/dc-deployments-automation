@@ -267,6 +267,4 @@
 
 - name: Include if jsd is requested to be installed from OBR
   include_tasks: "jira-servicedesk_as_obr.yml"
-  when:
-    - atl_install_jsd_as_obr is defined
-    - atl_install_jsd_as_obr | bool
+  when: atl_install_jsd_as_obr
