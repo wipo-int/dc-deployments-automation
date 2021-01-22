@@ -37,5 +37,5 @@ def test_completed_lockfile(host):
     assert lockfile.user == 'root'
 
 def test_servicedesk_not_installed(host):
-    jars = host.file('/media/atl/jira/shared/plugins/installed-plugins')
-    assert len(list(filter(lambda p: 'servicedesk' in p, jars))) == 0
+    plugins = host.file('/media/atl/jira/shared/plugins/installed-plugins')
+    assert (not plugins.exists) or (len(list(filter(lambda p: 'servicedesk' in p, jars))) == 0)
