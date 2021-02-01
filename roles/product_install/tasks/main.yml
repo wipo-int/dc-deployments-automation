@@ -265,13 +265,14 @@
     state: link
     force: true
 
-- name: "Ensure catalina.out log dir exists after product is installed"
+- name: "Ensure catalina.out log dir exists after product is installed (except bitbucket)"
   file:
     path: "{{ atl_product_installation_current }}/logs"
     state: directory
     mode: 0750
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
+  when: atl_product_family != "stash"
   changed_when: false  # For Molecule idempotence check
 
 - name: Include if jsd is requested to be installed from OBR
