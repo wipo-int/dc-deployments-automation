@@ -12,7 +12,7 @@ StandardError=journal+console
   {{ p }}
 {% endfor %}
 
-ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %}{% if (atl_product_family != "stash") %} >{{ atl_product_installation_current }}/logs/catalina.out  2>&1{% endif %}
+ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %}{% if (atl_product_family != "stash") %} >{{ atl_product_installation_current }}/logs/catalina.out 2>&1{% endif %}
 
 Restart=on-failure
 
