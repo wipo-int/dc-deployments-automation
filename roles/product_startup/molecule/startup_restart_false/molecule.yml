@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: amazon_linux2
+    image: amazonlinux:2
+    groups:
+      - aws_node_local
+    ulimits:
+      - nofile:262144:262144
+  - name: ubuntu_lts
+    image: ubuntu:bionic
+    groups:
+      - aws_node_local
+    ulimits:
+      - nofile:262144:262144
+provisioner:
+  name: ansible
+  env:
+    ATL_STARTUP_RESTART: "false"
+  options:
+    skip-tags: runtime_pkg
+  inventory:
+    links:
+      group_vars: ../../../../group_vars/
+verifier:
+  name: testinfra

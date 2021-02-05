@@ -13,3 +13,9 @@ def test_service_file(host):
     assert f.user == 'root'
     assert f.group == 'root'
     assert f.mode == 0o0640
+
+
+def test_atl_startup_restart(host):
+    f = host.file('/tmp/ansible-vars.yml')
+    # value should appear as YAML boolean true (i.e., string 'true' will fail)
+    assert f.contains(r'^\s*atl_startup_restart: true$')
