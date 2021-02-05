@@ -2,7 +2,7 @@
 
 # Mostly for molecule testing, as skip-tags doesn't work with handlers.
 atl_startup_enable: true
-atl_startup_restart: "{{ lookup('env', 'ATL_STARTUP_RESTART') | bool | default(true) }}"
+atl_startup_restart: "{{ lookup('env', 'ATL_STARTUP_RESTART') | default(true, true) | bool }}"
 
 atl_startup_script_map:
   jira: "bin/start-jira.sh"
