@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 37 batches"
+          - echo "Running tests in 38 batches"
 
     - step:
         name: Check if the template is up-to-date
@@ -97,6 +97,14 @@ pipelines:
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s bitbucket
+       - step:
+           name: product_startup/startup_restart_false
+           services:
+             - docker
+           script:
+             - ./bin/install-ansible --dev
+             - cd roles/product_startup
+             - pipenv run molecule test -s startup_restart_false
        - step:
            name: product_common/default
            services:
