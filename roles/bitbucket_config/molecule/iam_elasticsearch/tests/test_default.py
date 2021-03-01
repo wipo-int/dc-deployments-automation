@@ -17,7 +17,7 @@ def test_config_file(host):
 
     assert not f.contains("plugin.search.elasticsearch.username")
     assert not f.contains("plugin.search.elasticsearch.password")
-    assert not f.contains("plugin.search.elasticsearch.aws.region=us-east-2")
+    assert f.contains("plugin.search.elasticsearch.aws.region=us-east-2")
 
     assert f.contains("^key1=val1$")
     assert f.contains("^key2=val2$")
