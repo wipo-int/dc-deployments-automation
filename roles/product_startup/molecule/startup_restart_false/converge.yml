@@ -5,22 +5,11 @@
     atl_product_user: "jira"
     atl_product_family: "jira"
     atl_product_edition: "jira-software"
+    atl_startup_enable: false
 
     ansible_vars_dump_location: "/tmp/ansible-vars.yml"
 
-  pre_tasks:
-    - name: Create systemd dir if necessary
-      file:
-        path: "{{ item }}"
-        state: directory
-      with_items:
-        - '/usr/lib/systemd/system/'
-        - '/lib/systemd/system/'
-
-  roles:
-    - role: product_startup
-
-  post_tasks:
+  tasks:
     - include_vars: ../../defaults/main.yml
 
     # workaround Molecule idempotence check
