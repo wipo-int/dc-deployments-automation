@@ -9,16 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_config_file(host):
     f = host.file('/media/atl/bitbucket/shared/bitbucket.properties')
     assert f.exists
-    assert f.user == 'bitbucket'
-
-    assert f.contains("jdbc.driver=org.postgresql.Driver")
-    assert f.contains("jdbc.user=bb_db_user")
-    assert f.contains("jdbc.password=molecule_password")
 
     assert not f.contains("plugin.search.elasticsearch.username")
     assert not f.contains("plugin.search.elasticsearch.password")
     assert f.contains("plugin.search.elasticsearch.aws.region=us-east-2")
-
-    assert f.contains("^key1=val1$")
-    assert f.contains("^key2=val2$")
-    assert f.contains("^key3=val3$")

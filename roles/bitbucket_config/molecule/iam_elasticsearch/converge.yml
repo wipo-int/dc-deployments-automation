@@ -14,8 +14,6 @@
 
     atl_aws_region: us-east-2
 
-    atl_bitbucket_properties_raw: "key1=val1 key2=val2    key3=val3"
-
   roles:
     - role: linux_common
     - role: product_common
