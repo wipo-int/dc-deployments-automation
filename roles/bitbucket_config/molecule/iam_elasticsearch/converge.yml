@@ -12,10 +12,7 @@
     atl_jdbc_user: 'bb_db_user'
     atl_jdbc_password: 'molecule_password'
 
-    atl_elasticsearch_username: bitbucket
-    atl_elasticsearch_password: password
-
-    atl_bitbucket_properties_raw: "key1=val1 key2=val2    key3=val3"
+    atl_aws_region: us-east-2
 
   roles:
     - role: linux_common

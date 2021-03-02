@@ -15,6 +15,10 @@ def test_config_file(host):
     assert f.contains("jdbc.user=bb_db_user")
     assert f.contains("jdbc.password=molecule_password")
 
+    assert f.contains("plugin.search.elasticsearch.username=bitbucket")
+    assert f.contains("plugin.search.elasticsearch.password=password")
+    assert not f.contains("plugin.search.elasticsearch.aws.region")
+
     assert f.contains("^key1=val1$")
     assert f.contains("^key2=val2$")
     assert f.contains("^key3=val3$")

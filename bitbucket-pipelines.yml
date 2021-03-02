@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 38 batches"
+          - echo "Running tests in 39 batches"
 
     - step:
         name: Check if the template is up-to-date
@@ -33,6 +33,14 @@ pipelines:
               fi
 
     - parallel:
+       - step:
+           name: bitbucket_config/iam_elasticsearch
+           services:
+             - docker
+           script:
+             - ./bin/install-ansible --dev
+             - cd roles/bitbucket_config
+             - pipenv run molecule test -s iam_elasticsearch
        - step:
            name: bitbucket_config/default
            services:
