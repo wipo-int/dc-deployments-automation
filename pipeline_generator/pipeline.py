@@ -8,9 +8,9 @@ ROLES_DIR = 'roles/'
 
 def find_all_scenarios():
     scenario_dirs = []
-    for root, dirs, files in os.walk(Path(os.path.join(os.path.dirname(__file__), "..", ROLES_DIR))):
+    for root, dirs, files in os.walk('..'):
         [scenario_dirs.append(Path(root)) for f in files if f.endswith("molecule.yml")]
-    return scenario_dirs
+    return sorted(scenario_dirs)
 
 
 def load_template():
