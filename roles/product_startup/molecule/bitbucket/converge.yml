@@ -20,7 +20,6 @@
       - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
 
     atl_startup_exec_options:
-      - "-fg"
       - "--no-search"
 
     atl_startup_enable: false
