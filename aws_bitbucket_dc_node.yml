@@ -22,7 +22,6 @@
       - "Environment=JVM_MINIMUM_MEMORY={{ atl_jvm_heap }}"
       - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
     atl_startup_exec_options:
-      - "-fg"
       - "--no-search"
 
   roles:
@@ -37,5 +36,5 @@
     - role: product_startup
     - role: bitbucket_dataset_restore
       when: atl_bitbucket_dataset_url is search ("(http|https)://")
-  
+
 
