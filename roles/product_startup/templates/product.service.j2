@@ -3,6 +3,9 @@ Description=Atlassian {{ atl_product_edition }}
 After=network-online.target
 
 [Service]
+{% if (atl_product_family == "stash") %}
+Type=forking
+{% endif %}
 User={{ atl_product_user }}
 Group={{ atl_product_user }}
 StandardOutput=journal+console
@@ -12,8 +15,14 @@ StandardError=journal+console
   {{ p }}
 {% endfor %}
 
-{# Bitbucket DC sets up its service start/stop logging in a different way to all our other DC offerings and so we exclude it from having the catalina.out redirect #}
-ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %}{% if (atl_product_family != "stash") %} >{{ atl_product_installation_current }}/logs/catalina.out 2>&1{% endif %}
+{# Bitbucket DC sets up its service start/stop logging in a different way to all our other DC offerings and so we exclude it from having the catalina.out redirect and foreground startup #}
+{% if (atl_product_family == "stash") %}
+PIDFile={{ atl_product_home }}/log/bitbucket.pid
+ExecStart={{ atl_startup_exec_path }} --no-search
+ExecStop={{ atl_startup_exec_path }}
+{% else -%}
+ExecStart={{ atl_startup_exec_path }}{% for c in atl_startup_exec_options %} {{ c }}{% endfor %} >{{ atl_product_installation_current }}/logs/catalina.out 2>&1
+{% endif %}
 
 Restart=on-failure
 
