@@ -53,5 +53,4 @@ pipelines:
              - apt-get update && apt-get install -y npm
              - npm install -g snyk
              - snyk auth $SNYK_TOKEN
-             - pipenv run snyk test --severity-threshold=high
              - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
