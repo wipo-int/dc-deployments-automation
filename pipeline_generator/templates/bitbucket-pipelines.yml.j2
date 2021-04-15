@@ -33,7 +33,7 @@ pipelines:
               fi
 
     - parallel:
-       {% for spath in scenario_paths -%}
+       {% for spath in scenario_paths %}
         - step:
            name: {{ spath.parts[2] }}/{{ spath.parts[4] }}
            services:
@@ -43,3 +43,14 @@ pipelines:
              - cd roles/{{ spath.parts[2] }}
              - pipenv run molecule test -s {{ spath.parts[4] }}
        {% endfor %}
+
+        - step:
+           name: Run Snyk security scan
+           services:
+             - docker
+           script:
+             - ./bin/install-ansible --dev
+             - apt-get update && apt-get install -y npm
+             - npm install -g snyk
+             - snyk auth $SNYK_TOKEN
+             - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
