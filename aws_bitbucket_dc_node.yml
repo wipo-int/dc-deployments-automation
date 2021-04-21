@@ -22,6 +22,7 @@
       - "UMask=0027"
       - "LimitNOFILE=4096"
       - "Environment=BITBUCKET_HOME={{ atl_product_home }}"
+      - "Environment=JAVA_HOME=/usr/lib/jvm/java"
       - "Environment=JVM_MAXIMUM_MEMORY={{ atl_jvm_heap }}"
       - "Environment=JVM_MINIMUM_MEMORY={{ atl_jvm_heap }}"
       - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
