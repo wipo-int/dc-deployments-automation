@@ -10,6 +10,10 @@
 
     atl_product_home: "{{ atl_shared_mountpoint }}/{{ atl_product_edition }}"
 
+    atl_use_system_jdk: true
+    java_major_version: "11" # BB 8 will drop JDK 8 support
+    atl_download_format: "tarball"
+
     atl_nfs_mountpoint: "{{ atl_shared_mountpoint }}/bitbucket/shared"
     atl_nfs_target: "{{ atl_shared_mountpoint }}/bitbucket/shared"
     atl_nfs_version: "3"
@@ -18,6 +22,7 @@
       - "UMask=0027"
       - "LimitNOFILE=4096"
       - "Environment=BITBUCKET_HOME={{ atl_product_home }}"
+      - "Environment=JAVA_HOME=/usr/lib/jvm/java"
       - "Environment=JVM_MAXIMUM_MEMORY={{ atl_jvm_heap }}"
       - "Environment=JVM_MINIMUM_MEMORY={{ atl_jvm_heap }}"
       - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
