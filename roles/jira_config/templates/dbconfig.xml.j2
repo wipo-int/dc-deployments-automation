@@ -10,6 +10,9 @@
     <username>{{ atl_jdbc_user }}</username>
     <password>{{ atl_jdbc_password | replace("&", "&amp;") }}</password>
     <driver-class>{{ atl_db_driver }}</driver-class>
+    {% if 'postgres' in atl_db_type %}
+      <connection-properties>tcpKeepAlive={{ atl_db_keepalive }};socketTimeout={{ atl_db_sockettimeout }}</connection-properties>
+    {% endif %}
 
     <pool-min-size>{{ atl_db_poolminsize }}</pool-min-size>
     <pool-max-size>{{ atl_db_poolmaxsize }}</pool-max-size>
