@@ -15,6 +15,8 @@ def test_dbconfig_file(host):
     assert f.contains("<username>atljira</username>")
     assert f.contains("<password>molecule_password</password>")
 
+    assert f.contains("<connection-properties>tcpKeepAlive=true;socketTimeout=240</connection-properties>")
+
     assert f.contains("<pool-min-size>1111</pool-min-size>")
     assert f.contains("<pool-max-size>1111</pool-max-size>")
     assert f.contains("<pool-min-idle>1111</pool-min-idle>")

@@ -22,6 +22,11 @@ atl_tomcat_redirectport: ""
 atl_tomcat_scheme: "http"
 atl_tomcat_secure: "false"
 
+# Mitigation of potentially stuck threads with certain network setup while using PostgreSQL
+# https://confluence.atlassian.com/jirakb/connection-problems-to-postgresql-result-in-stuck-threads-in-jira-1047534091.html
+atl_db_keepalive: 'true'
+atl_db_sockettimeout: '240'
+
 atl_db_poolminsize: '20'
 atl_db_poolmaxsize: '100'
 atl_db_minidle: '10'

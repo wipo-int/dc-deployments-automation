@@ -13,6 +13,8 @@
     atl_jvm_heap: 'PLACEHOLDER'
     atl_jvm_opts: 'PLACEHOLDER'
     atl_cluster_node_id: 'FAKEID'
+    atl_db_keepalive: 'false'
+    atl_db_sockettimeout: '111'
     atl_db_poolminsize: 1111
     atl_db_poolmaxsize: 1111
     atl_db_minidle: 1111
