@@ -38,7 +38,7 @@ def test_server_file(host):
     assert f.exists
     assert f.contains('Connector port="8080"')
     assert f.contains('Server port="8005"')
-    assert f.contains('<Context path=""')
+    assert f.contains('<Context path="foo"')
     assert f.contains('maxThreads="200"')
     assert f.contains('minSpareThreads="10"')
     assert f.contains('connectionTimeout="20000"')
@@ -79,6 +79,7 @@ def test_confluence_config_file(host):
     assert f.contains('<property name="hibernate.connection.url">jdbc:postgresql://postgres-db.ap-southeast-2.rds.amazonaws.com:5432/confluence</property>')
     assert f.contains('<property name="hibernate.connection.password">molecule_password</property>')
     assert f.contains('<property name="hibernate.c3p0.preferredTestQuery">select 1;</property>')
+    assert f.contains('<property name="confluence.webapp.context.path">/foo</property>')
 
 @pytest.mark.parametrize('font', [
 #    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
