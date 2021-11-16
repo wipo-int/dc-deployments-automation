@@ -13,6 +13,7 @@
     path: "/etc/ssh/sshd_config"
     # Drop insecure ciphers, currently 3des-cbc only. You can get the
     # full list with `sshd -T | grep -i ciphers`
+    regexp: '^[Cc]iphers'
     line: "Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc"
     insertbefore: "BOF"
   ignore_errors: yes  # No sshd == no problem
