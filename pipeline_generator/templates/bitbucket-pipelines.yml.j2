@@ -39,6 +39,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/{{ spath.parts[2] }}
              - pipenv run molecule test -s {{ spath.parts[4] }}
