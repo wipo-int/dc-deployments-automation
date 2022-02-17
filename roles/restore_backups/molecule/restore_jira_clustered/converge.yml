@@ -76,7 +76,7 @@
               - "{{ test_archive_source }}"
               - "{{ test_product_version_file }}"
             dest: "{{ test_archive }}"
-            owner: "{{ atl_product_user }}"
+            owner: root
 
   tasks:
     - name: Install distro-specific restore support packages
