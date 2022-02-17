@@ -60,16 +60,6 @@
             line: '8.5'
             path: "{{ test_product_version_file }}"
             mode: 0640
-        - name: List tmp
-          shell: 'cd tmp && ls -al'
-          register: command_output
-        - debug:
-            var: command_output.stdout_lines
-        - name: List hello
-          shell: 'cd tmp/hello && ls -al'
-          register: command_output
-        - debug:
-            var: command_output.stdout_lines
         - name: "{{ test_pre_step_prefix }} Archive the shared home"
           archive:
             path:
