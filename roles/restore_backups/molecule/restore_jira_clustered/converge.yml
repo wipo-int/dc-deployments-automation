@@ -60,9 +60,16 @@
             line: '8.5'
             path: "{{ test_product_version_file }}"
             mode: 0640
-        - name: "{{ test_pre_step_prefix }} What is in tmp?"
-          shell:
-            cmd: cd /tmp && ls -al
+        - name: List files and folder in home directory
+          shell: 'ls -al'
+          register: command_output
+        - debug:
+            var: command_output.stdout_lines
+        - name: Find /tmp all directories, exclude nginx and mysql
+          find:
+            paths: /tmp
+            recurse: no
+            file_type: directory
         - name: "{{ test_pre_step_prefix }} Archive the shared home"
           archive:
             path:

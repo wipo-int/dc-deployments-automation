@@ -14,7 +14,7 @@
     atl_product_user_uid: '2001'
     atl_product_version_cache: "{{ atl_product_home_shared }}/{{ atl_product_edition }}.version"
 
-    test_archive: '/tmp/hello/hello.tar.gz'
+    test_archive: '/tmp/hello.tar.gz'
     test_archive_file: 'hello.txt'
     test_archive_source: '/tmp/hello'
 
