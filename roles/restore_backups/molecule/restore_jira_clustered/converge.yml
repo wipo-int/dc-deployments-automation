@@ -60,6 +60,9 @@
             line: '8.5'
             path: "{{ test_product_version_file }}"
             mode: 0640
+        - name: "{{ test_pre_step_prefix }} What is in tmp?"
+          shell:
+            cmd: cd /tmp && ls -al
         - name: "{{ test_pre_step_prefix }} Archive the shared home"
           archive:
             path:
