@@ -14,11 +14,6 @@
   set_fact:
     ec2_autoscaling_group: "{{ ec2_instance_tags.tags['aws:autoscaling:groupName'] | default('') }}"
 
-# Because Ansible - https://github.com/ansible/ansible/issues/11905#issuecomment-130496173
-- name: Set fact to store boolean 'atl_restore_required' value as as array of one string
-  set_fact:
-    atl_restore_required_tag_value: ["{{ atl_restore_required | lower }}"]
-
 - block:
     # No existing timestamp, so this is a first run. Persist some metadata into the ASG.
     - name: Fetch the git revision for this repo
@@ -41,12 +36,6 @@
             Key: "atl:deployment:first-run-timestamp"
             Value: "TIMESTAMP: {{ ansible_date_time.iso8601 }}"
 
-          - ResourceType: "auto-scaling-group"
-            ResourceId: "{{ ec2_autoscaling_group }}"
-            PropagateAtLaunch: true
-            Key: "atl:deployment:is-stack-restored"
-            Value: "{{ atl_restore_required_tag_value.0 }}"
-
 
     # Set the tags on the ASG and the local instance. We need to
     # ignore errors as it's possible we don't have the permissions,
@@ -65,7 +54,6 @@
         tags:
           "atl:deployment:commit-id": "COMMIT: {{ git_out.stdout }}"
           "atl:deployment:first-run-timestamp": "TIMESTAMP: {{ ansible_date_time.iso8601 }}"
-          "atl:deployment:is-stack-restored": "{{ atl_restore_required_tag_value.0 }}"
       ignore_errors: true
 
   when:
