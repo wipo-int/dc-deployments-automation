@@ -151,6 +151,3 @@ atl_rds_instance_class: "{{ lookup('env', 'ATL_RDS_INSTANCE_CLASS') }}"
 atl_rds_multi_az: "{{ lookup('env', 'ATL_RDS_MULTI_AZ') }}"
 atl_rds_subnet_group_name: "{{ lookup('env', 'ATL_RDS_SUBNET_GROUP_NAME') }}"
 atl_rds_security_group: "{{ lookup('env', 'ATL_RDS_SECURITY_GROUP') }}"
-
-atl_backup_manifest_url: "{{ lookup('env', 'ATL_BACKUP_MANIFEST_URL') }}"
-atl_restore_required: "{{ atl_backup_manifest_url is defined and atl_backup_manifest_url != '' }}"

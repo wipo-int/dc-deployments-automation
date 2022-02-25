@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 39 batches"
+          - echo "Running tests in 36 batches"
 
     - step:
         name: Check if the template is up-to-date
@@ -321,31 +321,6 @@ pipelines:
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s synchrony
-        - step:
-           name: restore_backups/default
-           services:
-             - docker
-           script:
-             - ./bin/install-ansible --dev
-             - cd roles/restore_backups
-             - pipenv run molecule test -s default
-        - step:
-           name: restore_backups/restore_conf_server
-           services:
-             - docker
-           script:
-             - ./bin/install-ansible --dev
-             - cd roles/restore_backups
-             - pipenv run molecule test -s restore_conf_server
-        - step:
-           name: restore_backups/restore_jira_clustered
-           services:
-             - docker
-           script:
-             - ./bin/install-ansible --dev
-             - cd roles/restore_backups
-             - pipenv run molecule test -s restore_jira_clustered
-
         - step:
            name: Run Snyk security scan
            services:
