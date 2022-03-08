@@ -30,3 +30,6 @@ PIPENV_NOSPIN=1 PIPENV_HIDE_EMOJIS=1 pipenv sync 2>&1 | iconv -c -f utf-8 -t asc
 if [[ $1 == "--dev" ]]; then
     pipenv sync --dev
 fi
+
+echo "Installing collections from galaxy..."
+pipenv run ansible-galaxy collection install -v -r requirements.yml

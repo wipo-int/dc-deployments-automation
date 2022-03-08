@@ -38,6 +38,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/aws_common
              - pipenv run molecule test -s cw-disabled
@@ -46,6 +47,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/aws_common
              - pipenv run molecule test -s default
@@ -54,6 +56,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/aws_common
              - pipenv run molecule test -s logs-disabled
@@ -62,6 +65,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/bitbucket_config
              - pipenv run molecule test -s default
@@ -70,6 +74,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/bitbucket_config
              - pipenv run molecule test -s iam_elasticsearch
@@ -78,6 +83,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/confluence_config
              - pipenv run molecule test -s aurora
@@ -86,6 +92,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/confluence_config
              - pipenv run molecule test -s default
@@ -94,6 +101,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/confluence_config
              - pipenv run molecule test -s password_char_escaping
@@ -102,6 +110,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/confluence_config
              - pipenv run molecule test -s system_jdk
@@ -110,6 +119,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/diy_backup
              - pipenv run molecule test -s default
@@ -118,6 +128,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/jira_config
              - pipenv run molecule test -s aurora
@@ -126,6 +137,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/jira_config
              - pipenv run molecule test -s default
@@ -134,6 +146,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/jira_config
              - pipenv run molecule test -s jira_config_props
@@ -142,6 +155,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/jira_config
              - pipenv run molecule test -s password_char_escaping
@@ -150,6 +164,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/linux_common
              - pipenv run molecule test -s default
@@ -158,6 +173,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_common
              - pipenv run molecule test -s default
@@ -166,6 +182,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_common
              - pipenv run molecule test -s system_jdk
@@ -174,6 +191,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s bitbucket_latest
@@ -182,6 +200,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s confluence_latest
@@ -190,6 +209,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s crowd_latest
@@ -198,6 +218,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s default
@@ -206,6 +227,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_all
@@ -214,6 +236,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_cached_with_downgrade
@@ -222,6 +245,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_cached_with_upgrade
@@ -230,6 +254,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_software_latest
@@ -238,6 +263,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_tarball
@@ -246,6 +272,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_version_from_file
@@ -254,6 +281,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_version_latest
@@ -262,6 +290,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s jira_version_override
@@ -270,6 +299,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s servicedesk3
@@ -278,6 +308,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s servicedesk4
@@ -286,6 +317,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_install
              - pipenv run molecule test -s servicedesk_latest
@@ -294,6 +326,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s bitbucket
@@ -302,6 +335,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s default
@@ -310,6 +344,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s startup_restart_false
@@ -318,6 +353,7 @@ pipelines:
            services:
              - docker
            script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s synchrony

@@ -2,7 +2,8 @@
 
 INSTANCE_NAME={{ atl_aws_stack_name }}
 
-AWS_INFO=$(curl -Lsf http://169.254.169.254/latest/dynamic/instance-identity/document)
+IMDSv2_TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 60")
+AWS_INFO=$(curl -H "X-aws-ec2-metadata-token: $IMDSv2_TOKEN" -Lsf http://169.254.169.254/latest/dynamic/instance-identity/document)
 AWS_ACCOUNT_ID=$(echo "${AWS_INFO}" | jq -r .accountId)
 AWS_AVAILABILITY_ZONE=$(echo "${AWS_INFO}" | jq -r .availabilityZone)
 AWS_REGION=$(echo "${AWS_INFO}" | jq -r .region)
