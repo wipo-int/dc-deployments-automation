@@ -364,6 +364,10 @@ pipelines:
            script:
              - ./bin/install-ansible --dev
              - apt-get update && apt-get install -y npm
+             - npm install npm@latest -g
+             - npm cache clean -f
+             - npm install -g n
+             - n stable
              - npm install -g snyk
              - snyk auth $SNYK_TOKEN
              - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
