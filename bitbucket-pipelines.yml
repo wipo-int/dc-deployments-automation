@@ -4,7 +4,7 @@
 #
 #    make > ../bitbucket-pipelines.yml
 
-image: debian:bullseye
+image: debian:buster
 options:
   size: 2x
 
@@ -363,7 +363,7 @@ pipelines:
              - docker
            script:
              - ./bin/install-ansible --dev
-             - apt-get update && apt-get install -y npm
+             - apt-get update && apt-get install -y npm nodejs=14.17.3
              - npm install -g snyk
              - snyk auth $SNYK_TOKEN
              - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
