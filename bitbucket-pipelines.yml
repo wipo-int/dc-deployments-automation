@@ -363,7 +363,7 @@ pipelines:
              - docker
            script:
              - ./bin/install-ansible --dev
-             - apt-get update && apt-get install -y npm
+             - apt-get update && apt-get install -y npm curl
              - npm install npm@latest -g
              - npm cache clean -f
              - npm install -g n
