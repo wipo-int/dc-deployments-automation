@@ -125,6 +125,7 @@ atl_proxy_name:  "{{ lookup('env', 'ATL_PROXY_NAME') | lower }}"
 atl_proxy_port:  "{{ lookup('env', 'ATL_TOMCAT_PROXYPORT') }}"
 atl_tomcat_port: "{{ lookup('env', 'ATL_TOMCAT_DEFAULTCONNECTORPORT') or '8080' }}"
 atl_ssl_proxy: "{{ lookup('env', 'ATL_SSL_PROXY') or 'false' }}"
+atl_apptunnel_port: "{{ lookup('env', 'ATL_APPTUNNEL_PORT') or '' }}"
 
 atl_tomcat_acceptcount: "{{ lookup('env', 'ATL_TOMCAT_ACCEPTCOUNT') or '10' }}"
 atl_tomcat_connectiontimeout: "{{ lookup('env', 'ATL_TOMCAT_CONNECTIONTIMEOUT') or '20000' }}"
