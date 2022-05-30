@@ -121,7 +121,7 @@
       update cwd_property set property_value=%s
       where property_name = 'base.url'
     positional_args:
-      - "{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}{{ atl_tomcat_contextpath }}/crowd"
+      - "{{ atl_tomcat_scheme }}://{{ atl_proxy_name }}{{ atl_tomcat_contextpath }}"
   when:
     - atl_proxy_name is defined
     - atl_tomcat_scheme is defined
