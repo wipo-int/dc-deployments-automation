@@ -35,13 +35,17 @@
       set_fact:
         atl_obr_download_url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
+    - name: Marketplace OBR - Set atl_jsd_build
+      set_fact:
+        atl_jsd_build: "{{ atl_jsd_build_info.json.name }}"
+
     - name: Marketplace OBR - Show the obr filename
       debug:
-        msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+        msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build }}.obr"
 
     - name: Marketplace OBR - Set the obr filename
       set_fact:
-        atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+        atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build }}.obr"
 
   when:
     - atl_source_obr_from_marketplace
@@ -57,6 +61,9 @@
       set_fact:
         atl_obr_filename: "{{ atl_obr_download_url | basename }}"
 
+    - name: Alternate URL OBR - Show atl_jsd_build (manual)
+      debug:
+        msg="atl_jsd_build={{ atl_jsd_build }}"
   when:
     - atl_source_obr_from_url
 
@@ -193,7 +200,7 @@
     remote_src: true
     src: "{{ atl_obr_download }}"
     dest: "{{ atl_product_home_shared }}/plugins/installed-plugins"
-    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.jar"
+    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/jira-servicedesk-application-{{ atl_jsd_build }}.jar"
     list_files: no
     exclude:
       - M*
@@ -206,5 +213,5 @@
 - name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
   shell:
     cmd: "mv {{ atl_product_home_shared }}/plugins/installed-plugins/dependencies/*.jar {{ atl_product_home_shared }}/plugins/installed-plugins"
-    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build_info.json.name }}-*.jar"
+    creates: "{{ atl_product_home_shared }}/plugins/installed-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build }}-*.jar"
   when: obr_unpack.changed
