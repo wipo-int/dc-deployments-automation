@@ -20,16 +20,18 @@
 - name: Show the returned obr binary href
   debug:
     msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
+
+- name: Set atl_obr_download_url
   set_fact:
     atl_obr_download_url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
-- name: url lookup splits lines by default
-  debug: msg="{{item}}"
-  loop: "{{ lookup('url', '{{atl_obr_download_url}}', wantlist=True) }}"
-
-- name: how about getting the obr filename
+- name: Show the obr filename
   debug:
     msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+
+- name: Set the obr filename
+  set_fact:
+    atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
 
 - name: is shared_home set ?
   debug:
@@ -45,7 +47,6 @@
   set_fact:
     download_obr: true
     move_obr: false
-    atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
     atl_obr_download: "{{ atl_installer_temp }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
     atl_obr_shared_download: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
     atl_obr_moving_lock: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr_moving"
