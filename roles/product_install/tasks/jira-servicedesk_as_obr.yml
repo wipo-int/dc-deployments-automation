@@ -3,6 +3,12 @@
 # - name: Source jira-servicedesk obr from marketplace
 #   block:
 
+- name: Check for alternate obr download url
+  set_fact:
+    atl_marketplace_obr: false
+  when:
+    - atl_obr_download_url is defined
+
 - name: Get the installer product version info
   uri:
     url: "{{ atl_mpac_products }}/key/jira/versions/name/{{ atl_product_version }}"
