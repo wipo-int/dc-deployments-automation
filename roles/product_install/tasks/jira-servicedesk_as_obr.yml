@@ -47,10 +47,10 @@
   set_fact:
     download_obr: true
     move_obr: false
-    atl_obr_download: "{{ atl_installer_temp }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
-    atl_obr_shared_download: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
-    atl_obr_moving_lock: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr_moving"
-    atl_obr_completed_lock: "{{ atl_product_home_shared_download_dir }}/jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr_completed"
+    atl_obr_download: "{{ atl_installer_temp }}/{{ atl_obr_filename }}"
+    atl_obr_shared_download: "{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}.obr"
+    atl_obr_moving_lock: "{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}_moving"
+    atl_obr_completed_lock: "{{ atl_product_home_shared_download_dir }}/{{ atl_obr_filename }}_completed"
 
 # Check for pre-downloaded obr on shared_home and completed lock dir.
 - name: Check for completed lock directory
