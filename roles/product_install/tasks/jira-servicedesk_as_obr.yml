@@ -20,8 +20,6 @@
 - name: Show the returned obr binary href
   debug:
     msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
-
-- name: Set atl_obr_download_url
   set_fact:
     atl_obr_download_url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
