@@ -37,6 +37,7 @@ atl_servicedesk_url_map:
 atl_servicedesk_metadata_url: "{{ atl_servicedesk_url_map[atl_product_version] | default(atl_servicedesk_url_map['default']) }}"
 
 atl_install_jsd_as_obr: false
+atl_obr_download_url: ''
 atl_servicedesk_download_file: "{{ atl_installer_temp }}/jira-servicedesk.{{ atl_product_version }}.obr"
 
 force_version_update: false
