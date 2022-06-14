@@ -1,43 +1,43 @@
 ---
 
-- name: Source jira-servicedesk obr from marketplace
-  block:
+# - name: Source jira-servicedesk obr from marketplace
+#   block:
 
-    - name: Get the installer product version info
-      uri:
-        url: "{{ atl_mpac_products }}/key/jira/versions/name/{{ atl_product_version }}"
-        return_content: yes
-      register: atl_product_version_info
+- name: Get the installer product version info
+  uri:
+    url: "{{ atl_mpac_products }}/key/jira/versions/name/{{ atl_product_version }}"
+    return_content: yes
+  register: atl_product_version_info
 
-    - name: Show the returned build number
-      debug:
-        msg="buildNumber={{ atl_product_version_info.json.buildNumber }}"
+- name: Show the returned build number
+  debug:
+    msg="buildNumber={{ atl_product_version_info.json.buildNumber }}"
 
-    - name: Get the JSD build version info
-      uri:
-        url: "{{ atl_mpac_products }}/key/jira-servicedesk/versions/latest?application=\
-        jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
-        return_content: yes
-      register: atl_jsd_build_info
+- name: Get the JSD build version info
+  uri:
+    url: "{{ atl_mpac_products }}/key/jira-servicedesk/versions/latest?application=\
+    jira&applicationBuild={{ atl_product_version_info.json.buildNumber }}"
+    return_content: yes
+  register: atl_jsd_build_info
 
-    - name: Show the returned obr binary href
-      debug:
-        msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
+- name: Show the returned obr binary href
+  debug:
+    msg="obr_ref={{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
-    - name: Set atl_obr_download_url
-      set_fact:
-        atl_obr_download_url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
+- name: Set atl_obr_download_url
+  set_fact:
+    atl_obr_download_url: "{{ atl_jsd_build_info.json._embedded.artifact._links.binary.href }}"
 
-    - name: Show the obr filename
-      debug:
-        msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+- name: Show the obr filename
+  debug:
+    msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
 
-    - name: Set the obr filename
-      set_fact:
-        atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
+- name: Set the obr filename
+  set_fact:
+    atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build_info.json.name }}.obr"
 
-  when:
-    - atl_obr_download_url is undefined
+  # when:
+  #   - atl_obr_download_url is undefined
 
 - name: is shared_home set ?
   debug:
