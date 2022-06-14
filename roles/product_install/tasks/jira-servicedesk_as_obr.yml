@@ -46,6 +46,20 @@
   when:
     - atl_source_obr_from_marketplace
 
+- name: Source jira-servicedesk obr from alternate url
+  block:
+
+    - name: Show the obr filename
+      debug:
+        msg="obr_name={{ atl_obr_download_url | basename }}"
+
+    - name: Set the obr filename
+      set_fact:
+        atl_obr_filename: "{{ atl_obr_download_url | basename }}"
+
+  when:
+    - atl_source_obr_from_url
+
 - name: is shared_home set ?
   debug:
     msg="atl_product_home_shared_download_dir={{ atl_product_home_shared_download_dir }}"
