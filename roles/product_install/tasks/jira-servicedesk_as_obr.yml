@@ -1,6 +1,7 @@
 ---
 
 - name: Source jira-servicedesk obr from marketplace
+  block:
 
   - name: Get the installer product version info
     uri:
