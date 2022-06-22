@@ -15,12 +15,12 @@ def test_version_is_correct(host):
     assert verfile.content.decode("UTF-8").strip() == "8.14.0"
 
 def test_is_downloaded(host):
-    installer = host.file('/media/atl/downloads/jira-software.8.14.0-x64.bin')
+    installer = host.file('/media/atl/downloads/jira-software.8.14.0.tar.gz')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0-x64.bin_completed')
+    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0-x64.tar.gz_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 

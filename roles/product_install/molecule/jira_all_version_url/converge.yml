@@ -17,6 +17,7 @@
     atl_jsd_build: "8.14.0"
     atl_product_download_url: "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.14.0.tar.gz"
     atl_obr_download_url: "https://marketplace.atlassian.com/download/apps/1213632/version/1040180000"
+
     atl_systemd_service_name: "jira.service"
     atl_jdbc_encoding: 'UNICODE'
     atl_jdbc_collation: 'C'
