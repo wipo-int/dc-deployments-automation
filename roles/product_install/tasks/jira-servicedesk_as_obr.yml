@@ -63,6 +63,11 @@
     - name: Alternate URL OBR - Show atl_jsd_build (manual)
       debug:
         msg="atl_jsd_build={{ atl_jsd_build }}"
+
+    - name: Alernate URL OBR - Show atl_product_version
+      debug:
+        msg="atl_product_version={{ atl_product_version }}"    
+
   when:
     - not atl_source_obr_from_marketplace | bool
 
