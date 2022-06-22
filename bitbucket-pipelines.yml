@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 36 batches"
+          - echo "Running tests in 37 batches"
 
     - step:
         name: Check if the template is up-to-date
@@ -366,6 +366,7 @@ pipelines:
              - ./bin/install-ansible --dev
              - cd roles/product_startup
              - pipenv run molecule test -s synchrony
+
         - step:
            name: Run Snyk security scan
            services:
@@ -373,6 +374,6 @@ pipelines:
            script:
              - ./bin/install-ansible --dev
              - apt-get update && apt-get install -y npm
-             - npm install -g snyk@1.455.0
+             - npm install -g snyk
              - snyk auth $SNYK_TOKEN
              - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
