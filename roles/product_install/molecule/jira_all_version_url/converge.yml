@@ -1,0 +1,38 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    atl_product_family: "jira"
+    atl_product_edition: "jira-software"
+    atl_product_user: "jira"
+    # Version 8.14.0 is chosen deliberately as it is a version where jira and jira-software returns different buildNumber from MPAC
+    # See DCD-1216 for context
+    atl_product_version: "8.14.0"
+    atl_install_jsd_as_obr: true
+
+    # This tests for an edge case where the product URL and OBR are source from a provided URL.
+    # Although marketplace (mpac) is used in this example, this could potentially be in a non mpac url.
+    # In this case it would not be possible to query atl_jsd_build_info to source the atl_jsd_build. One is therefore provided.
+    atl_source_obr_from_marketplace: false
+    atl_jsd_build: "8.14.0"
+    atl_product_download_url: "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.14.0.tar.gz"
+    atl_obr_download_url: "https://marketplace.atlassian.com/download/apps/1213632/version/1040180000"
+    atl_systemd_service_name: "jira.service"
+    atl_jdbc_encoding: 'UNICODE'
+    atl_jdbc_collation: 'C'
+    atl_jdbc_ctype: 'C'
+    atl_jdbc_template: 'template0'
+  pre_tasks:
+    - name: Create cache dir
+      file:
+        path: '/media/atl/jira/shared/'
+        state: directory
+    - name: Seed version
+      copy:
+        dest: '/media/atl/jira/shared/jira-core.version'
+        content: "8.14.0"
+        force: false  # For idempotency check
+  roles:
+    - role: linux_common
+    - role: product_common
+    - role: product_install
