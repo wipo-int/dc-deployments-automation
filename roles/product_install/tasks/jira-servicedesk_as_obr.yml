@@ -49,24 +49,19 @@
   when:
     - atl_source_obr_from_marketplace | bool
 
+# When sourcing jira-servicedesk from marketplace the atl_jsd_build is source by querying api.
+# In this case atl_jsd_build must be passed manually by flag
+
 - name: Source jira-servicedesk obr from alternate url
   block:
 
     - name: Alternate URL OBR - Show the obr filename
       debug:
-        msg="obr_name={{ atl_obr_download_url | basename }}"
+        msg="obr_name=jira-servicedesk-application-{{ atl_jsd_build }}.obr"
 
-    - name: Alternate URL OBR - Set the obr filename
+    - name: Alternate OBR - Set the obr filename
       set_fact:
-        atl_obr_filename: "{{ atl_obr_download_url | basename }}"
-
-    - name: Alternate URL OBR - Show atl_jsd_build (manual)
-      debug:
-        msg="atl_jsd_build={{ atl_jsd_build }}"
-
-    - name: Alernate URL OBR - Show atl_product_version
-      debug:
-        msg="atl_product_version={{ atl_product_version }}"    
+        atl_obr_filename: "jira-servicedesk-application-{{ atl_jsd_build }}.obr"
 
   when:
     - not atl_source_obr_from_marketplace | bool
