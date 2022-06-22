@@ -232,6 +232,15 @@ pipelines:
              - cd roles/product_install
              - pipenv run molecule test -s jira_all
         - step:
+           name: product_install/jira_all_version_url
+           services:
+             - docker
+           script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - pipenv run molecule test -s jira_all_version_url
+        - step:
            name: product_install/jira_cached_with_downgrade
            services:
              - docker
