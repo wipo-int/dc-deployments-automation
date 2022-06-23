@@ -43,8 +43,10 @@ def test_completed_lockfile(host):
     assert lockfile.user == 'root'
 
 def get_version(url):
-    assert url.lower().startswith('http')
-    upstream_req = urllib.request.Request(url)
+    if url.lower().startswith('http'):
+        upstream_req = urllib.request.Request(url)
+    else:
+        raise 2 from None
     with urllib.request.urlopen(upstream_req) as upstream_response: #nosec
         upstream_json = json.load(upstream_response)
         upstream = upstream_json['_embedded']['versions'][0]['name']
