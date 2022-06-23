@@ -32,7 +32,10 @@
   roles:
     - role: linux_common
     - role: aws_common
-    - role: nfs_mount
+    # for Bitbucket DC clusters that store repos on bb-mesh,
+    # nodes may be setup to use EFS instead of NFS for shared_home by not defining atl_fileserver_host
+    - { role: aws_shared_fs_config, when: atl_fileserver_host is not defined }
+    - { role: nfs_mount, when : (atl_fileserver_host is defined) and (atl_fileserver_host|length > 0) }
     - role: product_common
     - role: product_install
     - role: database_init
