@@ -46,7 +46,7 @@ def get_version(url):
     if url.lower().startswith('http'):
         upstream_req = urllib.request.Request(url)
     else:
-        raise 2 from None
+        raise ValueError from None
     with urllib.request.urlopen(upstream_req) as upstream_response: #nosec
         upstream_json = json.load(upstream_response)
         upstream = upstream_json['_embedded']['versions'][0]['name']
