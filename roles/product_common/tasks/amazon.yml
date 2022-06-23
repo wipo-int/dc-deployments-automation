@@ -1,28 +1,28 @@
 ---
 
-- name: Add AdoptOpenJDK repo and install if necessary on Amazon Linux
+- name: Add Adoptium repo and install Eclipse Temurin JDK if necessary on Amazon Linux
   block:
 
-    - name: Add AdoptOpenJDK yum repository
+    - name: Add Adoptium yum repository
       yum_repository:
-        name: AdoptOpenJDK
-        file: adoptopenjdk
-        description: AdoptOpenJDK Repo
-        baseurl: "https://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/amazonlinux/{{ ansible_distribution_version }}/{{ ansible_architecture }}/"
-        gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+        name: Adoptium
+        file: adoptium
+        description: Adoptium Repo
+        baseurl: "https://packages.adoptium.net/artifactory/rpm/amazonlinux/{{ ansible_distribution_version }}/{{ ansible_architecture }}"
+        gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
         gpgcheck: yes
         state: present
 
-    - name: Install AdoptOpenJDK
+    - name: Install Eclipse Temurin JDK
       yum:
-        name: "adoptopenjdk-{{ java_major_version }}-hotspot"
+        name: "temurin-{{ java_major_version }}-jdk"
         state: present
 
     - name: Ensure common JDK symlink exists
       alternatives:
         link: "/usr/lib/jvm/java"
         name: "java_sdk"
-        path: "/usr/lib/jvm/adoptopenjdk-{{ java_major_version }}-hotspot"
+        path: "/usr/lib/jvm/temurin-{{ java_major_version }}-jdk"
         priority: 99
 
   when: atl_use_system_jdk

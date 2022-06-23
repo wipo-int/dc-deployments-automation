@@ -1,6 +1,6 @@
 ---
 
-- name: Add AdoptOpenJDK repo and install if necessary on Ubuntu
+- name: Add Adoptium repo and install Eclipse Temurin JDK if necessary on Ubuntu
   block:
 
     - name: Install gnupg
@@ -8,20 +8,20 @@
         name: gnupg
         state: present
 
-    - name: Add AdoptOpenJDK debian repo public key
+    - name: Add Adoptium debian repo public key
       apt_key:
-        url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+        url: https://packages.adoptium.net/artifactory/api/gpg/key/public
         state: present
 
-    - name: Add AdoptOpenJDK debian repository
+    - name: Add Adoptium debian repository
       apt_repository:
-        repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb {{ ansible_distribution_release }} main"
+        repo: "deb https://packages.adoptium.net/artifactory/deb {{ ansible_distribution_release }} main"
         state: present
-        filename: adoptopenjdk
+        filename: adoptium
 
-    - name: Install AdoptOpenJDK
+    - name: Install Eclipse Temurin JDK
       apt:
-        name: "adoptopenjdk-{{ java_major_version }}-hotspot"
+        name: "temurin-{{ java_major_version }}-jdk"
         update_cache: yes
         state: present
 
@@ -29,7 +29,7 @@
       alternatives:
         link: "/usr/lib/jvm/java"
         name: "java_sdk"
-        path: "/usr/lib/jvm/adoptopenjdk-{{ java_major_version }}-hotspot-{{ debian_architecture }}"
+        path: "/usr/lib/jvm/temurin-{{ java_major_version }}-jdk-{{ debian_architecture }}"
         priority: 99
 
   when: atl_use_system_jdk
