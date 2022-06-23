@@ -33,7 +33,7 @@
         state: directory
     - name: Seed version
       copy:
-        dest: '/media/atl/jira/shared/jira-core.version'
+        dest: '/media/atl/jira/shared/jira-software.version'
         content: "8.14.0"
         force: false  # For idempotency check
   roles:
