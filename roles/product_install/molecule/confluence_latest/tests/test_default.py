@@ -24,29 +24,28 @@ def test_version_file_is_latest(host):
     verfile = host.file('/media/atl/confluence/shared-home/confluence.version')
     assert verfile.exists
 
-    upstream_req = urllib.request.Request("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
-    with urllib.request.urlopen(upstream_req) as upstream_response:
-        upstream_json = json.load(upstream_response)
-        upstream = upstream_json['_embedded']['versions'][0]['name']
+    upstream = get_version("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
 
     assert verfile.content.decode("UTF-8").strip() == upstream.strip()
 
 def test_latest_is_downloaded(host):
-    upstream_req = urllib.request.Request("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
-    with urllib.request.urlopen(upstream_req) as upstream_response:
-        upstream_json = json.load(upstream_response)
-        upstream = upstream_json['_embedded']['versions'][0]['name']
+    upstream = get_version("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
 
     installer = host.file('/media/atl/downloads/confluence.'+upstream+'-x64.bin')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    upstream_req = urllib.request.Request("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
-    with urllib.request.urlopen(upstream_req) as upstream_response:
-        upstream_json = json.load(upstream_response)
-        upstream = upstream_json['_embedded']['versions'][0]['name']
+    upstream = get_version("https://marketplace.atlassian.com/rest/2/products/key/confluence/versions")
 
     lockfile = host.file('/media/atl/downloads/confluence.'+upstream+'-x64.bin_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
+
+def get_version(url):
+    assert url.lower().startswith('http')
+    upstream_req = urllib.request.Request(url)
+    with urllib.request.urlopen(upstream_req) as upstream_response:
+        upstream_json = json.load(upstream_response)
+        upstream = upstream_json['_embedded']['versions'][0]['name']
+    return upstream
