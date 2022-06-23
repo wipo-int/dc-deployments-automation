@@ -374,6 +374,6 @@ pipelines:
            script:
              - ./bin/install-ansible --dev
              - apt-get update && apt-get install -y npm
-             - npm install -g snyk
+             - npm install -g snyk@1.455.0
              - snyk auth $SNYK_TOKEN
              - pipenv run snyk monitor --severity-threshold=high --project-name=dc-deployments-automation
