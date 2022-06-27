@@ -44,7 +44,10 @@ def test_completed_lockfile(host):
 
 def get_version(url):
     if url.lower().startswith('http'):
-        upstream_req = urllib.request.Request(url)
+        try:
+            upstream_req = urllib.request.Request(url)
+        except:
+            return None    
     else:
         raise ValueError from None
     with urllib.request.urlopen(upstream_req) as upstream_response:
