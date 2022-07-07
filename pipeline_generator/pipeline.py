@@ -16,6 +16,7 @@ def find_all_scenarios():
 def load_template():
     jenv = j2.Environment(
         loader=j2.FileSystemLoader('.'),
+        autoescape=True,
         lstrip_blocks=True,
         trim_blocks=True)
     return jenv.get_template(PIPELINE_TEMPLATE_J2_FILE)
