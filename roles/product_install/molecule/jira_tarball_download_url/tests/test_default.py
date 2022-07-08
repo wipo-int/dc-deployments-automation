@@ -20,7 +20,7 @@ def test_is_downloaded(host):
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0-x64.tar.gz_completed')
+    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0.tar.gz_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
