@@ -109,6 +109,10 @@
 # Fetch obr if required
 - name: download_obr is true so fetch and do all the things
   block:
+    - debug:
+        var: atl_obr_download_url
+    - debug:
+        var: atl_obr_download
 
     # Fetch obr and copy to temp
     - name: Fetch obr

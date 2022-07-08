@@ -14,28 +14,12 @@
     # Although marketplace (mpac) is used in this example, this could potentially be in a non mpac url.
     # In this case it would not be possible to query atl_jsd_build_info to source the atl_jsd_build. One is therefore provided.
     atl_install_jsd_as_obr: true
-    atl_source_obr_from_marketplace: false
-    atl_jsd_build: "4.14.0"
+    atl_jsd_build: "4.18.0"
     atl_obr_download_url: "https://marketplace.atlassian.com/download/apps/1213632/version/1040180000"
     # When using a tarball the following are also required:
     atl_download_format: "tarball"
     atl_use_system_jdk: true
 
-    atl_systemd_service_name: "jira.service"
-    atl_jdbc_encoding: 'UNICODE'
-    atl_jdbc_collation: 'C'
-    atl_jdbc_ctype: 'C'
-    atl_jdbc_template: 'template0'
-  pre_tasks:
-    - name: Create cache dir
-      file:
-        path: '/media/atl/jira/shared/'
-        state: directory
-    - name: Seed version
-      copy:
-        dest: '/media/atl/jira/shared/jira-software.version'
-        content: "8.14.0"
-        force: false  # For idempotency check
   roles:
     - role: linux_common
     - role: product_common

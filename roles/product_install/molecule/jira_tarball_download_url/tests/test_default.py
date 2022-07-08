@@ -32,12 +32,12 @@ def test_is_unpacked(host):
     assert installer.mode == 0o0755
 
 def test_obr_is_downloaded(host):
-    installer = host.file('/media/atl/downloads/jira-servicedesk-application-4.14.0.obr')
+    installer = host.file('/media/atl/downloads/jira-servicedesk-application-4.18.0.obr')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_obr_completed_lockfile(host):
-    lockfile = host.file('/media/atl/downloads/jira-servicedesk-application-4.14.0.obr_completed')
+    lockfile = host.file('/media/atl/downloads/jira-servicedesk-application-4.18.0.obr_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
