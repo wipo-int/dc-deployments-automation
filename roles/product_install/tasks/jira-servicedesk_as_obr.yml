@@ -215,6 +215,6 @@
 
 - name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
   shell:
-    cmd: "mv {{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/*.jar {{ atl_product_home_shared }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins"
+    cmd: "mv {{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/*.jar {{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins"
     creates: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build }}-*.jar"
   when: obr_unpack.changed
