@@ -198,7 +198,7 @@
     group: "{{ atl_product_user }}"
 
 # Note as ansible unarchive cant handle "-j junk paths" we need to ignore errors to bypass the path verify
-- name: Unpack the obr into the installed-plugins dir
+- name: Unpack the obr into the atlassian-bundled-plugins dir
   unarchive:
     remote_src: true
     src: "{{ atl_obr_download }}"
@@ -214,7 +214,13 @@
   ignore_errors: yes
 
 - name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
-  shell:
-    cmd: "mv {{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/*.jar {{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins"
-    creates: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/servicedesk-core-ui-plugin-{{ atl_jsd_build }}-*.jar"
+  copy:
+    src: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/"
+    dest: "{{ atl_product_home_shared }}/plugins/installed-plugins/"
+  when: obr_unpack.changed
+
+- name: Remove the empty dependencies folder      # noqa 503 - ignore lint info about when changed
+  file:
+    path: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies"
+    state: absent
   when: obr_unpack.changed
