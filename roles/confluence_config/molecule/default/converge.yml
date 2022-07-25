@@ -20,6 +20,7 @@
     atl_proxy_name: "localhost"
     atl_proxy_port: "80"
     atl_db_preferredtestquery: "select 1;"
+    atl_hazelcast_network_aws_tag_key: "my-cluster-tag"
 
   roles:
     - role: linux_common
