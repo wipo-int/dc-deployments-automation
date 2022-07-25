@@ -80,6 +80,7 @@ def test_confluence_config_file(host):
     assert f.contains('<property name="hibernate.connection.password">molecule_password</property>')
     assert f.contains('<property name="hibernate.c3p0.preferredTestQuery">select 1;</property>')
     assert f.contains('<property name="confluence.webapp.context.path">/foo</property>')
+    assert f.contains('<property name="confluence.cluster.aws.tag.key">my-cluster-tag</property>')
 
 @pytest.mark.parametrize('font', [
 #    '/usr/lib/jvm/java/lib/fonts/fallback/NotoSansJavanese-Regular.ttf'
