@@ -42,7 +42,7 @@ def test_obr_completed_lockfile(host):
     assert lockfile.user == 'root'
 
 def test_obr_is_unpacked(host):
-    jsdjar = host.file('/media/atl/jira/shared/plugins/installed-plugins/jira-servicedesk-application-4.14.0.jar')
+    jsdjar = host.file('/opt/atlassian/jira-software/8.14.0/atlassian-jira/WEB-INF/atlassian-bundled-plugins/jira-servicedesk-application-4.14.0.jar')
     assert jsdjar.exists
     assert jsdjar.user == 'jira'
-    assert jsdjar.mode == 0o0750
+    assert jsdjar.mode == 0o0644
