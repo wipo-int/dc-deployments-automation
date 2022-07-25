@@ -16,4 +16,8 @@
     regexp: '^[Cc]iphers'
     line: "Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc"
     insertbefore: "BOF"
-  ignore_errors: yes  # No sshd == no problem
+  register: ssh_cypher_results
+  failed_when: # No sshd == no problem
+    - ssh_cypher_results.rc > 0
+    - ssh_cypher_results.stderr is defined
+    - "'Destination /etc/ssh/sshd_config does not exist' not in ssh_cypher_results.stderr" # fails for errors other than this one

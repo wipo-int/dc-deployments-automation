@@ -96,6 +96,10 @@
     path: "{{ atl_obr_shared_download }}"
   register: home_shared_download
 
+- name: debug home_shared_download
+  debug:
+    var: home_shared_download
+
 # If obr exists and lockdir exists use this obr instead
 - name: Check lock directory and obr exists on shared_home
   set_fact:
@@ -103,10 +107,11 @@
     atl_obr_download: "{{ atl_obr_shared_download }}"
   when:
     - home_shared_download.stat.exists
+    - home_shared_download.stat.mimetype is match("application/zip")
     - completed_lock.stat.isdir is defined
     - completed_lock.stat.isdir
 
-# Fetch obr if required
+# Fetch obr if required - note we validate it by mimetype rather than checksum due to https://ecosystem.atlassian.net/browse/AMKT-25526
 - name: download_obr is true so fetch and do all the things
   block:
     - debug:
@@ -120,8 +125,28 @@
         url: "{{ atl_obr_download_url }}"
         dest: "{{ atl_obr_download }}"
         mode: 0755
-        force: false
+        force: true
+        timeout: 600
       register: atl_obr_completed
+
+    - name: Confirm the output from the download task
+      debug:
+        var: atl_obr_completed
+
+    # get details about the obr
+    - name: Stat the new obr file
+      stat:
+        path: "{{ atl_obr_completed.dest }}"
+        get_mime: yes
+      register: atl_obr_stats
+      when:
+        - atl_obr_completed.dest is defined
+
+    - name: fail if the downloaded OBR is not a zip file
+      fail:
+        msg: "The downloaded OBR was not detected as being a valid ZIP file: {{ atl_obr_stats }}"
+      when:
+        - (atl_obr_stats.stat.mimetype is not defined) or (atl_obr_stats.stat.mimetype is not match("application/zip"))
 
     # If obr was fetched make the lock directory
     - name: Create moving_lock.
@@ -200,27 +225,28 @@
 # Note as ansible unarchive cant handle "-j junk paths" we need to ignore errors to bypass the path verify
 - name: Unpack the obr into the atlassian-bundled-plugins dir
   unarchive:
-    remote_src: true
+    remote_src: yes
     src: "{{ atl_obr_download }}"
     dest: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins"
     creates: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/jira-servicedesk-application-{{ atl_jsd_build }}.jar"
     list_files: no
     exclude:
       - M*
+      - obr.xml
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
     mode: 0750
+    extra_opts: [-j]  # pass the junk paths to the unzip command so we flatten the dependencies directory
   register: obr_unpack
-  ignore_errors: yes
 
-- name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
-  copy:
-    src: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/"
-    dest: "{{ atl_product_home_shared }}/plugins/installed-plugins/"
-  when: obr_unpack.changed
+# - name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
+#   copy:
+#     src: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/"
+#     dest: "{{ atl_product_home_shared }}/plugins/installed-plugins/"
+#   when: obr_unpack.changed
 
-- name: Remove the empty dependencies folder      # noqa 503 - ignore lint info about when changed
-  file:
-    path: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies"
-    state: absent
-  when: obr_unpack.changed
+# - name: Remove the empty dependencies folder      # noqa 503 - ignore lint info about when changed
+#   file:
+#     path: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies"
+#     state: absent
+#   when: obr_unpack.changed
