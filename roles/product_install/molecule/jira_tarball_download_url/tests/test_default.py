@@ -15,12 +15,12 @@ def test_version_is_correct(host):
     assert verfile.content.decode("UTF-8").strip() == "8.14.0"
 
 def test_is_downloaded(host):
-    installer = host.file('/media/atl/downloads/jira-software.8.14.0-x64.bin')
+    installer = host.file('/media/atl/downloads/jira-software.8.14.0.tar.gz')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_completed_lockfile(host):
-    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0-x64.bin_completed')
+    lockfile = host.file('/media/atl/downloads/jira-software.8.14.0.tar.gz_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
@@ -32,17 +32,17 @@ def test_is_unpacked(host):
     assert installer.mode == 0o0755
 
 def test_obr_is_downloaded(host):
-    installer = host.file('/media/atl/downloads/jira-servicedesk-application-4.14.0.obr')
+    installer = host.file('/media/atl/downloads/jira-servicedesk-application-4.18.0.obr')
     assert installer.exists
     assert installer.user == 'root'
 
 def test_obr_completed_lockfile(host):
-    lockfile = host.file('/media/atl/downloads/jira-servicedesk-application-4.14.0.obr_completed')
+    lockfile = host.file('/media/atl/downloads/jira-servicedesk-application-4.18.0.obr_completed')
     assert lockfile.exists
     assert lockfile.user == 'root'
 
 def test_obr_is_unpacked(host):
-    jsdjar = host.file('/opt/atlassian/jira-software/8.14.0/atlassian-jira/WEB-INF/atlassian-bundled-plugins/jira-servicedesk-application-4.14.0.jar')
+    jsdjar = host.file('/opt/atlassian/jira-software/8.14.0/atlassian-jira/WEB-INF/atlassian-bundled-plugins/jira-servicedesk-application-4.18.0.jar')
     assert jsdjar.exists
     assert jsdjar.user == 'jira'
     assert jsdjar.mode == 0o0644
