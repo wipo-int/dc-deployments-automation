@@ -71,7 +71,7 @@ atl_product_logs:
 #  The following are imports from the environment. These are generally
 #  set in /etc/atl by the CloudFormation template and sourced before
 #  Ansible is run. See bin/ansible-with-atl-env for a convenient wrapper
-atl_product_version: "{{ lookup('env', 'ATL_PRODUCT_VERSION') | lower }}"
+atl_product_version: "{{ lookup('env', 'ATL_PRODUCT_VERSION') }}"
 
 atl_efs_id: "{{ lookup('env', 'ATL_EFS_ID') }}"
 atl_aws_stack_name: "{{ lookup('env', 'ATL_AWS_STACK_NAME') }}"
