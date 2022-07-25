@@ -13,7 +13,7 @@ atl_db_validate: "{{ lookup('env', 'ATL_DB_VALIDATE') or 'false' }}"
 atl_db_acquireincrement: "{{ lookup('env', 'ATL_DB_ACQUIREINCREMENT') or '1' }}"
 atl_db_preferredtestquery: "{{ lookup('env', 'ATL_DB_PREFERREDTESTQUERY') or 'select version();' }}"
 
-atl_hazelcast_network_aws_tag_key: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_TAG_KEY') }}"
+atl_hazelcast_network_aws_tag_key: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_TAG_KEY') or 'Cluster' }}"
 atl_hazelcast_network_aws_host_header: "ec2.amazonaws.com"
 atl_hazelcast_network_aws_iam_region: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_IAM_REGION') }}"
 atl_hazelcast_network_aws_iam_role: "{{ lookup('env', 'ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE') }}"
