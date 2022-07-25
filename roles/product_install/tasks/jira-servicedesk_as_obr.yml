@@ -238,6 +238,11 @@
     mode: 0750
     extra_opts: [-j]  # pass the junk paths to the unzip command so we flatten the dependencies directory
   register: obr_unpack
+  failed_when: # validation doesn't handle the -j flag, so this deals with the /dependencies/ directory not existing on dest.
+    - obr_unpack.rc > 0
+    - "'Unexpected error when accessing exploded file' not in obr_unpack.msg"
+    - "'No such file or directory' not in obr_unpack.msg"
+    - "'{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/' not in obr_unpack.msg"
 
 # - name: Move JSD dependency jars into the installed-plugins dir      # noqa 503 - ignore lint info about when changed
 #   copy:
