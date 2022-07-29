@@ -18,7 +18,7 @@ pipelines:
     - step:
         name: Pre Parallelization stage
         script:
-          - echo "Running tests in 37 batches"
+          - echo "Running tests in 38 batches"
 
     - step:
         name: Check if the template is up-to-date
