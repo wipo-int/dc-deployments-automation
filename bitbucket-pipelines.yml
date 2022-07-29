@@ -205,6 +205,15 @@ pipelines:
              - cd roles/product_install
              - pipenv run molecule test -s confluence_latest
         - step:
+            name: product_install/confluence_version_with_uppercase
+            services:
+              - docker
+            script:
+              - export ANSIBLE_CONFIG=./ansible.cfg
+              - ./bin/install-ansible --dev
+              - cd roles/product_install
+              - pipenv run molecule test -s confluence_version_with_uppercase
+        - step:
            name: product_install/crowd_latest
            services:
              - docker
