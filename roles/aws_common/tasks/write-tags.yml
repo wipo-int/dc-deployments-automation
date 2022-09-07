@@ -1,7 +1,7 @@
 ---
 
 - name: Retrieve all available EC2 tags
-  ec2_tag:
+  amazon.aws.ec2_tag:
     region: "{{ ansible_ec2_placement_region }}"
     resource: "{{ ansible_ec2_instance_id }}"
     state: list
@@ -11,18 +11,18 @@
     - notest
 
 - name: Retrieve autoscaling group
-  set_fact:
+  ansible.builtin.set_fact:
     ec2_autoscaling_group: "{{ ec2_instance_tags.tags['aws:autoscaling:groupName'] | default('') }}"
 
 - block:
     # No existing timestamp, so this is a first run. Persist some metadata into the ASG.
     - name: Fetch the git revision for this repo
-      command:
+      ansible.builtin.command:
         cmd: git rev-parse HEAD
       register: git_out
 
     - name: Setup the new ASG tags
-      set_fact:
+      ansible.builtin.set_fact:
         deployment_firstrun_meta:
           - ResourceType: "auto-scaling-group"
             ResourceId: "{{ ec2_autoscaling_group }}"
@@ -41,14 +41,14 @@
     # ignore errors as it's possible we don't have the permissions,
     # and we can't check up-front.
     - name: Set the first-run tags on the ASG ("FAIL" is not critical)
-      command: "aws autoscaling
+      ansible.builtin.command: "aws autoscaling
                     create-or-update-tags
                     --region {{ ansible_ec2_placement_region }}
                     --tags '{{ deployment_firstrun_meta | to_json }}'"
       ignore_errors: true
 
     - name: Set the tags on the local instance ("FAIL" is not critical)
-      ec2_tag:
+      amazon.aws.ec2_tag:
         region: "{{ ansible_ec2_placement_region }}"
         resource: "{{ ansible_ec2_instance_id }}"
         tags:
