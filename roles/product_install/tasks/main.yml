@@ -35,7 +35,7 @@
     - name: Fetch the latest edition version
       ansible.builtin.include_tasks: "{{ atl_product_edition }}_version_latest.yml"
 
-  when: not cached.stat.exists and version_is_latest
+  when: not cached.stat.exists and version_is_latest | bool
 
 
 ######################################################################
@@ -72,7 +72,7 @@
         atl_download_version: "{{ atl_latest_version }}"
       when: not cached.stat.exists
 
-  when: version_is_latest
+  when: version_is_latest | bool
 
 - name: "Case: Version is not latest"
   block:
@@ -100,14 +100,14 @@
             atl_product_normalised_version is version(atl_cached_normalised_version, '<=') and
             not force_version_update | bool
 
-  when: not version_is_latest
+  when: not version_is_latest | bool
 
 
 - name: "Fallthrough guard: Use cached or supplied version if nothing set"
   ansible.builtin.set_fact:
     atl_download_version: "{{ atl_cached_version or atl_product_version }}"
   when: atl_download_version is not defined or
-        atl_download_version|length == 0
+        atl_download_version | length == 0
 
 - name: Override the supplied version with the calculated one
   ansible.builtin.set_fact:
@@ -206,7 +206,7 @@
         # Otherwise directory lock was either already created or
         # could not be created. Fall back is to continue and install from temp
 
-  when: download_binary
+  when: download_binary | bool
 
 # If the intention is to move binary to home_shared
 - name: Move product installer to home_shared
@@ -250,7 +250,7 @@
         atl_product_download: "{{ atl_product_home_shared_download }}"
       when: temp_deleted is succeeded
 
-  when: move_binary
+  when: move_binary | bool
 
 # At this point the binary is in {{ atl_product_download }}
 # (which is either on home_shared or temp)
@@ -276,4 +276,4 @@
 
 - name: Include if jsd is requested to be installed from OBR
   ansible.builtin.include_tasks: "jira-servicedesk_as_obr.yml"
-  when: atl_install_jsd_as_obr
+  when: atl_install_jsd_as_obr | bool

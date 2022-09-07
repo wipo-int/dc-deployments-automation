@@ -15,7 +15,7 @@
   ansible.builtin.yum:
     name:
       - "{{ aws_cloudwatch_agent_rpm }}"
-  when: atl_aws_enable_cloudwatch is defined and atl_aws_enable_cloudwatch
+  when: atl_aws_enable_cloudwatch is defined and atl_aws_enable_cloudwatch | bool
   notify:
     - Enable CloudWatch Agent
   vars:

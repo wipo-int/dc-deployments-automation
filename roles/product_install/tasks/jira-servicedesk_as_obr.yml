@@ -168,7 +168,7 @@
         # Otherwise directory lock was either already created or
         # could not be created. Fall back is to continue and install from temp
 
-  when: download_obr
+  when: download_obr | bool
 
 # If the intention is to move obr to home_shared
 - name: Move obr to home_shared
@@ -209,7 +209,7 @@
         atl_obr_download: "{{ atl_obr_shared_download }}"
       when: temp_deleted is succeeded
 
-  when: move_obr
+  when: move_obr | bool
 
 # At this point the binary is in {{ atl_obr_download }}
 # (which is either on home_shared or temp)
@@ -238,14 +238,14 @@
     mode: 0644
   register: obr_unpack
 
-- name: Move JSD dependency jars into the bundled-plugins dir      # noqa 503 - ignore lint info about when changed
+- name: Move JSD dependency jars into the bundled-plugins dir      # noqa no-handler - ignore lint info about when changed
   ansible.builtin.copy:
     remote_src: yes
     src: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies/"
     dest: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/"
   when: obr_unpack.changed
 
-- name: Remove the empty dependencies folder      # noqa 503 - ignore lint info about when changed
+- name: Remove the empty dependencies folder      # noqa no-handler - ignore lint info about when changed
   ansible.builtin.file:
     path: "{{ atl_product_installation_versioned }}/atlassian-jira/WEB-INF/atlassian-bundled-plugins/dependencies"
     state: absent

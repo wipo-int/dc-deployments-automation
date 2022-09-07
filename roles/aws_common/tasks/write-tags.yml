@@ -16,7 +16,7 @@
 
 - block:
     # No existing timestamp, so this is a first run. Persist some metadata into the ASG.
-    - name: Fetch the git revision for this repo
+    - name: Fetch the git revision for this repo  # noqa: command-instead-of-module no-changed-when
       ansible.builtin.command:
         cmd: git rev-parse HEAD
       register: git_out
@@ -40,7 +40,7 @@
     # Set the tags on the ASG and the local instance. We need to
     # ignore errors as it's possible we don't have the permissions,
     # and we can't check up-front.
-    - name: Set the first-run tags on the ASG ("FAIL" is not critical)
+    - name: Set the first-run tags on the ASG ("FAIL" is not critical)  # noqa: no-changed-when
       ansible.builtin.command: "aws autoscaling
                     create-or-update-tags
                     --region {{ ansible_ec2_placement_region }}

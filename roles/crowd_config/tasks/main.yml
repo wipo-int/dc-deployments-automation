@@ -31,7 +31,7 @@
 
 - name: CATALINA_OPTS to list
   ansible.builtin.set_fact:
-    catalina_ops_list: "{{ catalina_ops_list|default([]) }} + {{ (item | trim | regex_replace('^-')).split(' -') }}"
+    catalina_ops_list: "{{ catalina_ops_list | default([]) }} + {{ (item | trim | regex_replace('^-')).split(' -') }}"
   loop:
     - '{{ atl_catalina_opts }}'
     - '{{ atl_catalina_opts_extra }}'

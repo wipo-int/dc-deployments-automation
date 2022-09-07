@@ -18,19 +18,16 @@
 # shared-data and attachments in the shared drive.
 - name: Symlink local attachments to shared storage
   ansible.builtin.file:
-    src: "{{ item.0 }}"
-    dest: "{{ item.1 }}"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     force: false
     state: link
     mode: 0750
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
-  vars:
-    - links:
-        - ["{{ atl_product_home_shared }}/", "{{ atl_product_home }}/shared-home"]
-        - ["{{ atl_product_home_shared }}/attachments/", "{{ atl_product_home }}/attachments"]
-  with_nested:
-    - "{{ links }}"
+  loop:
+    - {src: "{{ atl_product_home_shared }}/", dest: "{{ atl_product_home }}/shared-home"}
+    - {src: "{{ atl_product_home_shared }}/attachments/", dest: "{{ atl_product_home }}/attachments"}
 
 - name: Create Tomcat server config
   ansible.builtin.template:

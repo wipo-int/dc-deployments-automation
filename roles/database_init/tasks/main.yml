@@ -45,7 +45,7 @@
         lc_ctype: "{{ atl_jdbc_ctype }}"
         template: "{{ atl_jdbc_template }}"
       register: db_created
-      when: "atl_jdbc_db_name not in (dbcluster_db_names.query_result | map(attribute='datname') )"
+      when: "atl_jdbc_db_name not in (dbcluster_db_names.query_result | map(attribute='datname'))"
 
   tags:
     - new_only

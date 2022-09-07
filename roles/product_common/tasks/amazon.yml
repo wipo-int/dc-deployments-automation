@@ -27,7 +27,7 @@
         path: "/usr/lib/jvm/temurin-{{ java_major_version }}-jdk"
         priority: 99
 
-  when: atl_use_system_jdk
+  when: atl_use_system_jdk | bool
   tags:
     - runtime_pkg
 
