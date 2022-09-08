@@ -539,6 +539,7 @@ pipelines:
             services:
               - docker
             script:
+              - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - apt-get update && apt-get install -y npm
               - npm install -g snyk
