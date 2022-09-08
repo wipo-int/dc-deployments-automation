@@ -39,6 +39,7 @@ pipelines:
             name: aws_common/cw-disabled
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -50,6 +51,7 @@ pipelines:
             name: aws_common/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -61,6 +63,7 @@ pipelines:
             name: aws_common/logs-disabled
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -72,6 +75,7 @@ pipelines:
             name: bitbucket_config/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -83,6 +87,7 @@ pipelines:
             name: bitbucket_config/iam_elasticsearch
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -94,6 +99,7 @@ pipelines:
             name: confluence_config/aurora
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -105,6 +111,7 @@ pipelines:
             name: confluence_config/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -116,6 +123,7 @@ pipelines:
             name: confluence_config/password_char_escaping
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -127,6 +135,7 @@ pipelines:
             name: confluence_config/system_jdk
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -138,6 +147,7 @@ pipelines:
             name: diy_backup/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -149,6 +159,7 @@ pipelines:
             name: jira_config/aurora
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -160,6 +171,7 @@ pipelines:
             name: jira_config/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -171,6 +183,7 @@ pipelines:
             name: jira_config/jira_config_props
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -182,6 +195,7 @@ pipelines:
             name: jira_config/password_char_escaping
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -193,6 +207,7 @@ pipelines:
             name: linux_common/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -204,6 +219,7 @@ pipelines:
             name: product_common/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -215,6 +231,7 @@ pipelines:
             name: product_common/system_jdk
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -226,6 +243,7 @@ pipelines:
             name: product_install/bitbucket_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -237,6 +255,7 @@ pipelines:
             name: product_install/confluence_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -248,6 +267,7 @@ pipelines:
             name: product_install/confluence_version_with_uppercase
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -259,6 +279,7 @@ pipelines:
             name: product_install/crowd_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -270,6 +291,7 @@ pipelines:
             name: product_install/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -281,6 +303,7 @@ pipelines:
             name: product_install/jira_all
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -292,6 +315,7 @@ pipelines:
             name: product_install/jira_cached_with_downgrade
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -303,6 +327,7 @@ pipelines:
             name: product_install/jira_cached_with_upgrade
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -314,6 +339,7 @@ pipelines:
             name: product_install/jira_software_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -325,6 +351,7 @@ pipelines:
             name: product_install/jira_tarball
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -336,6 +363,7 @@ pipelines:
             name: product_install/jira_tarball_download_url
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -347,6 +375,7 @@ pipelines:
             name: product_install/jira_version_from_file
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -358,6 +387,7 @@ pipelines:
             name: product_install/jira_version_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -369,6 +399,7 @@ pipelines:
             name: product_install/jira_version_override
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -380,6 +411,7 @@ pipelines:
             name: product_install/servicedesk3
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -391,6 +423,7 @@ pipelines:
             name: product_install/servicedesk4
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -402,6 +435,7 @@ pipelines:
             name: product_install/servicedesk_latest
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -413,6 +447,7 @@ pipelines:
             name: product_startup/bitbucket
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -424,6 +459,7 @@ pipelines:
             name: product_startup/default
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -435,6 +471,7 @@ pipelines:
             name: product_startup/startup_restart_false
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -446,6 +483,7 @@ pipelines:
             name: product_startup/synchrony
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -456,6 +494,8 @@ pipelines:
 
         - step:
             name: Run Snyk security scan
+            caches:
+              - docker
             services:
               - docker
             script:

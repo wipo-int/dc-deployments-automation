@@ -40,6 +40,7 @@ pipelines:
             name: {{ spath.parts[2] }}/{{ spath.parts[4] }}
             caches:
               - ansible-collections
+              - docker
             services:
               - docker
             script:
@@ -51,6 +52,8 @@ pipelines:
 
         - step:
             name: Run Snyk security scan
+            caches:
+              - docker
             services:
               - docker
             script:
