@@ -33,4 +33,8 @@ if [[ $1 == "--dev" ]]; then
 fi
 
 echo "Installing collections from galaxy..."
-pipenv run ansible-galaxy collection install --upgrade --verbose --requirements-file requirements.yml
+galaxy_retry_count=0
+until [[ $galaxy_retry_count -gt 2 ]]; do
+  pipenv run ansible-galaxy collection install --upgrade --verbose --requirements-file requirements.yml && break
+  galaxy_retry_count=$((galaxy_retry_count + 1))
+done
