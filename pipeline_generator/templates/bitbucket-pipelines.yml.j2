@@ -41,6 +41,7 @@ pipelines:
             caches:
               - ansible-collections
               - docker
+              - pip
             services:
               - docker
             script:
@@ -54,6 +55,8 @@ pipelines:
             name: Run Snyk security scan
             caches:
               - docker
+              - pip
+              - node
             services:
               - docker
             script:
