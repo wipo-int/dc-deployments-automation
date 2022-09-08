@@ -19,6 +19,8 @@ platforms:
 provisioner:
   name: ansible
   env:
+    ANSIBLE_COLLECTIONS_PATH: "../../"
+  env:
     ATL_STARTUP_RESTART: "false"
   options:
     skip-tags: runtime_pkg

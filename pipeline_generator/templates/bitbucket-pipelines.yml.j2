@@ -9,6 +9,8 @@ options:
   size: 2x
 
 definitions:
+  caches:
+    ansible-collections: ansible_collections
   services:
     docker:
       memory: 4096
@@ -36,6 +38,8 @@ pipelines:
        {% for spath in scenario_paths %}
         - step:
            name: {{ spath.parts[2] }}/{{ spath.parts[4] }}
+           caches:
+             - ansible-collections
            services:
              - docker
            script:

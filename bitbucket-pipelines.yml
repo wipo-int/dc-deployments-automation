@@ -9,6 +9,8 @@ options:
   size: 2x
 
 definitions:
+  caches:
+    ansible-collections: ansible_collections
   services:
     docker:
       memory: 4096
@@ -35,6 +37,8 @@ pipelines:
     - parallel:
         - step:
            name: aws_common/cw-disabled
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -44,6 +48,8 @@ pipelines:
              - pipenv run molecule test -s cw-disabled
         - step:
            name: aws_common/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -53,6 +59,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: aws_common/logs-disabled
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -62,6 +70,8 @@ pipelines:
              - pipenv run molecule test -s logs-disabled
         - step:
            name: bitbucket_config/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -71,6 +81,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: bitbucket_config/iam_elasticsearch
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -80,6 +92,8 @@ pipelines:
              - pipenv run molecule test -s iam_elasticsearch
         - step:
            name: confluence_config/aurora
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -89,6 +103,8 @@ pipelines:
              - pipenv run molecule test -s aurora
         - step:
            name: confluence_config/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -98,6 +114,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: confluence_config/password_char_escaping
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -107,6 +125,8 @@ pipelines:
              - pipenv run molecule test -s password_char_escaping
         - step:
            name: confluence_config/system_jdk
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -116,6 +136,8 @@ pipelines:
              - pipenv run molecule test -s system_jdk
         - step:
            name: diy_backup/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -125,6 +147,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: jira_config/aurora
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -134,6 +158,8 @@ pipelines:
              - pipenv run molecule test -s aurora
         - step:
            name: jira_config/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -143,6 +169,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: jira_config/jira_config_props
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -152,6 +180,8 @@ pipelines:
              - pipenv run molecule test -s jira_config_props
         - step:
            name: jira_config/password_char_escaping
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -161,6 +191,8 @@ pipelines:
              - pipenv run molecule test -s password_char_escaping
         - step:
            name: linux_common/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -170,6 +202,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: product_common/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -179,6 +213,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: product_common/system_jdk
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -188,6 +224,8 @@ pipelines:
              - pipenv run molecule test -s system_jdk
         - step:
            name: product_install/bitbucket_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -197,6 +235,8 @@ pipelines:
              - pipenv run molecule test -s bitbucket_latest
         - step:
            name: product_install/confluence_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -205,16 +245,20 @@ pipelines:
              - cd roles/product_install
              - pipenv run molecule test -s confluence_latest
         - step:
-            name: product_install/confluence_version_with_uppercase
-            services:
-              - docker
-            script:
-              - export ANSIBLE_CONFIG=./ansible.cfg
-              - ./bin/install-ansible --dev
-              - cd roles/product_install
-              - pipenv run molecule test -s confluence_version_with_uppercase
+           name: product_install/confluence_version_with_uppercase
+           caches:
+             - ansible-collections
+           services:
+             - docker
+           script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - pipenv run molecule test -s confluence_version_with_uppercase
         - step:
            name: product_install/crowd_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -224,6 +268,8 @@ pipelines:
              - pipenv run molecule test -s crowd_latest
         - step:
            name: product_install/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -233,6 +279,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: product_install/jira_all
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -241,16 +289,9 @@ pipelines:
              - cd roles/product_install
              - pipenv run molecule test -s jira_all
         - step:
-           name: product_install/jira_tarball_download_url
-           services:
-             - docker
-           script:
-             - export ANSIBLE_CONFIG=./ansible.cfg
-             - ./bin/install-ansible --dev
-             - cd roles/product_install
-             - pipenv run molecule test -s jira_tarball_download_url
-        - step:
            name: product_install/jira_cached_with_downgrade
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -260,6 +301,8 @@ pipelines:
              - pipenv run molecule test -s jira_cached_with_downgrade
         - step:
            name: product_install/jira_cached_with_upgrade
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -269,6 +312,8 @@ pipelines:
              - pipenv run molecule test -s jira_cached_with_upgrade
         - step:
            name: product_install/jira_software_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -278,6 +323,8 @@ pipelines:
              - pipenv run molecule test -s jira_software_latest
         - step:
            name: product_install/jira_tarball
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -286,7 +333,20 @@ pipelines:
              - cd roles/product_install
              - pipenv run molecule test -s jira_tarball
         - step:
+           name: product_install/jira_tarball_download_url
+           caches:
+             - ansible-collections
+           services:
+             - docker
+           script:
+             - export ANSIBLE_CONFIG=./ansible.cfg
+             - ./bin/install-ansible --dev
+             - cd roles/product_install
+             - pipenv run molecule test -s jira_tarball_download_url
+        - step:
            name: product_install/jira_version_from_file
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -296,6 +356,8 @@ pipelines:
              - pipenv run molecule test -s jira_version_from_file
         - step:
            name: product_install/jira_version_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -305,6 +367,8 @@ pipelines:
              - pipenv run molecule test -s jira_version_latest
         - step:
            name: product_install/jira_version_override
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -314,6 +378,8 @@ pipelines:
              - pipenv run molecule test -s jira_version_override
         - step:
            name: product_install/servicedesk3
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -323,6 +389,8 @@ pipelines:
              - pipenv run molecule test -s servicedesk3
         - step:
            name: product_install/servicedesk4
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -332,6 +400,8 @@ pipelines:
              - pipenv run molecule test -s servicedesk4
         - step:
            name: product_install/servicedesk_latest
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -341,6 +411,8 @@ pipelines:
              - pipenv run molecule test -s servicedesk_latest
         - step:
            name: product_startup/bitbucket
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -350,6 +422,8 @@ pipelines:
              - pipenv run molecule test -s bitbucket
         - step:
            name: product_startup/default
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -359,6 +433,8 @@ pipelines:
              - pipenv run molecule test -s default
         - step:
            name: product_startup/startup_restart_false
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
@@ -368,6 +444,8 @@ pipelines:
              - pipenv run molecule test -s startup_restart_false
         - step:
            name: product_startup/synchrony
+           caches:
+             - ansible-collections
            services:
              - docker
            script:
