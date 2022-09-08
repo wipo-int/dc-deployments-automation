@@ -1,10 +1,9 @@
 ---
 
 - name: Retrieve all available EC2 tags
-  amazon.aws.ec2_tag:
+  amazon.aws.ec2_tag_info:
     region: "{{ ansible_ec2_placement_region }}"
     resource: "{{ ansible_ec2_instance_id }}"
-    state: list
   register: ec2_instance_tags
   ignore_errors: true
   tags:
