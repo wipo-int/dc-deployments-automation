@@ -19,7 +19,7 @@
     line: '\1Xmx{{ atl_jvm_heap }}\3'
     backrefs: yes
 
-- name: Set Crowd home directory in crowd-init.properties file
+- name: Set Crowd home directory in crowd-init.properties file
   ansible.builtin.lineinfile:
     path: "{{ atl_product_installation_versioned }}/crowd-webapp/WEB-INF/classes/crowd-init.properties"
     line: 'crowd.home={{ atl_product_home }}'
@@ -31,8 +31,9 @@
 
 - name: CATALINA_OPTS to list
   ansible.builtin.set_fact:
-    catalina_ops_list: "{{ catalina_ops_list | default([]) }} + {{ (item | trim | regex_replace('^-')).split(' -') }}"
+    catalina_ops_list: "{{ (item | trim | regex_replace('^-')).split(' -') }}"
   loop:
+    - '{{ catalina_ops_list | default([]) }}'
     - '{{ atl_catalina_opts }}'
     - '{{ atl_catalina_opts_extra }}'
 
