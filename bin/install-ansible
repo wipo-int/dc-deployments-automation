@@ -7,8 +7,6 @@ if [[ $ID = "amzn" ]]; then
     amazon-linux-extras enable python3.8
     yum clean metadata
     yum install -y \
-        gcc \
-        libpq-devel \
         python2-pip \
         python38 \
         python38-pip \
@@ -18,7 +16,6 @@ else
     # FIXME: Currently assumes Debian-based
     apt-get update && \
     apt-get install -y \
-            libpq-dev \
             python3-dev \
             python3-pip
 fi

@@ -13,7 +13,6 @@
       - curl
       - unzip
       - fontconfig
-      - python-psycopg2
 
 - name: Create product group
   ansible.builtin.group:

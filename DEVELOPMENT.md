@@ -24,15 +24,17 @@ the dependency tree. There are 2 main ways to do this; either directly if
 packaged, or via pip...
 
     # Ubuntu 22.04+, Debian 11+
-    sudo apt-get install libpq-dev python3-dev python3-pip
+    sudo apt-get install python3-dev python3-pip
 
     # Amazon Linux 2
     sudo amazon-linux-extras enable python3.8
-    sudo yum install gcc libpq-devel python38 python38-pip python38-devel python-lxml
+    sudo yum install python38 python38-pip python38-devel python-lxml
 
     # Mac via Homebrew
-    brew install libpq python@X.x  # (where "X.x") is 3.8 or newer
-    echo 'export PATH="/opt/homebrew/opt/libpq/bin:$PATH"' >> ~/.zshrc  # (or other shell profile)
+    brew install libpq openssl@3 python@X.x  # (where "X.x") is 3.8 or newer
+    export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+    export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
     # Finally
     pip3 install pipenv
