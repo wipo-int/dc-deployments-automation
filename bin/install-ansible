@@ -10,8 +10,7 @@ if [[ $ID = "amzn" ]]; then
         python2-pip \
         python38 \
         python38-pip \
-        python38-devel \
-        python-lxml
+        python38-devel
 else
     # FIXME: Currently assumes Debian-based
     apt-get update && \
