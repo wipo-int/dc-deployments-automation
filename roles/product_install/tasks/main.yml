@@ -183,8 +183,8 @@
       ansible.builtin.get_url:
         url: "{{ atl_product_download_url }}"
         dest: "{{ atl_product_temp_download }}"
-        url_password: "{{ lookup('amazon.aws.aws_secret', passwordpath, region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') }}"
-        url_username: "{{ lookup('amazon.aws.aws_secret', userpath, region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') }}"
+        url_password: "{{ lookup('amazon.aws.aws_secret', passwordpath, region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') | default(omit) }}"
+        url_username: "{{ lookup('amazon.aws.aws_secret', userpath, region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') | default(omit) }}"
         mode: 0755
         force: false
       register: atl_product_completed
