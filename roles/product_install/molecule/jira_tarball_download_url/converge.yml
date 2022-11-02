@@ -19,6 +19,7 @@
     # When using a tarball the following are also required:
     atl_download_format: "tarball"
     atl_use_system_jdk: true
+    ansible_ec2_placement_region: 'us-east-1'
 
   roles:
     - role: linux_common

@@ -13,6 +13,7 @@
     atl_jdbc_password: 'molecule_password'
 
     atl_aws_region: us-east-2
+    ansible_ec2_placement_region: 'us-east-2'
 
   roles:
     - role: linux_common

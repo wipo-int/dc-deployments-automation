@@ -6,6 +6,8 @@
     atl_product_edition: "confluence"
     atl_product_user: "confluence"
     atl_product_version: "7.20.0-CONFSERVER-63193-m01"
+    ansible_ec2_placement_region: 'us-east-1'
+    
   roles:
     - role: linux_common
     - role: product_common

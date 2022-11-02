@@ -7,6 +7,7 @@
     atl_product_user: "jira"
     # NOTE: This should be ignored because the version file exists (below).
     atl_product_version: "latest"
+    ansible_ec2_placement_region: 'us-east-1'
 
   pre_tasks:
     - name: Create cache dir

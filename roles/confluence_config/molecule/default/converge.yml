@@ -21,6 +21,7 @@
     atl_proxy_port: "80"
     atl_db_preferredtestquery: "select 1;"
     atl_hazelcast_network_aws_tag_key: "my-cluster-tag"
+    ansible_ec2_placement_region: 'us-east-1'
 
   roles:
     - role: linux_common
