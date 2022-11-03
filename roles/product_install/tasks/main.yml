@@ -182,9 +182,11 @@
       ansible.builtin.set_fact:
         download_atlassian_password: "{{ lookup('amazon.aws.aws_secret', 'download_atlassian.password', region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') }}"
         download_atlassian_username: "{{ lookup('amazon.aws.aws_secret', 'download_atlassian.username', region=ansible_ec2_placement_region, bypath=false, nested=true, on_denied='skip', on_missing='skip') }}"
-      failed_when: False
+      failed_when: false
       no_log: true
       when: ansible_ec2_placement_region is defined
+      tags:
+        - notest
 
     # Fetch binary and copy to temp 
     # optionally use basic_auth creds from secrets_manager
