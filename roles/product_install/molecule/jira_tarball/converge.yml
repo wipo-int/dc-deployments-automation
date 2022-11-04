@@ -6,8 +6,6 @@
     atl_product_edition: "jira-core"
     atl_product_user: "jira"
     atl_download_format: "tarball"
-    ansible_ec2_placement_region: 'us-east-1'
-    
   roles:
     - role: linux_common
     - role: product_common

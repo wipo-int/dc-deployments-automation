@@ -14,8 +14,6 @@
     atl_jdbc_collation: 'C'
     atl_jdbc_ctype: 'C'
     atl_jdbc_template: 'template0'
-    ansible_ec2_placement_region: 'us-east-1'
-    
   pre_tasks:
     - name: Create cache dir
       ansible.builtin.file:

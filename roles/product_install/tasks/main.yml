@@ -186,7 +186,7 @@
       no_log: true
       when: ansible_ec2_placement_region is defined
       tags:
-        - notest
+        - runtime_pkg
 
     # Fetch binary and copy to temp 
     # optionally use basic_auth creds from secrets_manager

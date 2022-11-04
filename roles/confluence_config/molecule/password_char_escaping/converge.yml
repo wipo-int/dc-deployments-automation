@@ -18,7 +18,6 @@
     atl_tomcat_scheme: "http"
     atl_proxy_name: "localhost"
     atl_proxy_port: "80"
-    ansible_ec2_placement_region: 'us-east-1'
 
   roles:
     - role: linux_common

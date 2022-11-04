@@ -17,8 +17,6 @@
 
     atl_bitbucket_properties_raw: "key1=val1 key2=val2    key3=val3"
 
-    ansible_ec2_placement_region: 'us-east-1'
-
   roles:
     - role: linux_common
     - role: product_common

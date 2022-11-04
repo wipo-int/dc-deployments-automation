@@ -6,7 +6,6 @@
     atl_product_family: "jira"
     atl_product_user: "jira"
     atl_product_version: "4.1.0"
-    ansible_ec2_placement_region: 'us-east-1'
 
   roles:
     - role: linux_common
