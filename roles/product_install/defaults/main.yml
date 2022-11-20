@@ -3,6 +3,9 @@
 # Empty values to simplify logic (no undefineds)
 atl_latest_version: ''
 atl_cached_version: ''
+# if basic_auth is required for download of atlassian installable artifact, provide the name of an AWS Secrets Manager secret
+#  with values for both password and username
+atl_download_secret_name: ''
 
 atl_product_latest_version_url: "https://marketplace.atlassian.com/rest/2/products/key/{{ atl_product_family }}/versions"
 atl_product_version_cache_dir: "{{ atl_product_home_shared }}"
