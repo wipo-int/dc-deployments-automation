@@ -3,6 +3,7 @@
 set -e
 
 PIP_BIN="pip3"
+PIPENV_PYTHON="3"
 
 source /etc/os-release
 if [[ $ID = "amzn" ]] && [[ $VERSION = "2" ]]; then
@@ -19,6 +20,7 @@ elif [[ $ID = "amzn" ]] && [[ $VERSION = "2023" ]]; then
         python3.11-pip \
         python3.11-devel
     PIP_BIN="pip3.11"
+    PIPENV_PYTHON="3.11"
 else
     # FIXME: Currently assumes Debian-based
     apt-get update && \
@@ -33,7 +35,7 @@ echo "Installing pipenv..."
 $PIP_BIN install pipenv
 
 echo "Installing ansible and dependencies..."
-PIPENV_NOSPIN=1 PIPENV_HIDE_EMOJIS=1 pipenv sync 2>&1 | iconv -c -f utf-8 -t ascii
+PIPENV_NOSPIN=1 PIPENV_HIDE_EMOJIS=1 pipenv --python $PIPENV_PYTHON sync 2>&1 | iconv -c -f utf-8 -t ascii
 
 if [[ $1 == "--dev" ]]; then
     pipenv sync --dev
