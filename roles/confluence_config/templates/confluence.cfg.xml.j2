@@ -34,6 +34,7 @@
     <property name="hibernate.hikari.maximumPoolSize">{{ atl_db_poolmaxsize }}</property>
     <property name="hibernate.hikari.minimumIdle">{{ atl_db_poolminsize }}</property>
     <property name="hibernate.hikari.registerMbeans">true</property>
+    <property name="hibernate.connection.provider_class">{{ atl_db_provider_class | default('com.atlassian.confluence.impl.hibernate.DelegatingHikariConnectionProvider') }}</property>
     {% endif %}
 
     <property name="shared-home">{{ atl_product_home_shared }}</property>
