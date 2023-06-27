@@ -44,6 +44,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/aws_common
@@ -57,6 +58,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/aws_common
@@ -70,6 +72,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/aws_common
@@ -83,6 +86,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/bitbucket_config
@@ -96,6 +100,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/bitbucket_config
@@ -109,6 +114,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/confluence_config
@@ -122,6 +128,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/confluence_config
@@ -135,6 +142,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/confluence_config
@@ -148,6 +156,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/confluence_config
@@ -161,6 +170,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/diy_backup
@@ -174,6 +184,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/jira_config
@@ -187,6 +198,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/jira_config
@@ -200,6 +212,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/jira_config
@@ -213,6 +226,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/jira_config
@@ -226,6 +240,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/linux_common
@@ -239,6 +254,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_common
@@ -252,6 +268,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_common
@@ -265,6 +282,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -278,6 +296,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -291,6 +310,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -304,6 +324,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -317,6 +338,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -330,6 +352,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -343,6 +366,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -356,6 +380,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -369,6 +394,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -382,6 +408,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -395,6 +422,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -408,6 +436,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -421,6 +450,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -434,6 +464,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -447,6 +478,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -460,6 +492,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -473,6 +506,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_install
@@ -486,6 +520,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_startup
@@ -499,6 +534,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_startup
@@ -512,6 +548,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_startup
@@ -525,6 +562,7 @@ pipelines:
             services:
               - docker
             script:
+              - apt-get update && apt-get install -y rsync
               - export ANSIBLE_CONFIG=./ansible.cfg
               - ./bin/install-ansible --dev
               - cd roles/product_startup
