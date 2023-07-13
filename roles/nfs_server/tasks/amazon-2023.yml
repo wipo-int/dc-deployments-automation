@@ -12,3 +12,7 @@
     owner: root
     group: root
     state: link
+
+- name: Reload systemd services
+  ansible.builtin.systemd:
+    daemon_reload: yes
