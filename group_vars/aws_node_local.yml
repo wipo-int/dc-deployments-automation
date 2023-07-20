@@ -118,6 +118,9 @@ atl_jdbc_query_params_for_engine:
   aurora_postgres: "?targetServerType=master"
 atl_jdbc_url: "jdbc:postgresql://{{ atl_db_host }}:{{ atl_db_port }}/{{ atl_jdbc_db_name }}{{ atl_jdbc_query_params_for_engine[atl_db_engine] | default('') }}"
 
+atl_secretsmanager_aws_region: "{{ lookup('env', 'ATL_SECRETSMANAGER_AWS_REGION') }}"
+atl_secretsmanager_aws_secret_id: "{{ lookup('env', 'ATL_SECRETSMANAGER_AWS_SECRET_ID') }}"
+
 atl_jvm_heap: "{{ lookup('env', 'ATL_JVM_HEAP') or '2048m' }}"
 atl_jvm_opts: "{{ lookup('env', 'ATL_JVM_OPTS') or '' }}"
 atl_catalina_opts: "{{ lookup('env', 'ATL_CATALINA_OPTS') or '' }}"

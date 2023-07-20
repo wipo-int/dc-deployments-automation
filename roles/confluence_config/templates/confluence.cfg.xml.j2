@@ -17,7 +17,13 @@
     <property name="hibernate.connection.driver_class">{{ atl_db_driver }}</property>
     <property name="hibernate.connection.url">{{ atl_jdbc_url }}</property>
     <property name="hibernate.connection.username">{{ atl_jdbc_user }}</property>
+
+    {% if atl_product_version.split(".")[:2] | join(".") is version('8.6', '>=') and atl_secretsmanager_aws_region is defined and atl_secretsmanager_aws_region != "" and atl_secretsmanager_aws_secret_id is defined and atl_secretsmanager_aws_secret_id != "" -%}
+    <property name="jdbc.password.decrypter.classname">com.atlassian.secrets.store.aws.AwsSecretsManagerStore</property>
+    <property name="hibernate.connection.password">{"region": "{{ atl_secretsmanager_aws_region }}", "secretId": "{{ atl_secretsmanager_aws_secret_id }}"}</property>
+    {% else -%}
     <property name="hibernate.connection.password">{{ atl_jdbc_password | replace("&", "&amp;") }}</property>
+    {% endif -%}
 
     {# Confluence versions 7.13 and newer #}
     {% if (atl_product_version.split(".")[0] | int() == 7 and atl_product_version.split(".")[1] | int() <= 13) or atl_product_version.split(".")[0] | int() < 7 %}
