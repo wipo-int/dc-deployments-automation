@@ -18,8 +18,6 @@
       - curl
       - unzip
       - fontconfig
-  vars:
-    ansible_python_interpreter: "{{ '/usr/bin/python2' if ((ansible_distribution | lower == 'amazon') and (ansible_distribution_version == '2')) else pipenv_venv }}"
 
 - name: Create product group
   ansible.builtin.group:
