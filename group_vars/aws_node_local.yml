@@ -9,7 +9,7 @@
 #
 #    https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 
-pipenv_venv: /usr/bin/python3  # this will get overridden by the wrapper scripts, but should allow molecule to run
+pipenv_venv: /usr/bin/python  # this will get overridden by the wrapper scripts, but should allow molecule to run
 ansible_python_interpreter: "{{ pipenv_venv }}"
 
 java_major_version: "8"
