@@ -3,6 +3,5 @@
   hosts: all
   vars:
     atl_product_user: "jira"
-    pipenv_venv: "/usr/bin/python"
   roles:
     - role: linux_common
