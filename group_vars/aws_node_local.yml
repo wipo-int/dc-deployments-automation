@@ -9,7 +9,8 @@
 #
 #    https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 
-ansible_python_interpreter: "{{ pipenv_venv | default('/usr/bin/python') }}"
+pipenv_venv: /usr/bin/python  # this will get overridden by the wrapper scripts, but should allow molecule to run
+ansible_python_interpreter: "{{ pipenv_venv }}"
 
 java_major_version: "8"
 postgres_version: "9.6"
