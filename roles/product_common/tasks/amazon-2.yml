@@ -17,7 +17,7 @@
         gpgcheck: yes
         state: present
       tags:
-        - notest
+        - molecule-idempotence-notest
 
     - name: Install Eclipse Temurin JDK
       ansible.builtin.yum:
