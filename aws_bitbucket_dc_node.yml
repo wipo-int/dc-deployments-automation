@@ -8,9 +8,22 @@
     atl_product_edition: "bitbucket"
     atl_product_user: "bitbucket"
 
+    alt_product_home: "/media/atl/bitbucket"
+
     atl_use_system_jdk: true
     java_major_version: "11" # BB 8 will drop JDK 8 support
     atl_download_format: "tarball"
+
+    atl_startup_systemd_params:
+      - "UMask=0027"
+      - "LimitNOFILE=4096"
+      - "Environment=BITBUCKET_HOME=/media/atl/bitbucket"
+      - "Environment=JAVA_HOME=/usr/lib/jvm/java"
+      - "Environment=JVM_MAXIMUM_MEMORY={{ atl_jvm_heap }}"
+      - "Environment=JVM_MINIMUM_MEMORY={{ atl_jvm_heap }}"
+      - "Environment=JVM_SUPPORT_RECOMMENDED_ARGS={{ atl_jvm_opts }}"
+    atl_startup_exec_options:
+      - "--no-search"
 
   roles:
     - role: linux_common
