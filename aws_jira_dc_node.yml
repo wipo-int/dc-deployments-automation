@@ -9,7 +9,6 @@
     atl_product_edition: "jira-{{ lookup('env', 'ATL_PRODUCT_EDITION') | lower }}"
     atl_install_jsd_as_obr: "{{ lookup('env', 'ATL_JSD_ASOBR') | bool }}"
     atl_systemd_service_name: "jira.service"
-    atl_shared_mountpoint: "/media/atl
 
     atl_use_system_jdk: true
     java_major_version: "11"
