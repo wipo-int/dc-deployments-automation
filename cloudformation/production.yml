@@ -1,0 +1,1818 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Atlassian Bitbucket Data Center (qs-1qup6ra1t)
+
+Metadata:
+  QSLint:
+    Exclusions:
+      - E9101
+      - EIAMPolicyWildcardResource
+      - ERDSDBInstancePubliclyAccessible
+  QuickStartDocumentation:
+    EntrypointName: Launch into an existing VPC
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Bitbucket setup
+        Parameters:
+          - BitbucketVersion
+      - Label:
+          default: Cluster nodes
+        Parameters:
+          - CloudWatchIntegration
+          - ClusterNodeInstanceType
+          - ClusterNodeMax
+          - ClusterNodeMin
+          - ClusterNodeVolumeSize
+          - DeploymentAutomationRepository
+          - DeploymentAutomationBranch
+          - DeploymentAutomationPlaybook
+          - DeploymentAutomationKeyName
+          - DeploymentAutomationCustomParams
+      - Label:
+          default: Database
+        Parameters:
+          - DBEngine
+          - DBEngineVersion
+          - DBInstanceClass
+          - DBIops
+          - DBMasterUserPassword
+          - DBMultiAZ
+          - DBPassword
+          - DBStorage
+          - DBStorageType
+      - Label:
+          default: Elasticsearch
+        Parameters:
+          - ElasticSearchPassword
+          - ElasticsearchInstanceType
+          - ElasticsearchNodeVolumeSize
+      - Label:
+          default: Networking
+        Parameters:
+          - CidrBlock
+          - InternetFacingLoadBalancer
+          - CustomDnsName
+          - SSLCertificateARN
+      - Label:
+          default: Advanced (Optional)
+        Parameters:
+          - BitbucketProperties
+          - JvmHeapOverride
+          - JvmSupportOpts
+          - CreateBucket
+          - DBMaster
+          - DBSnapshotId
+          - ESBucketName
+          - BitbucketLicenseKey
+          - BitbucketAdminPassword
+          - BitbucketDatasetURL
+      - Label:
+          default: AWS Quick Start Configuration
+        Parameters:
+          - QSS3BucketName
+          - QSS3KeyPrefix
+          - ExportPrefix
+    ParameterLabels:
+      BitbucketProperties:
+        default: Bitbucket properties
+      BitbucketVersion:
+        default: Version *
+      BitbucketLicenseKey:
+        default: License Key for Bitbucket (if you have one)
+      BitbucketAdminPassword:
+        default: Password for the administrator account
+      BitbucketDatasetURL:
+        default: HTTP/HTTPS URL to download the Bitbucket Dataset
+      CidrBlock:
+        default: Permitted IP range *
+      ClusterNodeMax:
+        default: Maximum number of cluster nodes
+      ClusterNodeMin:
+        default: Minimum number of cluster nodes
+      ClusterNodeInstanceType:
+        default: Bitbucket cluster node instance type
+      ClusterNodeVolumeSize:
+        default: Cluster node instance volume size
+      CreateBucket:
+        default: Create S3 bucket for Elasticsearch snapshots
+      DBEngine:
+        default: The database engine to deploy with
+      DBEngineVersion:
+        default: The database engine version to use
+      DBInstanceClass:
+        default: Database instance class
+      DBIops:
+        default: RDS Provisioned IOPS
+      DBMasterUserPassword:
+        default: Master password *
+      DBMaster:
+        default: Bitbucket primary database
+      DBMultiAZ:
+        default: Enable RDS Multi-AZ deployment
+      DBPassword:
+        default: Bitbucket database password *
+      DBStorage:
+        default: Database storage
+      DBStorageType:
+        default: Database storage type
+      DBSnapshotId:
+        default: Database snapshot ID to restore
+      DeploymentAutomationRepository:
+        default: Deployment Automation Git Repository URL
+      DeploymentAutomationBranch:
+        default: Deployment Automation Branch
+      DeploymentAutomationPlaybook:
+        default: Ansible playbook to invoke during instance initialization
+      DeploymentAutomationCustomParams:
+        default: Custom command-line parameters for Ansible
+      DeploymentAutomationKeyName:
+        default: SSH key name to use with the repository
+      CloudWatchIntegration:
+        default: Enable CloudWatch integration
+      ElasticSearchPassword:
+        default: Elasticsearch master user password *
+      ElasticsearchInstanceType:
+        default: Elasticsearch instance type
+      OpenSearchInstanceType:
+        default: OpenSearch instance type
+      OSDomainName:
+        default: 'bitbucket-opensearch'
+      ElasticsearchNodeVolumeSize:
+        default: Elasticsearch disk space per node (GB)
+      ESBucketName:
+        default: Elasticsearch snapshot S3 bucket name
+      ExportPrefix:
+        default: ASI identifier
+      InternetFacingLoadBalancer:
+        default: Make instance internet facing
+      JvmHeapOverride:
+        default: JVM Heap Size Override
+      JvmSupportOpts:
+        default: Additional JVM options
+      CustomDnsName:
+        default: Existing DNS name
+      SSLCertificateARN:
+        default: SSL Certificate ARN
+      QSS3BucketName:
+        default: Quick Start S3 Bucket Name
+      QSS3KeyPrefix:
+        default: Quick Start S3 Key Prefix
+
+Parameters:
+  VpcId:
+    Type: String
+  LbSubnet1:
+    Type: String
+  LbSubnet2:
+    Type: String
+  LbSubnet3:
+    Type: String
+  DbSubnet1ID:
+    Type: String
+  DbSubnet2ID:
+    Type: String
+  HostedZone:
+    Default: ''
+    ConstraintDescription: Must be the name of an existing Amazon Route 53 Hosted Zone.
+    Description: (Optional) The domain name of the Amazon Route 53 PRIVATE Hosted Zone in which to create cnames.
+    Type: String
+  DnsNameSpaceId:
+    Type: String
+    Default: 'ns-2n7lzqagu7z265lo'
+  BitbucketProperties:
+    Default: ''
+    Description: A space-separated list of bitbucket properties in the form 'key1=value1 key2=value2 ...' Find documentation at https://confluence.atlassian.com/x/m5ZKLg.
+    Type: String
+  BitbucketVersion:
+    Default: 8.9.9
+    AllowedPattern: ([^1234]\.\d+\.\d+(-?.*))
+    ConstraintDescription: 'Must be a valid Bitbucket version number. For example: 5.0.0 or higher'
+    Description: Version of Bitbucket to install. Please use version 5.0.0 or higher. Find valid versions at http://go.atlassian.com/bbs-releases.
+    Type: String
+  BitbucketLicenseKey:
+    Default: ''
+    Description: (Optional) Provide a license key for Bitbucket Data Center if you have one.
+    NoEcho: true
+    Type: String
+  BitbucketAdminPassword:
+    AllowedPattern: ((?=^.{0,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*)|(^$)
+    ConstraintDescription: Must be at least 8 characters and include 1 uppercase, 1 lowercase, 1 number, 1 (non / @ " ') symbol
+    Description: (Optional) Password for the Bitbucket administrator ('admin') account.
+    MaxLength: 128
+    NoEcho: true
+    Type: String
+  BitbucketDatasetURL:
+    Default: ''
+    Description: (Optional) Provide the HTTP/HTTPS URL for the dataset to restore. Refer https://confluence.atlassian.com/bitbucketserver/importing-957497836.html.
+    Type: String
+  CidrBlock:
+    Default: 10.0.0.0/8
+    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+    ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x.
+    Description: CIDR block allowed to access the Atlassian product. This should be set to a trusted IP range; if you want to give public access use '0.0.0.0/0'.
+    MinLength: 9
+    MaxLength: 18
+    Type: String
+  ClusterNodeInstanceType:
+    Default: r5.large
+    Description: Instance type for the cluster application nodes. See https://confluence.atlassian.com/x/GpdKLg for guidance.
+    Type: String
+  ClusterNodeMax:
+    Description: Maximum number of nodes in the cluster.
+    Default: 1
+    Type: Number
+  ClusterNodeMin:
+    Default: 1
+    Description: Set to 1 for new deployment. Can be updated post launch.
+    Type: Number
+  ClusterNodeVolumeSize:
+    Default: 50
+    Description: Size of Bitbucket web server cluster node volume in Gb.
+    Type: Number
+  CreateBucket:
+    Default: 'true'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    ConstraintDescription: Must be 'true' or 'false'.
+    Description: Set to true to create the S3 bucket within this stack, must be used in conjunction with ESBucketName.
+    Type: String
+  DeploymentAutomationRepository:
+    Default: https://github.com/wipo-int/dc-deployments-automation.git
+    Type: String
+    Description: The deployment automation repository to use for per-node initialization. Leave this as default unless you have customizations.
+  DeploymentAutomationBranch:
+    Default: master
+    Type: String
+    Description: The deployment automation repository branch to pull from.
+  DeploymentAutomationPlaybook:
+    Default: aws_bitbucket_dc_node.yml
+    Type: String
+    Description: The Ansible playbook to invoke to initialize the application node on first start.
+  DeploymentAutomationCustomParams:
+    Default: ''
+    Type: String
+    Description: Additional command-line options for the `ansible-playbook` command. See https://bitbucket.org/atlassian/dc-deployments-automation/src/master/README.md for more information about overriding parameters. (Optional)
+  DeploymentAutomationKeyName:
+    Default: ''
+    Type: String
+    Description: Named Key Pair name to use with this repository. The key should be imported into the SSM parameter store. (Optional)
+  CloudWatchIntegration:
+    Default: Metrics and Logs
+    Type: String
+    Description: Enables CloudWatch metrics with or without log gathering. If cost is an issue, you can disable this altogether.
+    AllowedValues:
+      - 'Off'
+      - Metrics Only
+      - Metrics and Logs
+    ConstraintDescription: Must be 'Off', 'Metrics Only', or 'Metrics and Logs'
+  DBEngine:
+    Default: PostgreSQL
+    Description: Database Engine to use. PostgreSQL or Amazon Aurora PostgreSQL.
+    AllowedValues:
+      - Amazon Aurora PostgreSQL
+      - PostgreSQL
+    ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
+    Type: String
+  DBEngineVersion:
+    Default: 15
+    Description: The database engine version to use; we'll install a suitable minor version for your chosen engine. Make sure that the Bitbucket version you're installing supports the database engine selected.
+    Type: String
+  DBInstanceClass:
+    Default: db.m5.large
+    Description: RDS instance type (only r4 and r5 families are supported for Aurora).
+    Type: String
+  DBIops:
+    Default: 1000
+    ConstraintDescription: Must be in the range 1000 - 30000.
+    Description: 'Must be in the range of 1000 - 30000 and a multiple of 1000. This value is only used with Provisioned IOPS. Note: The ratio of IOPS per allocated-storage must be between 3.00 and 10.00. Not valid for Aurora.'
+    MinValue: 1000
+    MaxValue: 30000
+    Type: Number
+  DBMasterUserPassword:
+    AllowedPattern: ^(?=^.{8,255}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*[@/"']).*$
+    ConstraintDescription: 'Must be at least 8 characters and include 1 uppercase, 1 lowercase, 1 number, and 1 of the following symbols: ! # $ { * : [ = , ] - _ + % &'
+    Description: 'Password for the master (''postgres'') account. Must be at least 8 characters and include 1 uppercase, 1 lowercase, 1 number, and 1 of the following symbols: ! # $ { * : [ = , ] - _ + % &'
+    NoEcho: true
+    MaxLength: 128
+    MinLength: 8
+    Type: String
+  DBMultiAZ:
+    Description: Whether to provision a multi-AZ RDS instance.
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    ConstraintDescription: Must be 'true' or 'false'.
+    Type: String
+  DBPassword:
+    AllowedPattern: (?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*
+    ConstraintDescription: 'Must be at least 8 characters and include 1 uppercase, 1 lowercase, 1 number, and 1 of the following symbols: ! # $ { * : [ = , ] - _ @ + % &'
+    Description: 'Database password used by BitBucket. Must be at least 8 characters and include 1 uppercase, 1 lowercase, 1 number, and 1 of the following symbols: ! # $ { * : [ = , ] - _ @ + % &'
+    MaxLength: 128
+    NoEcho: true
+    Type: String
+  DBMaster:
+    Default: ''
+    ConstraintDescription: Must be a valid RDS ARN.
+    Description: Database ARN of the RDS instance to replicate. Setting this parameter will bring up Bitbucket as a Disaster recovery standby, with an RDS read replica database. Not valid for Aurora.
+    Type: String
+  DBSnapshotId:
+    Default: ''
+    ConstraintDescription: Must be a valid RDS snapshot ID, or blank.
+    Description: RDS snapshot ID of an existing backup to restore. Leave blank for a new instance. Not valid for Aurora.
+    Type: String
+  DBStorage:
+    Default: 50
+    Description: Database allocated storage size, in gigabytes (GB). If you choose Provisioned IOPS, storage should be between 100 and 6144. Not used for Aurora.
+    Type: Number
+  DBStorageType:
+    Default: General Purpose (SSD)
+    AllowedValues:
+      - General Purpose (SSD)
+      - Provisioned IOPS
+    ConstraintDescription: Must be 'General Purpose (SSD)' or 'Provisioned IOPS'.
+    Description: Database storage type.
+    Type: String
+  ElasticSearchPassword:
+    Description: Password for the elasticsearch master user, the username will be 'bitbucket'. If no password is specified, Bitbucket will authenticate with the elasticsearch cluster using IAM request signing (not recommended).
+    Type: String
+    NoEcho: true
+  ElasticsearchInstanceType:
+    Description: EC2 instance type for the Amazon Elasticsearch service to run on.
+    Type: String
+    Default: c5.large.elasticsearch
+  OpenSearchInstanceType:
+    Description: EC2 instance type for the Amazon Elasticsearch service to run on.
+    Type: String
+    Default: m5.large.search
+  OpenSearchEngineVersion:
+    Description: OpenSearchEngineVersion.
+    Type: String
+    Default: 'OpenSearch_1.3'
+  OSDomainName:
+    Description: Domain Name of Open Search Domain.
+    Type: String
+    Default: bitbucket-opensearch
+  ElasticsearchNodeVolumeSize:
+    Description: The EBS volume size (in GB) of each Elasticsearch node.
+    Type: Number
+    Default: 100
+    MinValue: 100
+  ESBucketName:
+    Default: atlassian-portfolio-int-bitbucket-es-eu-central-1-132466473476
+    AllowedPattern: '[a-z0-9-]*'
+    ConstraintDescription: Must contain only lowercase letters, numbers and hyphens (-).
+    Description: Name of a new, or existing, S3 bucket configured for Elasticsearch snapshots.
+    Type: String
+  ExportPrefix:
+    Default: ATL-
+    Description: Each Atlassian Standard Infrastructure (ASI) uses a unique identifier. If you have multiple ASIs within the same AWS region, use this field to specify where to deploy Bitbucket.
+    Type: String
+  InternetFacingLoadBalancer:
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    ConstraintDescription: Must be 'true' or 'false'.
+    Description: Controls whether the load balancer should be visible to the internet (true) or only within the VPC (false).
+    Type: String
+  JvmHeapOverride:
+    Default: ''
+    Description: Override the default amount of memory to allocate to the JVM for your instance type - set size in meg or gig e.g. 1024m or 1g.
+    Type: String
+  JvmSupportOpts:
+    Default: ''
+    Description: Pass in any additional JVM options to tune the Bitbucket instance.
+    Type: String
+  CustomDnsName:
+    Default: ''
+    Description: 'Use custom existing DNS name for your Data Center instance. Please note: you must own the domain and configure it to point at the load balancer.'
+    Type: String
+  SSLCertificateARN:
+    Default: ''
+    Description: Amazon Resource Name (ARN) of your SSL certificate. If you want to use your own certificate that you generated outside of Amazon, you need to first import it to AWS Certificate Manager. After a successful import, you'll receive the ARN. If you want to create a certificate with AWS Certificate Manager (ACM certificate), you will receive the ARN after it's successfully created.
+    MinLength: 0
+    MaxLength: 90
+    Type: String
+  QSS3BucketName:
+    Default: ''
+    Description: S3 bucket name for the Quick Start assets. Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
+    Type: String
+  QSS3KeyPrefix:
+    Default: bitbucket/
+    AllowedPattern: ^[0-9a-zA-Z-/]*$
+    ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).
+    Description: S3 key prefix for the Quick Start assets. Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).
+    Type: String
+
+Conditions:
+  IsURLProvided: !Not
+    - !Equals
+      - !Ref BitbucketDatasetURL
+      - ''
+  IsLicenseKeyProvided: !Not
+    - !Equals
+      - !Ref BitbucketLicenseKey
+      - ''
+  IsBBAdminPasswordProvided: !Not
+    - !Equals
+      - !Ref BitbucketAdminPassword
+      - ''
+  DBProvisionedIops: !Equals
+    - !Ref DBStorageType
+    - Provisioned IOPS
+  EnableCloudWatch: !Not
+    - !Equals
+      - !Ref CloudWatchIntegration
+      - 'Off'
+  EnableCloudWatchLogs: !Equals
+    - !Ref CloudWatchIntegration
+    - Metrics and Logs
+  UseFineGrainedAccessControlES: !Not
+    - !Equals
+      - !Ref ElasticSearchPassword
+      - ''
+  UseIAMSignedRequestsES: !Equals
+    - !Ref ElasticSearchPassword
+    - ''
+  RestoreFromRDSSnapshot: !Not
+    - !Equals
+      - !Ref DBSnapshotId
+      - ''
+  ESBucketNameSet: !Not
+    - !Equals
+      - !Ref ESBucketName
+      - ''
+  StandbyMode: !Not
+    - !Equals
+      - !Ref DBMaster
+      - ''
+  UseCustomDnsName: !Not
+    - !Equals
+      - !Ref CustomDnsName
+      - ''
+  UseHostedZone: !Not 
+    - !Equals
+      - !Ref HostedZone
+      - ''
+  DoSSL: !Not
+    - !Equals
+      - !Ref SSLCertificateARN
+      - ''
+  NotStandbyMode: !Equals
+    - !Ref DBMaster
+    - ''
+  RestoreRDSOrStandby: !Or
+    - !Condition RestoreFromRDSSnapshot
+    - !Condition StandbyMode
+  CreateESBucket: !And
+    - !Equals
+      - !Ref CreateBucket
+      - 'true'
+    - !Condition ESBucketNameSet
+  SetDBMasterUserAndPassword: !And
+    - !Not
+      - !Equals
+        - !Ref DBMasterUserPassword
+        - ''
+    - !Condition NotStandbyMode
+  UsePublicIp: !Equals
+    - !Ref InternetFacingLoadBalancer
+    - 'true'
+  GovCloudCondition: !Equals
+    - !Ref AWS::Region
+    - us-gov-west-1
+  DBEngineAurora: !Equals
+    - !Ref DBEngine
+    - Amazon Aurora PostgreSQL
+  DBEnginePostgres: !Equals
+    - !Ref DBEngine
+    - PostgreSQL
+
+Mappings:
+  AWSRegionArch2AMI:
+    ap-northeast-1:
+      HVM64: ami-08d56ac42e2d4a08b
+    ap-northeast-2:
+      HVM64: ami-0eb7a369386789460
+    ap-south-1:
+      HVM64: ami-0dafa01c8100180f8
+    ap-southeast-1:
+      HVM64: ami-04fc979a55e14b094
+    ap-southeast-2:
+      HVM64: ami-042c4533fa25c105a
+    ca-central-1:
+      HVM64: ami-040d8c460f4fc4a9f
+    eu-central-1:
+      HVM64: ami-00e232b942edaf8f9
+    eu-north-1:
+      HVM64: ami-0e3f1570eb0a9bc7f
+    eu-west-1:
+      HVM64: ami-09d5dd12541e69077
+    eu-west-2:
+      HVM64: ami-098a393b6fa6e700b
+    eu-west-3:
+      HVM64: ami-05cb6b584fc3c8ac8
+    sa-east-1:
+      HVM64: ami-088911543b10876a4
+    us-east-1:
+      HVM64: ami-038b3df3312ddf25d
+    us-east-2:
+      HVM64: ami-07b1d7739c91ed3fc
+    us-west-1:
+      HVM64: ami-0729cd65c1a99b0c9
+    us-west-2:
+      HVM64: ami-090bc08d7ae1f3881
+    us-gov-west-1:
+      HVM64: ami-0bbf3595bb2fb39ec
+    us-gov-east-1:
+      HVM64: ami-0cc17d57bec8c6017
+
+Resources:
+  AnsiblePinnedShaPutPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: SSMParameterPutAccess
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - ssm:PutParameter
+            Resource: !Sub arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}/pinned-ansible-sha
+      Roles:
+        - !Ref BitbucketClusterNodeRole
+
+  # EC2
+  BitbucketClusterNodeRole:
+    Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/CloudWatchAgentServerPolicy
+      Path: /
+      Policies:
+        - PolicyName: BitbucketClusterNodePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Action:
+                  - autoscaling:DescribeTags
+                  - ec2:DescribeInstances
+                  - ec2:DescribeTags
+                  - ec2:CreateTags
+                Effect: Allow
+                Resource:
+                  - '*'
+              - Action:
+                  - autoscaling:CreateOrUpdateTags
+                Effect: Allow
+                Resource:
+                  - !Sub arn:${AWS::Partition}:autoscaling:*:${AWS::AccountId}:autoScalingGroup:*:autoScalingGroupName/*
+              - Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Effect: Allow
+                Resource:
+                  - arn:aws:s3:::wipo-crowdstrike-bucket
+                  - arn:aws:s3:::wipo-crowdstrike-bucket/*
+                  - !Sub arn:aws:s3:::atlassian-portfolio-quickstart-${AWS::Region}-${AWS::AccountId}
+                  - !Sub arn:aws:s3:::atlassian-portfolio-quickstart-${AWS::Region}-${AWS::AccountId}/*
+  BitbucketClusterNodeInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref BitbucketClusterNodeRole
+  ClusterNodeGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    CreationPolicy:
+      ResourceSignal:
+        Count: !Ref ClusterNodeMin
+        Timeout: PT30M
+    Properties:
+      DesiredCapacity: !If
+        - StandbyMode
+        - '0'
+        - !Ref ClusterNodeMin
+      LaunchConfigurationName: !Ref ClusterNodeLaunchConfig
+      MinSize: !If
+        - StandbyMode
+        - '0'
+        - !Ref ClusterNodeMin
+      MaxSize: !Ref ClusterNodeMax
+    #TargetGroupARNs: [!Ref MainTargetGroup]
+      LoadBalancerNames:
+        - !Ref LoadBalancer
+      VPCZoneIdentifier:
+        - !Ref LbSubnet1
+        - !Ref LbSubnet2
+        - !Ref LbSubnet3
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} Bitbucket Node
+          PropagateAtLaunch: true
+        - Key: Cluster
+          Value: !Ref AWS::StackName
+          PropagateAtLaunch: true
+        - Key: atl:quickstart:commit-id
+          Value: 'COMMIT: 1ab73837b650a79665ca974ceb37e4088eee21b2'
+          PropagateAtLaunch: true
+        - Key: atl:quickstart:timestamp
+          Value: 'TIMESTAMP: 2021-11-25T07:12:04Z'
+          PropagateAtLaunch: true
+        - Key: service
+          Value: atlassian
+          PropagateAtLaunch: true
+        - Key: schedule
+          Value: 'no'
+          PropagateAtLaunch: true
+  ClusterNodeLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    DependsOn:
+      - EFSMountAz1
+      - EFSMountAz2
+      - AnsibleRepoPinSHA
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          files:
+            /etc/atl:
+              content:
+                !Join
+                - "\n"
+                -
+                  - ATL_PRODUCT=bitbucket
+                  - ATL_APP_DATA_MOUNT_ENABLED=false
+                  - !Sub ["ATL_EFS_ID=${ElasticFileSystem}", ElasticFileSystem: !Ref "ElasticFileSystem"]
+                  - !Sub
+                    - ATL_PRODUCT_VERSION=${BitbucketVersion}
+                    - BitbucketVersion: !Ref BitbucketVersion
+                  - !If
+                    - IsBBAdminPasswordProvided
+                    - !Sub
+                      - ATL_BB_ADMIN_PASSWORD=${BBAdminPassword}
+                      - BBAdminPassword: !Ref BitbucketAdminPassword
+                    - !Ref AWS::NoValue
+                  - !If
+                    - IsLicenseKeyProvided
+                    - !Sub
+                      - ATL_BB_LICENSEKEY='${LicenseKey}'
+                      - LicenseKey: !Ref BitbucketLicenseKey
+                    - !Ref AWS::NoValue
+                  - !If
+                    - IsURLProvided
+                    - !Sub
+                      - ATL_DATASET_URL=${DatasetURL}
+                      - DatasetURL: !Ref BitbucketDatasetURL
+                    - !Ref AWS::NoValue
+                  - !Sub
+                    - ATL_BB_BASEURL=${BaseURL}
+                    - BaseURL: !If
+                        - UseCustomDnsName
+                        - !Sub
+                          - ${HTTP}://${CustomDNSName}
+                          - HTTP: !If
+                              - DoSSL
+                              - https
+                              - http
+                            CustomDNSName: !Ref CustomDnsName
+                        - !Sub
+                          - ${HTTP}://${LoadBalancerDNSName}
+                          - HTTP: !If
+                              - DoSSL
+                              - https
+                              - http
+                            LoadBalancerDNSName: !GetAtt LoadBalancer.DNSName
+                  - !Sub
+                    - ATL_PROXY_NAME=${AtlProxyName}
+                    - AtlProxyName: !If
+                        - UseCustomDnsName
+                        - !Ref CustomDnsName
+                        - !GetAtt LoadBalancer.DNSName
+                  - !Sub
+                    - ATL_DEPLOYMENT_REPOSITORY=${DeployRepository}
+                    - DeployRepository: !Ref DeploymentAutomationRepository
+                  - !Sub
+                    - ATL_DEPLOYMENT_REPOSITORY_BRANCH=${DeployRepositoryBranch}
+                    - DeployRepositoryBranch: !Ref DeploymentAutomationBranch
+                  - !Sub
+                    - ATL_DEPLOYMENT_REPOSITORY_PLAYBOOK=${DeployRepositoryPlaybook}
+                    - DeployRepositoryPlaybook: !Ref DeploymentAutomationPlaybook
+                  - !Sub
+                    - ATL_DEPLOYMENT_REPOSITORY_KEYNAME=${DeployRepositoryKeyName}
+                    - DeployRepositoryKeyName: !Ref DeploymentAutomationKeyName
+                  - !Sub
+                    - ATL_DEPLOYMENT_REPOSITORY_CUSTOM_PARAMS='${DeployRepositoryCustomParams}'
+                    - DeployRepositoryCustomParams: !Ref DeploymentAutomationCustomParams
+                  - ''
+                  - !Sub
+                    - ATL_JVM_HEAP=${JvmHeapOverride}
+                    - JvmHeapOverride: !Ref JvmHeapOverride
+                  - !Sub
+                    - ATL_JVM_OPTS='${JvmSupportOpts}'
+                    - JvmSupportOpts: !Ref JvmSupportOpts
+                  - ''
+                  - !Sub
+                    - ATL_AWS_REGION=${Region}
+                    - Region: !Ref AWS::Region
+                  - !Sub
+                    - ATL_AWS_STACK_NAME=${StackName}
+                    - StackName: !Ref AWS::StackName
+                  - !Sub
+                    - ATL_AWS_IAM_ROLE=${Role}
+                    - Role: !Ref BitbucketClusterNodeRole
+                  - ''
+                  - ATL_JDBC_DB_NAME=bitbucket
+                  - ATL_JDBC_DRIVER=org.postgresql.Driver
+                  - ATL_JDBC_USER=atlbitbucket
+                  - !Sub
+                    - ATL_JDBC_PASSWORD='${DBPassword}'
+                    - DBPassword: !Ref DBPassword
+                  - !Sub
+                    - ATL_DB_ROOT_PASSWORD='${DBMasterUserPassword}'
+                    - DBMasterUserPassword: !Ref DBMasterUserPassword
+                  - !Sub
+                    - ATL_DB_ENGINE=${DBEngine}
+                    - DBEngine: !If
+                        - DBEngineAurora
+                        - aurora_postgres
+                        - !If
+                          - DBEnginePostgres
+                          - rds_postgres
+                          - ''
+                  - !Sub
+                    - ATL_DB_HOST=${DBEndpointAddress}
+                    - DBEndpointAddress: !If
+                        - DBEngineAurora
+                        - !GetAtt DBCluster.Outputs.RDSEndPointAddress
+                        - !GetAtt DB.Endpoint.Address
+                  - !Sub
+                    - ATL_DB_PORT=${DBEndpointPort}
+                    - DBEndpointPort: !If
+                        - DBEngineAurora
+                        - !GetAtt DBCluster.Outputs.RDSEndPointPort
+                        - !GetAtt DB.Endpoint.Port
+                  - !Sub
+                    - ATL_JDBC_URL=jdbc:postgresql://${DBEndpointAddress}:${DBEndpointPort}/bitbucket
+                    - DBEndpointAddress: !If
+                        - DBEngineAurora
+                        - !GetAtt DBCluster.Outputs.RDSEndPointAddress
+                        - !GetAtt DB.Endpoint.Address
+                      DBEndpointPort: !If
+                        - DBEngineAurora
+                        - !GetAtt DBCluster.Outputs.RDSEndPointPort
+                        - !GetAtt DB.Endpoint.Port
+                  - ''
+                  - !Sub
+                    - ATL_RDS_INSTANCE_ID=${DB}
+                    - DB: !If
+                        - DBEngineAurora
+                        - !Ref DBCluster
+                        - !Ref DB
+                  - !Sub
+                    - ATL_RDS_INSTANCE_CLASS=${DBInstanceClass}
+                    - DBInstanceClass: !Ref DBInstanceClass
+                  - !Sub
+                    - ATL_RDS_MULTI_AZ=${DBMultiAZ}
+                    - DBMultiAZ: !Ref DBMultiAZ
+                  - !Sub
+                    - ATL_RDS_SUBNET_GROUP_NAME=${DBSubnetGroup}
+                    - DBSubnetGroup: !If
+                        - DBEnginePostgres
+                        - !Ref DBSubnetGroup
+                        - ''
+                  - !Sub
+                    - ATL_RDS_SECURITY_GROUP=${SecurityGroup}
+                    - SecurityGroup: !Ref SecurityGroup
+                  - ''
+#                  - !Sub
+#                    - ATL_ELASTICSEARCH_HOST=${ESEndpoint}
+#                    - ESEndpoint: !If
+#                        - UseFineGrainedAccessControlES
+#                        - !GetAtt ElasticsearchSecure.DomainEndpoint
+#                        - !GetAtt Elasticsearch.DomainEndpoint
+                  - !Sub
+                    - ATL_ELASTICSEARCH_PROTOCOL=${ESScheme}
+                    - ESScheme: !If
+                        - UseFineGrainedAccessControlES
+                        - https
+                        - http
+                  - !If
+                    - UseFineGrainedAccessControlES
+                    - ATL_ELASTICSEARCH_USERNAME=bitbucket
+                    - !Ref AWS::NoValue
+                  - !If
+                    - UseFineGrainedAccessControlES
+                    - !Sub
+                      - ATL_ELASTICSEARCH_PASSWORD=${ESPassword}
+                      - ESPassword: !Ref ElasticSearchPassword
+                    - !Ref AWS::NoValue
+                  - ''
+                  - !Sub
+                    - ATL_BITBUCKET_PROPERTIES="${BitbucketProperties}"
+                    - BitbucketProperties: !Ref BitbucketProperties
+                  - !If
+                    - DoSSL
+                    - ATL_SSL_PROXY=true
+                    - !Ref AWS::NoValue
+                  - ''
+                  - !Sub
+                    - ATL_AWS_ENABLE_CLOUDWATCH=${EnableCW}
+                    - EnableCW: !If
+                        - EnableCloudWatch
+                        - true
+                        - false
+                  - !Sub
+                    - ATL_AWS_ENABLE_CLOUDWATCH_LOGS=${EnableCWLogs}
+                    - EnableCWLogs: !If
+                        - EnableCloudWatchLogs
+                        - true
+                        - false
+            /opt/atlassian/bin/clone_deployment_repo:
+              content: !Sub |
+                #!/bin/bash
+                key_location=/root/.ssh/deployment_repo_key
+                key_name="${DeploymentAutomationKeyName}"
+                bitbucket_version="${BitbucketVersion}"
+                ssm_pin=/${AWS::StackName}/pinned-ansible-sha
+                bitbucket_minor_version=$(echo "$bitbucket_version" | cut -d. -f-2)
+                case "$bitbucket_minor_version" in
+                  6.0)  supported_git_version="2.17.2" ;;
+                  6.1)  supported_git_version="2.17.2" ;;
+                  6.1)  supported_git_version="2.17.2" ;;
+                  6.2)  supported_git_version="2.17.2" ;;
+                  6.3)  supported_git_version="2.17.2" ;;
+                  6.4)  supported_git_version="2.17.2" ;;
+                  6.5)  supported_git_version="2.17.2" ;;
+                  6.6)  supported_git_version="2.23.1" ;;
+                  6.7)  supported_git_version="2.23.4" ;;
+                  6.8)  supported_git_version="2.23.4" ;;
+                  6.9)  supported_git_version="2.23.4" ;;
+                  6.10) supported_git_version="2.23.4" ;;
+                  7.0)  supported_git_version="2.23.4" ;;
+                  7.1)  supported_git_version="2.23.4" ;;
+                  7.2)  supported_git_version="2.23.4" ;;
+                  7.3)  supported_git_version="2.23.4" ;;
+                  7.4)  supported_git_version="2.23.4" ;;
+                  7.5)  supported_git_version="2.23.4" ;;
+                  7.6)  supported_git_version="2.23.4" ;;
+                  7.7)  supported_git_version="2.23.4" ;;
+                  7.8)  supported_git_version="2.23.4" ;;
+                  7.9)  supported_git_version="2.23.4" ;;
+                  7.10) supported_git_version="2.23.4" ;;
+                  7.11) supported_git_version="2.23.4" ;;
+                  7.12) supported_git_version="2.23.4" ;;
+                  7.13) supported_git_version="2.23.4" ;;
+                  7.14) supported_git_version="2.32.0" ;;
+                  7.15) supported_git_version="2.32.0" ;;
+                  7.16) supported_git_version="2.32.0" ;;
+                  7.17) supported_git_version="2.32.0" ;;
+                  7.18) supported_git_version="2.32.0" ;;
+                  7.19) supported_git_version="2.34.3" ;;
+                  7.20) supported_git_version="2.34.3" ;;
+                  7.21) supported_git_version="2.34.3" ;;
+                  8.0)  supported_git_version="2.34.3" ;;
+                  8.1)  supported_git_version="2.34.3" ;;
+                  8.2)  supported_git_version="2.34.3" ;;
+                  8.3)  supported_git_version="2.37.1" ;;
+                  9.4)  supported_git_version="2.47.3" ;;
+                    *)  supported_git_version="2.47.3" ;;
+                esac
+                yum install -y git-"$supported_git_version" awscli jq
+                if [[ ! -z "$key_name" ]]; then
+                    # Ensure awscli is up to date
+                    key_val=$(aws --region=${AWS::Region} ssm get-parameters --names "$key_name" --with-decryption | jq --raw-output '.Parameters[0].Value')
+                    echo -e "$key_val" > $key_location
+                    chmod 600 $key_location
+                    export GIT_SSH_COMMAND="ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -i $key_location"
+                else
+                    export GIT_SSH_COMMAND="ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no"
+                fi
+                ### Ansible repo pinning ###
+                pinned_commit_id=$(aws --region=${AWS::Region} ssm get-parameters --names "$ssm_pin" | jq --raw-output '.Parameters[0].Value')
+                git clone "${DeploymentAutomationRepository}" -b "${DeploymentAutomationBranch}" /opt/atlassian/dc-deployments-automation/
+                cd /opt/atlassian/dc-deployments-automation/
+                aws s3 cp s3://${QSS3BucketName}/JiraInstall/dc-deployments-automation/aws_bitbucket_dc_node.yml /opt/atlassian/dc-deployments-automation/aws_bitbucket_dc_node.yml
+
+              mode: '000750'
+              owner: root
+              group: root
+          commands:
+            070_create_atl_dir:
+              test: test ! -d /opt/atlassian/
+              command: mkdir -p /opt/atlassian
+              ignoreErrors: false
+            071_install_packages:
+              command: yum install -y python-virtualenv htop
+              ignoreErrors: true
+            072_clone_atl_scripts:
+              test: test ! -d /opt/atlassian/dc-deployments-automation/
+              command: /opt/atlassian/bin/clone_deployment_repo
+              ignoreErrors: true
+            080_run_atl_init_node:
+              command: !Sub |
+                aws s3 sync s3://${QSS3BucketName}/${QSS3KeyPrefix}/dc-deployments-automation/ /opt/atlassian/dc-deployments-automation/
+                cd /opt/atlassian/dc-deployments-automation/ && bash ./bin/install-ansible && bash ./bin/ansible-with-atl-env inv/aws_node_local ${DeploymentAutomationPlaybook} /var/log/ansible-bootstrap.log
+              ignoreErrors: true
+            090_add_ssh_keys:
+              command: !Sub |
+                aws s3 cp s3://${QSS3BucketName}/custom/authorized_keys /root/.ssh/authorized_keys
+              ignoreErrors: true
+            091_add_wipo_cer:
+              command: !Sub |
+                aws s3 sync s3://${QSS3BucketName}/custom/ /etc/pki/ca-trust/source/anchors/ --exclude "*" --include "*.cer"
+              ignoreErrors: true
+            092_update_ca_trust:
+              command: !Sub |
+                update-ca-trust
+              ignoreErrors: true
+            093_update_java_keystore:
+              command: !Sub |
+                for file in /etc/pki/ca-trust/source/anchors/*.cer; do keytool -import -keystore /usr/lib/jvm/temurin-21-jdk/lib/security/cacerts -keypass changeit -storepass changeit -noprompt -file $file; done
+              ignoreErrors: true
+            094_add_swap:
+              command: fallocate -l 8G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
+              ignoreErrors: true
+            095_install_crowdstrike_agent:
+              command: aws s3 cp s3://wipo-crowdstrike-bucket/crowdstrike.amzn2.x86_64.sh - | xargs -0 bash -c
+              ignoreErrors: true
+    Properties:
+      AssociatePublicIpAddress: false
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            Encrypted: true
+            VolumeSize: !Ref ClusterNodeVolumeSize
+      IamInstanceProfile: !Ref BitbucketClusterNodeInstanceProfile
+      ImageId: !FindInMap
+        - AWSRegionArch2AMI
+        - !Ref AWS::Region
+        - HVM64
+      InstanceType: !Ref ClusterNodeInstanceType
+      SecurityGroups:
+        - !Ref SecurityGroup
+      UserData: !Base64
+        Fn::Join:
+          - ''
+          - - |
+              #!/bin/bash -xe
+            - |
+              yum update -y aws-cfn-bootstrap amazon-ssm-agent
+            - !Sub /opt/aws/bin/cfn-init -v --stack ${AWS::StackName}
+            - !Sub |2
+               --resource ClusterNodeLaunchConfig --region ${AWS::Region}
+            - !Sub /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName}
+            - !Sub |2
+               --resource ClusterNodeGroup --region ${AWS::Region}
+  ClusterNodeScaleUpPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AdjustmentType: ChangeInCapacity
+      AutoScalingGroupName: !Ref ClusterNodeGroup
+      Cooldown: '600'
+      ScalingAdjustment: 1
+  ClusterNodeScaleDownPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AdjustmentType: ChangeInCapacity
+      AutoScalingGroupName: !Ref ClusterNodeGroup
+      Cooldown: '600'
+      ScalingAdjustment: -1
+  CPUAlarmHigh:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Scale up if CPU > 60% for 5 minutes
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: 60
+      EvaluationPeriods: 5
+      Threshold: 60
+      AlarmActions:
+        - !Ref ClusterNodeScaleUpPolicy
+      Dimensions:
+        - Name: AutoScalingGroupName
+          Value: !Ref ClusterNodeGroup
+      ComparisonOperator: GreaterThanThreshold
+  CPUAlarmLow:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Scale down if CPU < 40% for 30 minutes
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: 60
+      EvaluationPeriods: 30
+      Threshold: 40
+      AlarmActions:
+        - !Ref ClusterNodeScaleDownPolicy
+      Dimensions:
+        - Name: AutoScalingGroupName
+          Value: !Ref ClusterNodeGroup
+      ComparisonOperator: LessThanThreshold
+  
+  # OpenSearch
+#  Elasticsearch:
+#    Condition: UseIAMSignedRequestsES
+#    Type: AWS::Elasticsearch::Domain
+#    Metadata:
+#      cfn-lint:
+#        config:
+#          ignore_checks:
+#            - EIAMPolicyWildcardResource
+#          ignore_reasons:
+#            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+#    Properties:
+#      EBSOptions:
+#        EBSEnabled: true
+#        VolumeSize: !Ref ElasticsearchNodeVolumeSize
+#        VolumeType: gp3
+#      ElasticsearchVersion: '7.10'
+#      ElasticsearchClusterConfig:
+#        InstanceCount: '2'
+#        InstanceType: !Ref ElasticsearchInstanceType
+#        DedicatedMasterCount: '3'
+#        DedicatedMasterEnabled: true
+#        ZoneAwarenessEnabled: true
+#        ZoneAwarenessConfig:
+#          AvailabilityZoneCount: '2'
+#      VPCOptions:
+#        SubnetIds:
+#          - !Ref DbSubnet1ID
+#          - !Ref DbSubnet2ID
+#      AccessPolicies:
+#        Version: 2012-10-17
+#        Statement:
+#          - Effect: Allow
+#            Principal:
+#              AWS: !GetAtt BitbucketClusterNodeRole.Arn
+#            Action:
+#              - es:AcceptInboundConnection
+#              - es:AcceptInboundCrossClusterSearchConnection
+#              - es:AddTags
+#              - es:AssociatePackage
+#              - es:CancelElasticsearchServiceSoftwareUpdate
+#              - es:CreateDataPrepperPipeline
+#              - es:CreateDomain
+#              - es:CreateElasticsearchDomain
+#              - es:CreateElasticsearchServiceRole
+#              - es:CreateOutboundConnection
+#              - es:CreateOutboundCrossClusterSearchConnection
+#              - es:CreatePackage
+#              - es:CreateServiceRole
+#              - es:DeleteDataPrepperPipeline
+#              - es:DeleteDomain
+#              - es:DeleteElasticsearchDomain
+#              - es:DeleteElasticsearchServiceRole
+#              - es:DeleteInboundConnection
+#              - es:DeleteInboundCrossClusterSearchConnection
+#              - es:DeleteOutboundConnection
+#              - es:DeleteOutboundCrossClusterSearchConnection
+#              - es:DeletePackage
+#              - es:DescribeDataPrepperPipeline
+#              - es:DescribeDomain
+#              - es:DescribeDomainConfig
+#              - es:DescribeDomains
+#              - es:DescribeElasticsearchDomain
+#              - es:DescribeElasticsearchDomainConfig
+#              - es:DescribeElasticsearchDomains
+#              - es:DescribeElasticsearchInstanceTypeLimits
+#              - es:DescribeInboundConnections
+#              - es:DescribeInboundCrossClusterSearchConnections
+#              - es:DescribeInstanceTypeLimits
+#              - es:DescribeOutboundConnections
+#              - es:DescribeOutboundCrossClusterSearchConnections
+#              - es:DescribePackages
+#              - es:DescribeReservedElasticsearchInstanceOfferings
+#              - es:DescribeReservedElasticsearchInstances
+#              - es:DescribeReservedInstanceOfferings
+#              - es:DescribeReservedInstances
+#              - es:DissociatePackage
+#              - es:ESCrossClusterGet
+#              - es:ESHttpDelete
+#              - es:ESHttpGet
+#              - es:ESHttpHead
+#              - es:ESHttpPatch
+#              - es:ESHttpPost
+#              - es:ESHttpPut
+#              - es:GetCompatibleElasticsearchVersions
+#              - es:GetCompatibleVersions
+#              - es:GetPackageVersionHistory
+#              - es:GetUpgradeHistory
+#              - es:GetUpgradeStatus
+#              - es:IngestDataPrepperPipeline
+#              - es:ListDataPrepperPipelines
+#              - es:ListDomainNames
+#              - es:ListDomainsForPackage
+#              - es:ListElasticsearchInstanceTypeDetails
+#              - es:ListElasticsearchInstanceTypes
+#              - es:ListElasticsearchVersions
+#              - es:ListInstanceTypeDetails
+#              - es:ListInstanceTypes
+#              - es:ListPackagesForDomain
+#              - es:ListTags
+#              - es:ListVersions
+#              - es:PurchaseReservedElasticsearchInstanceOffering
+#              - es:PurchaseReservedInstanceOffering
+#              - es:RejectInboundConnection
+#              - es:RejectInboundCrossClusterSearchConnection
+#              - es:RemoveTags
+#              - es:StartElasticsearchServiceSoftwareUpdate
+#              - es:UpdateDataPrepperPipeline
+#              - es:UpdateDomainConfig
+#              - es:UpdateElasticsearchDomainConfig
+#              - es:UpdatePackage
+#              - es:UpgradeElasticsearchDomain
+#            Resource: '*'
+#      Tags:
+#        - Key: Name
+#          Value: !Sub ${AWS::StackName} Bitbucket Elasticsearch cluster
+#        - Key: Application
+#          Value: !Ref AWS::StackId
+  ElasticsearchServiceRole:
+    Condition: UseFineGrainedAccessControlES
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - es.amazonaws.com
+#  ElasticsearchSecure:
+#    Condition: UseFineGrainedAccessControlES
+#    Metadata:
+#      cfn-lint:
+#        config:
+#          ignore_checks:
+#            - EIAMPolicyWildcardResource
+#          ignore_reasons:
+#            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+#    DependsOn:
+#      - ElasticsearchServiceRole
+#    Type: AWS::Elasticsearch::Domain
+#    Properties:
+#      EBSOptions:
+#        EBSEnabled: true
+#        VolumeSize: !Ref ElasticsearchNodeVolumeSize
+#        VolumeType: gp3
+#      ElasticsearchVersion: '7.10'
+#      ElasticsearchClusterConfig:
+#        InstanceType: !Ref ElasticsearchInstanceType
+#      AccessPolicies:
+#        Version: 2012-10-17
+#        Statement:
+#          - Effect: Allow
+#            Principal:
+#              AWS: '*'
+#            Action:
+#              - es:ESHttpDelete
+#              - es:ESHttpGet
+#              - es:ESHttpHead
+#              - es:ESHttpPatch
+#              - es:ESHttpPost
+#              - es:ESHttpPut
+#            Resource: '*'
+#      AdvancedSecurityOptions:
+#        Enabled: true
+#        InternalUserDatabaseEnabled: true
+#        MasterUserOptions:
+#          MasterUserName: bitbucket
+#          MasterUserPassword: !Ref ElasticSearchPassword
+#      DomainEndpointOptions:
+#        EnforceHTTPS: true
+#        TLSSecurityPolicy: Policy-Min-TLS-1-2-2019-07
+#      EncryptionAtRestOptions:
+#        Enabled: true
+#        KmsKeyId: !Ref ElasticsearchKMSKey
+#      NodeToNodeEncryptionOptions:
+#        Enabled: true
+#      VPCOptions:
+#        SubnetIds:
+#          - !Ref LbSubnet1
+#        SecurityGroupIds:
+#          - !Ref SecurityGroup
+#      Tags:
+#        - Key: Name
+#          Value: !Sub ${AWS::StackName} Bitbucket Elasticsearch cluster
+#        - Key: Application
+#          Value: !Ref AWS::StackId
+  OpenSearchSecure:
+    Condition: UseFineGrainedAccessControlES
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+    DependsOn:
+      - ElasticsearchServiceRole
+    Type: AWS::OpenSearchService::Domain
+    Properties:
+      DomainName: 'bitbucket-opensearch'
+      EBSOptions:
+        EBSEnabled: true
+        VolumeSize: !Ref ElasticsearchNodeVolumeSize
+        VolumeType: gp3
+      EngineVersion: !Ref OpenSearchEngineVersion
+      ClusterConfig:
+        InstanceType: !Ref OpenSearchInstanceType
+        InstanceCount: 3
+        ZoneAwarenessEnabled: true
+        ZoneAwarenessConfig:
+          AvailabilityZoneCount: 3
+      AccessPolicies:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: '*'
+            Action:
+              - es:ESHttpDelete
+              - es:ESHttpGet
+              - es:ESHttpHead
+              - es:ESHttpPatch
+              - es:ESHttpPost
+              - es:ESHttpPut
+            Resource: '*'
+      AdvancedSecurityOptions:
+        Enabled: true
+        InternalUserDatabaseEnabled: true
+        MasterUserOptions:
+          MasterUserName: bitbucket
+          MasterUserPassword: !Ref ElasticSearchPassword
+      DomainEndpointOptions:
+        EnforceHTTPS: true
+        TLSSecurityPolicy: Policy-Min-TLS-1-2-2019-07
+      EncryptionAtRestOptions:
+        Enabled: true
+        KmsKeyId: !Ref ElasticsearchKMSKey
+      NodeToNodeEncryptionOptions:
+        Enabled: true
+      VPCOptions:
+        SubnetIds:
+          - !Ref LbSubnet1
+          - !Ref LbSubnet2
+          - !Ref LbSubnet3
+        SecurityGroupIds:
+          - !Ref SecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} Bitbucket OpenSearch cluster
+        - Key: Application
+          Value: !Ref AWS::StackId
+  ElasticsearchKMSKey:
+    Condition: UseFineGrainedAccessControlES
+    Type: AWS::KMS::Key
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            - EIAMPolicyWildcardResource: Intent assumed for initial migration.
+    Properties:
+      Description: Encryption key for Elasticsearch cluster
+      Enabled: true
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: !Sub ${AWS::StackName}
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
+            Action:
+              - kms:CancelKeyDeletion
+              - kms:ConnectCustomKeyStore
+              - kms:CreateAlias
+              - kms:CreateCustomKeyStore
+              - kms:CreateGrant
+              - kms:CreateKey
+              - kms:Decrypt
+              - kms:DeleteAlias
+              - kms:DeleteCustomKeyStore
+              - kms:DeleteImportedKeyMaterial
+              - kms:DescribeCustomKeyStores
+              - kms:DescribeKey
+              - kms:DisableKey
+              - kms:DisableKeyRotation
+              - kms:DisconnectCustomKeyStore
+              - kms:EnableKey
+              - kms:EnableKeyRotation
+              - kms:Encrypt
+              - kms:GenerateDataKey
+              - kms:GenerateDataKeyPair
+              - kms:GenerateDataKeyPairWithoutPlaintext
+              - kms:GenerateDataKeyWithoutPlaintext
+              - kms:GenerateRandom
+              - kms:GetKeyPolicy
+              - kms:GetKeyRotationStatus
+              - kms:GetParametersForImport
+              - kms:GetPublicKey
+              - kms:ImportKeyMaterial
+              - kms:ListAliases
+              - kms:ListGrants
+              - kms:ListKeyPolicies
+              - kms:ListKeys
+              - kms:ListResourceTags
+              - kms:ListRetirableGrants
+              - kms:PutKeyPolicy
+              - kms:ReEncryptFrom
+              - kms:ReEncryptTo
+              - kms:ReplicateKey
+              - kms:RetireGrant
+              - kms:RevokeGrant
+              - kms:ScheduleKeyDeletion
+              - kms:Sign
+              - kms:SynchronizeMultiRegionKey
+              - kms:TagResource
+              - kms:UntagResource
+              - kms:UpdateAlias
+              - kms:UpdateCustomKeyStore
+              - kms:UpdateKeyDescription
+              - kms:UpdatePrimaryRegion
+              - kms:Verify
+            Resource: '*'
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - ${StackName} Elasticsearch Encryption Key
+            - StackName: !Ref AWS::StackName
+  ElasticsearchBucket:
+    Type: AWS::S3::Bucket
+    Condition: CreateESBucket
+    Properties:
+      BucketName: !Ref ESBucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Cluster
+          Value: !Ref AWS::StackName
+  
+  # EFS
+  ElasticFileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+      BackupPolicy:
+        Status: ENABLED
+      FileSystemTags:
+        - Key: Name
+          Value: !Join [' ', [!Ref 'AWS::StackName', 'cluster shared-files']]
+        - Key: Application
+          Value: !Ref AWS::StackId
+        # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
+        - Key: atl:quickstart:commit-id
+          Value: 'COMMIT: 1ab73837b650a79665ca974ceb37e4088eee21b2'
+        - Key: atl:quickstart:timestamp
+          Value: 'TIMESTAMP: 2021-11-25T07:12:04Z'
+        - Key: service
+          Value: atlassian
+  EFSMountAz1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref ElasticFileSystem
+      SecurityGroups: [!Ref SecurityGroup]
+      SubnetId: !Ref LbSubnet1
+  EFSMountAz2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref ElasticFileSystem
+      SecurityGroups: [!Ref SecurityGroup]
+      SubnetId: !Ref LbSubnet2
+  EFSMountAz3:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref ElasticFileSystem
+      SecurityGroups: [!Ref SecurityGroup]
+      SubnetId: !Ref LbSubnet3
+  EFSCname:
+    Type: AWS::Route53::RecordSet
+    Condition: UseHostedZone
+    Properties:
+      HostedZoneName: !Ref HostedZone
+      Comment: Route53 cname for the efs
+      Name: !If [ UseHostedZone, !Join ['.', [!Ref 'AWS::StackName', 'efs', !Ref 'HostedZone']], '']
+      Type: CNAME
+      TTL: 900
+      ResourceRecords:
+        - !Join ['.', [!Ref ElasticFileSystem, 'efs', !Ref 'AWS::Region', 'amazonaws.com.']]
+
+  # RDS
+  DbInstanceName:
+    Condition: DBEnginePostgres
+    Type: Custom::DbInstanceName
+    Version: 1
+    Properties:
+      ServiceToken: !GetAtt DBNameGenerator.Arn
+      StackName: !Ref AWS::StackName
+  DBNameGenerator:
+    Condition: DBEnginePostgres
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt DBNameGeneratorExecutionRole.Arn
+      Runtime: python3.12
+      Timeout: 120
+      Code:
+        ZipFile: |
+          import cfnresponse
+          def lambda_handler(event, context):
+            stack_name = event['ResourceProperties']['StackName']
+            responseData = {}
+            responseData['DBInstanceName'] = stack_name[:57] + "-db"
+            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+  DBNameGeneratorExecutionRole:
+    Condition: DBEnginePostgres
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub arn:${AWS::Partition}:logs:*:${AWS::AccountId}:log-group:/aws/lambda/*DBNameGenerator*
+  DB:
+    Type: AWS::RDS::DBInstance
+    Condition: DBEnginePostgres
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - ERDSDBInstancePubliclyAccessible
+          ignore_reasons:
+            - ERDSDBInstancePubliclyAccessible: PubliclyAccessible defined by subnet configration
+    Properties:
+      AllocatedStorage: !Ref DBStorage
+      AllowMajorVersionUpgrade: true
+      AutoMinorVersionUpgrade: true
+      BackupRetentionPeriod: '30'
+      DBInstanceClass: !Ref DBInstanceClass
+      DBInstanceIdentifier: !GetAtt DbInstanceName.DBInstanceName
+      DBName: !If
+        - RestoreRDSOrStandby
+        - !Ref AWS::NoValue
+        - bitbucket
+      DBSnapshotIdentifier: !If
+        - RestoreFromRDSSnapshot
+        - !Ref DBSnapshotId
+        - !Ref AWS::NoValue
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      DeletionProtection: true
+      Engine: postgres
+      EngineVersion: !Ref DBEngineVersion
+      Iops: !If
+        - DBProvisionedIops
+        - !Ref DBIops
+        - !Ref AWS::NoValue
+      MasterUsername: !If
+        - SetDBMasterUserAndPassword
+        - postgres
+        - !Ref AWS::NoValue
+      MasterUserPassword: !If
+        - SetDBMasterUserAndPassword
+        - !Ref DBMasterUserPassword
+        - !Ref AWS::NoValue
+      MultiAZ: !If
+        - StandbyMode
+        - !Ref AWS::NoValue
+        - !Ref DBMultiAZ
+      SourceDBInstanceIdentifier: !If
+        - StandbyMode
+        - !Ref DBMaster
+        - !Ref AWS::NoValue
+      StorageEncrypted: true
+      StorageType: !If
+        - DBProvisionedIops
+        - io1
+        - gp3
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} Bitbucket PostgreSQL Database
+        - Key: service
+          Value: atlassian
+        - Key: schedule
+          Value: 'no'
+      VPCSecurityGroups:
+        - !Ref SecurityGroup
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Condition: DBEnginePostgres
+    Properties:
+      DBSubnetGroupDescription: DBSubnetGroup
+      SubnetIds:
+        - !Ref DbSubnet1ID
+        - !Ref DbSubnet2ID
+  DBCluster:
+    Type: AWS::CloudFormation::Stack
+    Condition: DBEngineAurora
+    Properties:
+      TemplateURL: !Sub
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/bitbucket/submodules/cfn-ps-atlassian-services/templates/quickstart-database-for-atlassian-services.yaml
+        - QSS3Region: !If
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      Parameters:
+        DatabaseImplementation: !Ref DBEngine
+        DBAllocatedStorage: !Ref DBStorage
+        DBAutoMinorVersionUpgrade: 'true'
+        DBBackupRetentionPeriod: '30'
+        DBEngineVersion: !Ref DBEngineVersion
+        DBInstanceClass: !Ref DBInstanceClass
+        DBIops: !Ref DBIops
+        DBMasterUserPassword: !Ref DBMasterUserPassword
+        DBMultiAZ: !Ref DBMultiAZ
+        DBSecurityGroup: !Ref SecurityGroup
+        DBStorageEncrypted: true
+        DBStorageType: !Ref DBStorageType
+        ExportPrefix: !Ref ExportPrefix
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3KeyPrefix: !Ref QSS3KeyPrefix
+  
+  # EC2 LB
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      AppCookieStickinessPolicy:
+        - CookieName: BITBUCKETSESSIONID
+          PolicyName: SessionStickiness
+      ConnectionDrainingPolicy:
+        Enabled: true
+        Timeout: 300
+      ConnectionSettings:
+        IdleTimeout: 3600
+      CrossZone: true
+      Listeners:
+        - LoadBalancerPort: '80'
+          Protocol: HTTP
+          InstancePort: !If
+            - DoSSL
+            - '7991'
+            - '7990'
+          InstanceProtocol: HTTP
+          PolicyNames:
+            - SessionStickiness
+        - !If
+          - DoSSL
+          - LoadBalancerPort: '443'
+            Protocol: HTTPS
+            InstancePort: '7990'
+            InstanceProtocol: HTTP
+            PolicyNames:
+              - SessionStickiness
+            SSLCertificateId: !Ref SSLCertificateARN
+          - !Ref AWS::NoValue
+        - LoadBalancerPort: '7999'
+          Protocol: TCP
+          InstancePort: '7999'
+          InstanceProtocol: TCP
+      HealthCheck:
+        HealthyThreshold: '2'
+        Interval: '60'
+        Target: HTTP:7990/status
+        Timeout: '29'
+        UnhealthyThreshold: '2'
+      Scheme: !If
+        - UsePublicIp
+        - internet-facing
+        - internal
+      SecurityGroups:
+        - !Ref SecurityGroup
+      Subnets:
+        - !Ref LbSubnet1
+        - !Ref LbSubnet2
+        - !Ref LbSubnet3
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} LoadBalancer
+        - Key: Cluster
+          Value: !Ref AWS::StackName
+  LoadBalancerCname:
+    Condition: UseHostedZone
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref HostedZone
+      Comment: Route53 cname for the ALB
+      Name: !Join ['.', [!Ref "AWS::StackName", !Ref 'HostedZone']]
+      Type: CNAME
+      TTL: '900'
+      ResourceRecords:
+        - !GetAtt LoadBalancer.DNSName
+  
+  # Route 53
+  DnsBitbucketService:
+    Type: 'AWS::ServiceDiscovery::Service'
+    DependsOn:
+      - LoadBalancer
+    Properties:
+      Name: 'git'
+      NamespaceId: !Ref DnsNameSpaceId
+      Description: 'bitbucket'
+      DnsConfig:
+        DnsRecords:
+          - Type: 'CNAME'
+            TTL: '60'
+        RoutingPolicy: 'WEIGHTED'
+      HealthCheckCustomConfig:
+        FailureThreshold: 1
+  DnsBitbucketServiceInstance:
+    Type: 'AWS::ServiceDiscovery::Instance'
+    DependsOn:
+      - DnsBitbucketService
+    Properties:
+      InstanceId: 'bitbucket'
+      ServiceId: !GetAtt DnsBitbucketService.Id
+      InstanceAttributes:
+        AWS_INSTANCE_CNAME: !GetAtt LoadBalancer.DNSName
+  
+  # EC2 SG
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group allowing SSH and HTTP/HTTPS access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 25500
+          ToPort: 25500
+          CidrIp: '10.0.0.0/8'
+        - IpProtocol: tcp
+          FromPort: 5801
+          ToPort: 5801
+          CidrIp: '10.0.0.0/8'
+        - IpProtocol: tcp
+          FromPort: 8091
+          ToPort: 8091
+          CidrIp: '10.0.0.0/8'
+        - IpProtocol: tcp
+          FromPort: 7999
+          ToPort: 7999
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '10.0.0.0/8'
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '10.0.0.0/8'
+      Tags:
+        - Key: Name
+          Value: !Join
+            - ' '
+            - - !Ref AWS::StackName
+              - sg
+      VpcId: !Ref VpcId
+  SecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref SecurityGroup
+      IpProtocol: '-1'
+      FromPort: -1
+      ToPort: -1
+      SourceSecurityGroupId: !Ref SecurityGroup
+  
+  AnsibleRepoPinSHA:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: The dc-deployments-automation commit SHA that all nodes in the cluster will use
+      Name: !Sub /${AWS::StackName}/pinned-ansible-sha
+      Type: String
+      AllowedPattern: ^(latest)|([0-9a-f]{5,40})$
+      Value: latest
+  CloudWatchDashboard:
+    Condition: EnableCloudWatch
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/bitbucket/submodules/cfn-ps-atlassian-services/templates/quickstart-cloudwatch-dashboard.yaml
+        - QSS3Region: !If
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      Parameters:
+        ProductStackName: !Sub ${AWS::StackName}
+        ProductFamilyName: bitbucket
+        AsgToMonitor: !Ref ClusterNodeGroup
+
+Outputs:
+  ClusterNodeGroup:
+    Description: The name of the auto scaling group of cluster nodes
+    Value: !Ref ClusterNodeGroup
+  DBEndpointAddress:
+    Description: The Database Connection String
+    Value: !If
+      - DBEngineAurora
+      - !GetAtt DBCluster.Outputs.RDSEndPointAddress
+      - !GetAtt DB.Endpoint.Address
+  DBMaster:
+    Description: The RDS ARN to use when creating a Data Center standby stack
+    Value: !If
+      - DBEngineAurora
+      - ''
+      - !If
+        - NotStandbyMode
+        - !Sub
+          - arn:${AWS::Partition}:rds:${AWS::Region}:${AWS::AccountId}:db:${DB}
+          - DB: !Ref DB
+        - !Ref AWS::NoValue
+  ServiceURL:
+    Description: The URL of the Bitbucket Data Center instance
+    Value: !If
+      - UseCustomDnsName
+      - !Sub
+        - ${HTTP}://${CustomDNSName}
+        - HTTP: !If
+            - DoSSL
+            - https
+            - http
+          CustomDNSName: !Ref CustomDnsName
+      - !Sub
+        - ${HTTP}://${LoadBalancerDNSName}
+        - HTTP: !If
+            - DoSSL
+            - https
+            - http
+          LoadBalancerDNSName: !GetAtt LoadBalancer.DNSName
+  LoadBalancerURL:
+    Description: The Load Balancer URL
+    Value: !Sub
+      - ${HTTP}://${LoadBalancerDNSName}
+      - HTTP: !If
+          - DoSSL
+          - https
+          - http
+        LoadBalancerDNSName: !GetAtt LoadBalancer.DNSName
+  SGname:
+    Description: The name of the SecurityGroup
+    Value: !Ref SecurityGroup
+    Export:
+      Name: !Join
+        - ''
+        - - !Ref AWS::StackName
+          - '-SGname'
+  CloudWatchDashboardURL:
+    Description: CloudWatch monitoring dashboard URL
+    Value: !GetAtt CloudWatchDashboard.Outputs.Dashboard
+    Condition: EnableCloudWatch
