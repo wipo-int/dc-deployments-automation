@@ -5,7 +5,7 @@
     name:
       - amazon-efs-utils
       - amazon-ssm-agent
-      - awscli
+      - awscli-2
       - git
       - ec2-utils
 
