@@ -927,7 +927,13 @@ Resources:
               command: mkdir -p /opt/atlassian
               ignoreErrors: false
             071_install_packages:
-              command: yum install -y python-virtualenv htop
+              command: |
+                . /etc/os-release
+                if [ "$ID" = "amzn" ] && [ "$VERSION_ID" = "2023" ]; then
+                  dnf install -y htop
+                else
+                  yum install -y python-virtualenv htop
+                fi
               ignoreErrors: true
             072_clone_atl_scripts:
               test: test ! -d /opt/atlassian/dc-deployments-automation/
@@ -981,7 +987,12 @@ Resources:
           - - |
               #!/bin/bash -xe
             - |
-              yum update -y aws-cfn-bootstrap amazon-ssm-agent
+              source /etc/os-release
+              if [[ "$ID" == "amzn" ]] && [[ "$VERSION_ID" == "2023" ]]; then
+                dnf update -y aws-cfn-bootstrap amazon-ssm-agent
+              else
+                yum update -y aws-cfn-bootstrap amazon-ssm-agent
+              fi
             - !Sub /opt/aws/bin/cfn-init -v --stack ${AWS::StackName}
             - !Sub |2
                --resource ClusterNodeLaunchConfig --region ${AWS::Region}
