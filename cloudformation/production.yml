@@ -964,7 +964,13 @@ Resources:
               command: fallocate -l 8G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
               ignoreErrors: true
             095_install_crowdstrike_agent:
-              command: aws s3 cp s3://wipo-crowdstrike-bucket/crowdstrike.amzn2.x86_64.sh - | xargs -0 bash -c
+              command: |
+                . /etc/os-release
+                if [ "$ID" = "amzn" ] && [ "$VERSION_ID" = "2023" ]; then
+                  aws s3 cp s3://wipo-crowdstrike-bucket/crowdstrike.amzn2023.x86_64.sh - | xargs -0 bash -c
+                else
+                  aws s3 cp s3://wipo-crowdstrike-bucket/crowdstrike.amzn2.x86_64.sh - | xargs -0 bash -c
+                fi
               ignoreErrors: true
     Properties:
       AssociatePublicIpAddress: false
