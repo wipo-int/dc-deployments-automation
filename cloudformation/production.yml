@@ -854,6 +854,7 @@ Resources:
                 key_name="${DeploymentAutomationKeyName}"
                 bitbucket_version="${BitbucketVersion}"
                 ssm_pin=/${AWS::StackName}/pinned-ansible-sha
+                source /etc/os-release
                 bitbucket_minor_version=$(echo "$bitbucket_version" | cut -d. -f-2)
                 case "$bitbucket_minor_version" in
                   6.0)  supported_git_version="2.17.2" ;;
@@ -897,7 +898,11 @@ Resources:
                   9.4)  supported_git_version="2.47.3" ;;
                     *)  supported_git_version="2.47.3" ;;
                 esac
-                yum install -y git-"$supported_git_version" awscli jq
+                if [[ "$ID" == "amzn" ]] && [[ "$VERSION_ID" == "2023" ]]; then
+                    dnf install -y git awscli-2 jq
+                else
+                    yum install -y git-"$supported_git_version" awscli jq
+                fi
                 if [[ ! -z "$key_name" ]]; then
                     # Ensure awscli is up to date
                     key_val=$(aws --region=${AWS::Region} ssm get-parameters --names "$key_name" --with-decryption | jq --raw-output '.Parameters[0].Value')
