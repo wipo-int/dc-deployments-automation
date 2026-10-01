@@ -54,6 +54,7 @@ Metadata:
           - InternetFacingLoadBalancer
           - CustomDnsName
           - SSLCertificateARN
+          - DnsServiceName
       - Label:
           default: Advanced (Optional)
         Parameters:
@@ -152,6 +153,8 @@ Metadata:
         default: Additional JVM options
       CustomDnsName:
         default: Existing DNS name
+      DnsServiceName:
+        default: Cloud Map service name
       SSLCertificateARN:
         default: SSL Certificate ARN
       QSS3BucketName:
@@ -180,6 +183,10 @@ Parameters:
   DnsNameSpaceId:
     Type: String
     Default: 'ns-2n7lzqagu7z265lo'
+  DnsServiceName:
+    Type: String
+    Default: 'git'
+    Description: Cloud Map service name used by this Bitbucket deployment. Use a unique value when deploying parallel stacks in the same namespace.
   BitbucketProperties:
     Default: ''
     Description: A space-separated list of bitbucket properties in the form 'key1=value1 key2=value2 ...' Find documentation at https://confluence.atlassian.com/x/m5ZKLg.
@@ -1254,7 +1261,7 @@ Resources:
       - ElasticsearchServiceRole
     Type: AWS::OpenSearchService::Domain
     Properties:
-      DomainName: 'bitbucket-opensearch'
+      DomainName: !Ref OSDomainName
       EBSOptions:
         EBSEnabled: true
         VolumeSize: !Ref ElasticsearchNodeVolumeSize
@@ -1677,7 +1684,7 @@ Resources:
     DependsOn:
       - LoadBalancer
     Properties:
-      Name: 'git'
+      Name: !Ref DnsServiceName
       NamespaceId: !Ref DnsNameSpaceId
       Description: 'bitbucket'
       DnsConfig:
