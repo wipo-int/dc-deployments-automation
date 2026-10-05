@@ -5,6 +5,7 @@ set -e
 PIP_BIN="pip3"
 PIPENV_PYTHON="3"
 PIPENV_PACKAGE="pipenv"
+PIPENV_INSTALL_OPTIONS=""
 
 source /etc/os-release
 if [[ $ID = "amzn" ]] && [[ $VERSION = "2" ]]; then
@@ -22,6 +23,7 @@ elif [[ $ID = "amzn" ]] && [[ $VERSION = "2023" ]]; then
     PIP_BIN="pip3"
     PIPENV_PYTHON="/usr/bin/python3"
     PIPENV_PACKAGE="pipenv==2023.10.3"
+    PIPENV_INSTALL_OPTIONS="--ignore-installed"
 else
     # FIXME: Currently assumes Debian-based
     apt-get update && \
@@ -33,7 +35,7 @@ export PATH=/usr/local/bin:$PATH
 export PIP_DEFAULT_TIMEOUT=60
 
 echo "Installing pipenv..."
-$PIP_BIN install "$PIPENV_PACKAGE"
+$PIP_BIN install $PIPENV_INSTALL_OPTIONS "$PIPENV_PACKAGE"
 
 echo "Installing ansible and dependencies..."
 PIPENV_NOSPIN=1 PIPENV_HIDE_EMOJIS=1 pipenv --python $PIPENV_PYTHON sync 2>&1 | iconv -c -f utf-8 -t ascii
