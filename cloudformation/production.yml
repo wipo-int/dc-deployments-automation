@@ -13,154 +13,60 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-          default: Bitbucket setup
+          default: Parameters
         Parameters:
+          - BitbucketAdminPassword
+          - BitbucketDatasetURL
+          - BitbucketLicenseKey
+          - BitbucketProperties
           - BitbucketVersion
-      - Label:
-          default: Cluster nodes
-        Parameters:
+          - CidrBlock
           - CloudWatchIntegration
           - ClusterNodeInstanceType
           - ClusterNodeMax
           - ClusterNodeMin
           - ClusterNodeVolumeSize
-          - DeploymentAutomationRepository
-          - DeploymentAutomationBranch
-          - DeploymentAutomationPlaybook
-          - DeploymentAutomationKeyName
-          - DeploymentAutomationCustomParams
-      - Label:
-          default: Database
-        Parameters:
+          - CreateBucket
+          - CustomDnsName
           - DBEngine
           - DBEngineVersion
           - DBInstanceClass
           - DBIops
+          - DBMaster
           - DBMasterUserPassword
           - DBMultiAZ
           - DBPassword
+          - DBSnapshotId
           - DBStorage
           - DBStorageType
-      - Label:
-          default: Elasticsearch
-        Parameters:
-          - ElasticSearchPassword
+          - DbSubnet1ID
+          - DbSubnet2ID
+          - DeploymentAutomationBranch
+          - DeploymentAutomationCustomParams
+          - DeploymentAutomationKeyName
+          - DeploymentAutomationPlaybook
+          - DeploymentAutomationRepository
+          - DnsNameSpaceId
+          - DnsServiceName
           - ElasticsearchInstanceType
           - ElasticsearchNodeVolumeSize
-      - Label:
-          default: Networking
-        Parameters:
-          - CidrBlock
+          - ElasticSearchPassword
+          - ESBucketName
+          - ExportPrefix
+          - HostedZone
           - InternetFacingLoadBalancer
-          - CustomDnsName
-          - SSLCertificateARN
-          - DnsServiceName
-      - Label:
-          default: Advanced (Optional)
-        Parameters:
-          - BitbucketProperties
           - JvmHeapOverride
           - JvmSupportOpts
-          - CreateBucket
-          - DBMaster
-          - DBSnapshotId
-          - ESBucketName
-          - BitbucketLicenseKey
-          - BitbucketAdminPassword
-          - BitbucketDatasetURL
-      - Label:
-          default: AWS Quick Start Configuration
-        Parameters:
+          - LbSubnet1
+          - LbSubnet2
+          - LbSubnet3
+          - OpenSearchEngineVersion
+          - OpenSearchInstanceType
+          - OSDomainName
           - QSS3BucketName
           - QSS3KeyPrefix
-          - ExportPrefix
-    ParameterLabels:
-      BitbucketProperties:
-        default: Bitbucket properties
-      BitbucketVersion:
-        default: Version *
-      BitbucketLicenseKey:
-        default: License Key for Bitbucket (if you have one)
-      BitbucketAdminPassword:
-        default: Password for the administrator account
-      BitbucketDatasetURL:
-        default: HTTP/HTTPS URL to download the Bitbucket Dataset
-      CidrBlock:
-        default: Permitted IP range *
-      ClusterNodeMax:
-        default: Maximum number of cluster nodes
-      ClusterNodeMin:
-        default: Minimum number of cluster nodes
-      ClusterNodeInstanceType:
-        default: Bitbucket cluster node instance type
-      ClusterNodeVolumeSize:
-        default: Cluster node instance volume size
-      CreateBucket:
-        default: Create S3 bucket for Elasticsearch snapshots
-      DBEngine:
-        default: The database engine to deploy with
-      DBEngineVersion:
-        default: The database engine version to use
-      DBInstanceClass:
-        default: Database instance class
-      DBIops:
-        default: RDS Provisioned IOPS
-      DBMasterUserPassword:
-        default: Master password *
-      DBMaster:
-        default: Bitbucket primary database
-      DBMultiAZ:
-        default: Enable RDS Multi-AZ deployment
-      DBPassword:
-        default: Bitbucket database password *
-      DBStorage:
-        default: Database storage
-      DBStorageType:
-        default: Database storage type
-      DBSnapshotId:
-        default: Database snapshot ID to restore
-      DeploymentAutomationRepository:
-        default: Deployment Automation Git Repository URL
-      DeploymentAutomationBranch:
-        default: Deployment Automation Branch
-      DeploymentAutomationPlaybook:
-        default: Ansible playbook to invoke during instance initialization
-      DeploymentAutomationCustomParams:
-        default: Custom command-line parameters for Ansible
-      DeploymentAutomationKeyName:
-        default: SSH key name to use with the repository
-      CloudWatchIntegration:
-        default: Enable CloudWatch integration
-      ElasticSearchPassword:
-        default: Elasticsearch master user password *
-      ElasticsearchInstanceType:
-        default: Elasticsearch instance type
-      OpenSearchInstanceType:
-        default: OpenSearch instance type
-      OSDomainName:
-        default: 'bitbucket-opensearch'
-      ElasticsearchNodeVolumeSize:
-        default: Elasticsearch disk space per node (GB)
-      ESBucketName:
-        default: Elasticsearch snapshot S3 bucket name
-      ExportPrefix:
-        default: ASI identifier
-      InternetFacingLoadBalancer:
-        default: Make instance internet facing
-      JvmHeapOverride:
-        default: JVM Heap Size Override
-      JvmSupportOpts:
-        default: Additional JVM options
-      CustomDnsName:
-        default: Existing DNS name
-      DnsServiceName:
-        default: Cloud Map service name
-      SSLCertificateARN:
-        default: SSL Certificate ARN
-      QSS3BucketName:
-        default: Quick Start S3 Bucket Name
-      QSS3KeyPrefix:
-        default: Quick Start S3 Key Prefix
+          - SSLCertificateARN
+          - VpcId
 
 Parameters:
   VpcId:
