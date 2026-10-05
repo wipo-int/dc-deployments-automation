@@ -2016,7 +2016,7 @@ Outputs:
     Description: The URL of the Bitbucket Data Center instance
     Value: !If
       - UseCustomDnsName
-      - !Sub https://${CustomDNSName}
+      - !Join ['', ['https://', !Ref CustomDnsName]]
       - !Sub
         - https://${ManagedDnsName}
         - ManagedDnsName: !Join ['.', [!Ref 'AWS::StackName', !Ref HostedZone]]
