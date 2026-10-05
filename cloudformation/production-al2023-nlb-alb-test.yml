@@ -425,6 +425,19 @@ Parameters:
     Type: String
 
 Rules:
+  ParallelDeploymentSafety:
+    Assertions:
+      - Assert:
+          Fn::Equals:
+            - !Ref DeploymentAutomationBranch
+            - feature/al2023-migration
+        AssertDescription: This parallel test template must bootstrap from feature/al2023-migration.
+      - Assert:
+          Fn::Not:
+            - Fn::Equals:
+                - !Ref CustomDnsName
+                - git.wipo.int
+        AssertDescription: The parallel test stack must not use the Production Bitbucket hostname git.wipo.int.
   DnsAndCertificateConfiguration:
     Assertions:
       - Assert:
