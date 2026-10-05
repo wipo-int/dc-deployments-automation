@@ -1,5 +1,12 @@
 ---
 
+- name: Ensure Bitbucket owns mounted shared filesystem root
+  ansible.builtin.file:
+    path: "{{ atl_shared_mountpoint }}"
+    state: directory
+    owner: "{{ atl_product_user }}"
+    group: "{{ atl_product_user }}"
+
 - name: Create Bitbucket shared dir if necessary
   ansible.builtin.file:
     path: "{{ atl_product_home_shared }}"
