@@ -18,9 +18,10 @@
 - name: Create Bitbucket config file
   ansible.builtin.template:
     src: bitbucket.properties.j2
-    dest: "{{ atl_product_home_shared }}/bitbucket.properties"
+    dest: "{{ atl_shared_mountpoint }}/bitbucket.properties"
     owner: "{{ atl_product_user }}"
     group: "{{ atl_product_user }}"
+    mode: "0600"
 
 - name: Remove write permissions from installation directory
   ansible.builtin.file:
