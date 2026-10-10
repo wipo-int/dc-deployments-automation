@@ -714,12 +714,12 @@ Resources:
                     - ATL_RDS_SECURITY_GROUP=${SecurityGroup}
                     - SecurityGroup: !Ref SecurityGroup
                   - ''
-#                  - !Sub
-#                    - ATL_ELASTICSEARCH_HOST=${ESEndpoint}
-#                    - ESEndpoint: !If
-#                        - UseFineGrainedAccessControlES
-#                        - !GetAtt ElasticsearchSecure.DomainEndpoint
-#                        - !GetAtt Elasticsearch.DomainEndpoint
+                  - !If
+                    - UseFineGrainedAccessControlES
+                    - !Sub
+                      - ATL_ELASTICSEARCH_HOST=${ESEndpoint}
+                      - ESEndpoint: !GetAtt OpenSearchSecure.DomainEndpoint
+                    - !Ref AWS::NoValue
                   - !Sub
                     - ATL_ELASTICSEARCH_PROTOCOL=${ESScheme}
                     - ESScheme: !If
